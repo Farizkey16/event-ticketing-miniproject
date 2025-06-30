@@ -8,6 +8,7 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
+
 // User Flow
 
 model user_account {
@@ -228,6 +229,8 @@ enum transactions_STATUS {
     canceled
 }
 
+
+// Voucher Table
 model voucher_table {
     id                 Int                  @id @default(autoincrement())
     organizer_id       Int
