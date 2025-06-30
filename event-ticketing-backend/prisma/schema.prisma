@@ -1,5 +1,6 @@
 generator client {
     provider = "prisma-client-js"
+    output   = "./generated/client"
 }
 
 datasource db {
@@ -16,7 +17,7 @@ model user_account {
     username            String               @unique
     email               String               @unique
     password            String
-    role                ROLE
+    role                ACCOUNT_ROLE
     referral_code       String               @unique
     referred_by_user_id String
     imgProfile          String?
@@ -32,7 +33,7 @@ model user_account {
     transactions        transactions_table[]
 }
 
-enum ROLE {
+enum ACCOUNT_ROLE {
     user
     organizer
     admin
