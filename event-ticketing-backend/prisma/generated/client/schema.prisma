@@ -1,0 +1,244 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client"
+  previewFeatures = ["typedSQL"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// User Flow
+
+model user_account {
+  id                Int                  @id @default(autoincrement())
+  username          String               @unique
+  email             String               @unique
+  password          String
+  role              ACCOUNT_ROLE
+  referral_code     String               @unique
+  referred_by_code  String?
+  imgProfile        String?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime?            @updatedAt
+  user_profile      user_profile?
+  user_points       user_points[]
+  points_redemption points_redemption[]
+  coupon_table      coupon_table[]
+  organizer_reviews organizer_reviews[]
+  ticket_holds      ticket_holds[]
+  event_attendees   event_attendees[]
+  transactions      transactions_table[]
+}
+
+enum ACCOUNT_ROLE {
+  user
+  organizer
+  admin
+}
+
+model user_profile {
+  id                 Int      @id @default(autoincrement())
+  user_id            Int      @unique
+  user_fullname      String
+  user_date_of_birth DateTime
+  user_phone         Int
+  user_profile_image String
+
+  user user_account @relation(fields: [user_id], references: [id])
+}
+
+model user_points {
+  id                      Int                       @id @default(autoincrement())
+  points                  Int
+  points_source_type      String
+  points_source_id        Int
+  earned_at               DateTime
+  expires_at              DateTime
+  points_remaining        Int
+  user_id                 Int
+  user                    user_account              @relation(fields: [user_id], references: [id])
+  points_redemption_items points_redemption_items[]
+}
+
+model points_redemption {
+  id                      Int                       @id @default(autoincrement())
+  user_id                 Int
+  total_points            Int
+  redeemed_at             DateTime
+  user                    user_account              @relation(fields: [user_id], references: [id])
+  points_redemption_items points_redemption_items[]
+}
+
+model points_redemption_items {
+  id                Int               @id @default(autoincrement())
+  user_point_id     Int
+  redemption_id     Int
+  user_points       user_points       @relation(fields: [user_point_id], references: [id])
+  points_redemption points_redemption @relation(fields: [redemption_id], references: [id])
+
+  @@unique([user_point_id, redemption_id])
+}
+
+model coupon_table {
+  id            Int          @id @default(autoincrement())
+  user_id       Int
+  created_at    DateTime
+  expires_at    DateTime
+  used_at       DateTime?
+  status        STATUS
+  coupon_amount Int
+  user          user_account @relation(fields: [user_id], references: [id])
+}
+
+enum STATUS {
+  active
+  used
+  expired
+}
+
+// Organizer Flow
+
+model organizer_account {
+  id                Int                 @id @default(autoincrement())
+  username          String
+  email             String              @unique
+  password          String
+  is_admin          Boolean // Perlu dipikirkan cara implementasinya
+  organizer_profile organizer_profile?
+  organizer_reviews organizer_reviews[]
+  event_table       event_table[]
+  event_attendees   event_attendees[]
+  voucher           voucher_table[]
+}
+
+model organizer_profile {
+  id                      Int               @id @default(autoincrement())
+  organizer_id            Int               @unique
+  organizer_name          String
+  organizer_address       String
+  organizer_phone         Int
+  organizer_profile_image String
+  organizer               organizer_account @relation(fields: [organizer_id], references: [id])
+}
+
+model organizer_reviews {
+  id           Int               @id @default(autoincrement())
+  organizer_id Int
+  event_id     Int
+  user_id      Int
+  rating       Int
+  review       String
+  created_at   DateTime
+  organizer    organizer_account @relation(fields: [organizer_id], references: [id])
+  event        event_table       @relation(fields: [event_id], references: [id])
+  user         user_account      @relation(fields: [user_id], references: [id])
+}
+
+// Event Flow
+
+model event_table {
+  id                Int                  @id @default(autoincrement())
+  organizer_id      Int
+  name              String
+  price             Int
+  start_date        DateTime
+  end_date          DateTime
+  seat_capacity     Int // query from attendees_list
+  event_type        String
+  created_at        DateTime
+  organizer         organizer_account    @relation(fields: [organizer_id], references: [id])
+  organizer_reviews organizer_reviews[]
+  ticket_holds      ticket_holds[]
+  ticket_type       ticket_type[]
+  event_attendees   event_attendees[]
+  transactions      transactions_table[]
+  voucher           voucher_table[]
+}
+
+model ticket_holds {
+  id              Int                @id @default(autoincrement())
+  event_id        Int
+  user_id         Int
+  ticket_type_id  Int
+  ticket_quantity Int
+  held_at         DateTime
+  expires_at      DateTime
+  transactions_id Int
+  status          STATUS
+  event           event_table        @relation(fields: [event_id], references: [id])
+  user            user_account       @relation(fields: [user_id], references: [id])
+  ticket_type     ticket_type        @relation(fields: [ticket_type_id], references: [id])
+  transactions    transactions_table @relation(fields: [transactions_id], references: [id])
+}
+
+model ticket_type {
+  id           Int            @id @default(autoincrement())
+  event_id     Int
+  type_name    String
+  price        Int
+  quota        Int
+  event        event_table    @relation(fields: [event_id], references: [id])
+  ticket_holds ticket_holds[]
+}
+
+model event_attendees {
+  id               Int               @id @default(autoincrement())
+  event_id         Int
+  organizer_id     Int
+  user_id          Int
+  ticket_quantity  Int
+  total_price_paid Int
+  status           EVENT_STATUS
+  event            event_table       @relation(fields: [event_id], references: [id])
+  organizer        organizer_account @relation(fields: [organizer_id], references: [id])
+  user             user_account      @relation(fields: [user_id], references: [id])
+
+  @@unique([event_id, user_id])
+}
+
+enum EVENT_STATUS {
+  attended
+  expired
+  cancelled
+}
+
+// transactions Flow
+
+model transactions_table {
+  id                Int                 @id @default(autoincrement())
+  user_id           Int
+  event_id          Int
+  voucher_id        Int
+  created_at        DateTime
+  status            transactions_STATUS
+  payment_proof_url String
+  user              user_account        @relation(fields: [user_id], references: [id])
+  event             event_table         @relation(fields: [event_id], references: [id])
+  ticket            ticket_holds[]
+  voucher           voucher_table       @relation(fields: [voucher_id], references: [id])
+}
+
+enum transactions_STATUS {
+  waiting_for_payment
+  waiting_for_admin_confirmation
+  rejected
+  done
+  expired
+  canceled
+}
+
+// Voucher Table
+model voucher_table {
+  id                 Int                  @id @default(autoincrement())
+  organizer_id       Int
+  event_id           Int
+  start_at           DateTime
+  expires_at         DateTime?
+  usage_limit        Int
+  organizer          organizer_account    @relation(fields: [organizer_id], references: [id])
+  event              event_table          @relation(fields: [event_id], references: [id])
+  transactions_table transactions_table[]
+}
