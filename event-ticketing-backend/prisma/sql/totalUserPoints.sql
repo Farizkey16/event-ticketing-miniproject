@@ -1,0 +1,1 @@
+SELECT COALESCE(SUM(points), 0) AS total_points FROM user_points WHERE user_id = $1

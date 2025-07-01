@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.10.1
- * Query Engine version: 9b628578b3b7cae625e8c927178f15a170e74a9c
+ * Prisma Client JS version: 6.11.0
+ * Query Engine version: 9c30299f5a0ea26a96790e13f796dc6094db3173
  */
 Prisma.prismaVersion = {
-  client: "6.10.1",
-  engine: "9b628578b3b7cae625e8c927178f15a170e74a9c"
+  client: "6.11.0",
+  engine: "9c30299f5a0ea26a96790e13f796dc6094db3173"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -127,7 +127,7 @@ exports.Prisma.User_accountScalarFieldEnum = {
   password: 'password',
   role: 'role',
   referral_code: 'referral_code',
-  referred_by_user_id: 'referred_by_user_id',
+  referred_by_code: 'referred_by_code',
   imgProfile: 'imgProfile',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -146,7 +146,7 @@ exports.Prisma.User_pointsScalarFieldEnum = {
   id: 'id',
   points: 'points',
   points_source_type: 'points_source_type',
-  points_souce_id: 'points_souce_id',
+  points_source_id: 'points_source_id',
   earned_at: 'earned_at',
   expires_at: 'expires_at',
   points_remaining: 'points_remaining',
@@ -278,7 +278,7 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.ROLE = exports.$Enums.ROLE = {
+exports.ACCOUNT_ROLE = exports.$Enums.ACCOUNT_ROLE = {
   user: 'user',
   organizer: 'organizer',
   admin: 'admin'

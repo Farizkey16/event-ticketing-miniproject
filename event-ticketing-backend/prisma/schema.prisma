@@ -1,6 +1,7 @@
 generator client {
-    provider = "prisma-client-js"
-    output   = "./generated/client"
+    provider        = "prisma-client-js"
+    output          = "./generated/client"
+    previewFeatures = ["typedSQL"]
 }
 
 datasource db {
@@ -9,28 +10,27 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-
 // User Flow
 
 model user_account {
-    id                  Int                  @id @default(autoincrement())
-    username            String               @unique
-    email               String               @unique
-    password            String
-    role                ACCOUNT_ROLE
-    referral_code       String               @unique
-    referred_by_user_id String
-    imgProfile          String?
-    createdAt           DateTime             @default(now())
-    updatedAt           DateTime?            @updatedAt
-    user_profile        user_profile?
-    user_points         user_points[]
-    points_redemption   points_redemption[]
-    coupon_table        coupon_table[]
-    organizer_reviews   organizer_reviews[]
-    ticket_holds        ticket_holds[]
-    event_attendees     event_attendees[]
-    transactions        transactions_table[]
+    id                Int                  @id @default(autoincrement())
+    username          String               @unique
+    email             String               @unique
+    password          String
+    role              ACCOUNT_ROLE
+    referral_code     String               @unique
+    referred_by_code  String?
+    imgProfile        String?
+    createdAt         DateTime             @default(now())
+    updatedAt         DateTime?            @updatedAt
+    user_profile      user_profile?
+    user_points       user_points[]
+    points_redemption points_redemption[]
+    coupon_table      coupon_table[]
+    organizer_reviews organizer_reviews[]
+    ticket_holds      ticket_holds[]
+    event_attendees   event_attendees[]
+    transactions      transactions_table[]
 }
 
 enum ACCOUNT_ROLE {
@@ -54,7 +54,7 @@ model user_points {
     id                      Int                       @id @default(autoincrement())
     points                  Int
     points_source_type      String
-    points_souce_id         Int
+    points_source_id        Int
     earned_at               DateTime
     expires_at              DateTime
     points_remaining        Int
@@ -229,7 +229,6 @@ enum transactions_STATUS {
     expired
     canceled
 }
-
 
 // Voucher Table
 model voucher_table {

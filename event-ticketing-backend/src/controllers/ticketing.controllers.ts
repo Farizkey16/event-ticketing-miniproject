@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { compare } from "bcrypt";
 import { Jwt } from "jsonwebtoken";
 import { prisma } from "../config/prisma";
+import dayjs from "dayjs";
+import { totalUserPoints } from "../../prisma/generated/client/sql";
 
 class TicketingController {
   // Registration
@@ -26,12 +28,71 @@ class TicketingController {
         );
       }
 
+      // Generating Referral Code
+      async function referralCodeGeneration(username: string) {
+        const cleanUsername = (username || "").trim().toUpperCase();
+        const prefix = cleanUsername.slice(0, 4).toUpperCase();
+
+        for (let i = 0; i < 10; i++) {
+          const suffix = Math.random()
+            .toString(36)
+            .substring(2, 6)
+            .toUpperCase();
+          const code = `${prefix}${suffix}`;
+
+          const codeCheck = await prisma.user_account.findUnique({
+            where: {
+              referral_code: code,
+            },
+          });
+
+          if (!codeCheck) return code;
+        }
+
+        throw new Error(
+          "Failed to generate unique referral code after 10 attempts."
+        );
+      }
+
+      const referralCode = await referralCodeGeneration(req.body.username);
+
+      // Rewarding Used Referral Code
+      let referrer = null;
+      if (req.body.referred_by_code) {
+        referrer = await prisma.user_account.findUnique({
+          where: { referral_code: req.body.referred_by_code },
+          select: { id: true, username: true, referral_code: true },
+        });
+
+        if (!referrer) {
+          throw new Error("The referral code does not exist.");
+        }
+
+        const user_points_result = await prisma.$queryRawTyped(totalUserPoints(referrer.id))
+
+        const user_points_remaining = Number(user_points_result[0]?.total_points ?? 0);
+
+        await prisma.user_points.create({
+          data: {
+            user_id: referrer.id,
+            points: 10000,
+            points_source_type: "referral",
+            points_source_id: 1,
+            earned_at: new Date(),
+            expires_at: dayjs().add(3, 'month').toDate(),
+            points_remaining: user_points_remaining + 10000,
+          }
+        });
+      }
+
       // Registering User
       const registerUser = await prisma.user_account.create({
         data: {
           ...req.body,
           password: req.body.password,
           role: req.body.role || "user",
+          referral_code: referralCode,
+          referred_by_code: req.body.referred_by_code || ""
         },
       });
 
@@ -42,7 +103,7 @@ class TicketingController {
         data: registerUser,
       });
     } catch (err) {
-        next(err)
+      next(err);
     }
   }
 }

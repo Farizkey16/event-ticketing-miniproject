@@ -93,13 +93,13 @@ export type voucher_table = $Result.DefaultSelection<Prisma.$voucher_tablePayloa
  * Enums
  */
 export namespace $Enums {
-  export const ROLE: {
+  export const ACCOUNT_ROLE: {
   user: 'user',
   organizer: 'organizer',
   admin: 'admin'
 };
 
-export type ROLE = (typeof ROLE)[keyof typeof ROLE]
+export type ACCOUNT_ROLE = (typeof ACCOUNT_ROLE)[keyof typeof ACCOUNT_ROLE]
 
 
 export const STATUS: {
@@ -133,9 +133,9 @@ export type transactions_STATUS = (typeof transactions_STATUS)[keyof typeof tran
 
 }
 
-export type ROLE = $Enums.ROLE
+export type ACCOUNT_ROLE = $Enums.ACCOUNT_ROLE
 
-export const ROLE: typeof $Enums.ROLE
+export const ACCOUNT_ROLE: typeof $Enums.ACCOUNT_ROLE
 
 export type STATUS = $Enums.STATUS
 
@@ -251,6 +251,16 @@ export class PrismaClient<
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
+  /**
+   * Executes a typed SQL query and returns a typed result
+   * @example
+   * ```
+   * import { myQuery } from '@prisma/client/sql'
+   * 
+   * const result = await prisma.$queryRawTyped(myQuery())
+   * ```
+   */
+  $queryRawTyped<T>(typedSql: runtime.TypedSql<unknown[], T>): Prisma.PrismaPromise<T[]>
 
   /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -481,8 +491,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.10.1
-   * Query Engine version: 9b628578b3b7cae625e8c927178f15a170e74a9c
+   * Prisma Client JS version: 6.11.0
+   * Query Engine version: 9c30299f5a0ea26a96790e13f796dc6094db3173
    */
   export type PrismaVersion = {
     client: string
@@ -2031,6 +2041,10 @@ export namespace Prisma {
           args: [query: string, ...values: any[]],
           result: any
         }
+        $queryRawTyped: {
+          args: runtime.UnknownTypedSql,
+          result: Prisma.JsonObject
+        }
       }
     }
   }
@@ -2601,9 +2615,9 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    role: $Enums.ROLE | null
+    role: $Enums.ACCOUNT_ROLE | null
     referral_code: string | null
-    referred_by_user_id: string | null
+    referred_by_code: string | null
     imgProfile: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2614,9 +2628,9 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    role: $Enums.ROLE | null
+    role: $Enums.ACCOUNT_ROLE | null
     referral_code: string | null
-    referred_by_user_id: string | null
+    referred_by_code: string | null
     imgProfile: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2629,7 +2643,7 @@ export namespace Prisma {
     password: number
     role: number
     referral_code: number
-    referred_by_user_id: number
+    referred_by_code: number
     imgProfile: number
     createdAt: number
     updatedAt: number
@@ -2652,7 +2666,7 @@ export namespace Prisma {
     password?: true
     role?: true
     referral_code?: true
-    referred_by_user_id?: true
+    referred_by_code?: true
     imgProfile?: true
     createdAt?: true
     updatedAt?: true
@@ -2665,7 +2679,7 @@ export namespace Prisma {
     password?: true
     role?: true
     referral_code?: true
-    referred_by_user_id?: true
+    referred_by_code?: true
     imgProfile?: true
     createdAt?: true
     updatedAt?: true
@@ -2678,7 +2692,7 @@ export namespace Prisma {
     password?: true
     role?: true
     referral_code?: true
-    referred_by_user_id?: true
+    referred_by_code?: true
     imgProfile?: true
     createdAt?: true
     updatedAt?: true
@@ -2776,9 +2790,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code: string | null
     imgProfile: string | null
     createdAt: Date
     updatedAt: Date | null
@@ -2810,7 +2824,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     referral_code?: boolean
-    referred_by_user_id?: boolean
+    referred_by_code?: boolean
     imgProfile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2832,7 +2846,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     referral_code?: boolean
-    referred_by_user_id?: boolean
+    referred_by_code?: boolean
     imgProfile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2845,7 +2859,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     referral_code?: boolean
-    referred_by_user_id?: boolean
+    referred_by_code?: boolean
     imgProfile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2858,13 +2872,13 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     referral_code?: boolean
-    referred_by_user_id?: boolean
+    referred_by_code?: boolean
     imgProfile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type user_accountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "role" | "referral_code" | "referred_by_user_id" | "imgProfile" | "createdAt" | "updatedAt", ExtArgs["result"]["user_account"]>
+  export type user_accountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "role" | "referral_code" | "referred_by_code" | "imgProfile" | "createdAt" | "updatedAt", ExtArgs["result"]["user_account"]>
   export type user_accountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user_profile?: boolean | user_account$user_profileArgs<ExtArgs>
     user_points?: boolean | user_account$user_pointsArgs<ExtArgs>
@@ -2896,9 +2910,9 @@ export namespace Prisma {
       username: string
       email: string
       password: string
-      role: $Enums.ROLE
+      role: $Enums.ACCOUNT_ROLE
       referral_code: string
-      referred_by_user_id: string
+      referred_by_code: string | null
       imgProfile: string | null
       createdAt: Date
       updatedAt: Date | null
@@ -3337,9 +3351,9 @@ export namespace Prisma {
     readonly username: FieldRef<"user_account", 'String'>
     readonly email: FieldRef<"user_account", 'String'>
     readonly password: FieldRef<"user_account", 'String'>
-    readonly role: FieldRef<"user_account", 'ROLE'>
+    readonly role: FieldRef<"user_account", 'ACCOUNT_ROLE'>
     readonly referral_code: FieldRef<"user_account", 'String'>
-    readonly referred_by_user_id: FieldRef<"user_account", 'String'>
+    readonly referred_by_code: FieldRef<"user_account", 'String'>
     readonly imgProfile: FieldRef<"user_account", 'String'>
     readonly createdAt: FieldRef<"user_account", 'DateTime'>
     readonly updatedAt: FieldRef<"user_account", 'DateTime'>
@@ -5064,7 +5078,7 @@ export namespace Prisma {
   export type User_pointsAvgAggregateOutputType = {
     id: number | null
     points: number | null
-    points_souce_id: number | null
+    points_source_id: number | null
     points_remaining: number | null
     user_id: number | null
   }
@@ -5072,7 +5086,7 @@ export namespace Prisma {
   export type User_pointsSumAggregateOutputType = {
     id: number | null
     points: number | null
-    points_souce_id: number | null
+    points_source_id: number | null
     points_remaining: number | null
     user_id: number | null
   }
@@ -5081,7 +5095,7 @@ export namespace Prisma {
     id: number | null
     points: number | null
     points_source_type: string | null
-    points_souce_id: number | null
+    points_source_id: number | null
     earned_at: Date | null
     expires_at: Date | null
     points_remaining: number | null
@@ -5092,7 +5106,7 @@ export namespace Prisma {
     id: number | null
     points: number | null
     points_source_type: string | null
-    points_souce_id: number | null
+    points_source_id: number | null
     earned_at: Date | null
     expires_at: Date | null
     points_remaining: number | null
@@ -5103,7 +5117,7 @@ export namespace Prisma {
     id: number
     points: number
     points_source_type: number
-    points_souce_id: number
+    points_source_id: number
     earned_at: number
     expires_at: number
     points_remaining: number
@@ -5115,7 +5129,7 @@ export namespace Prisma {
   export type User_pointsAvgAggregateInputType = {
     id?: true
     points?: true
-    points_souce_id?: true
+    points_source_id?: true
     points_remaining?: true
     user_id?: true
   }
@@ -5123,7 +5137,7 @@ export namespace Prisma {
   export type User_pointsSumAggregateInputType = {
     id?: true
     points?: true
-    points_souce_id?: true
+    points_source_id?: true
     points_remaining?: true
     user_id?: true
   }
@@ -5132,7 +5146,7 @@ export namespace Prisma {
     id?: true
     points?: true
     points_source_type?: true
-    points_souce_id?: true
+    points_source_id?: true
     earned_at?: true
     expires_at?: true
     points_remaining?: true
@@ -5143,7 +5157,7 @@ export namespace Prisma {
     id?: true
     points?: true
     points_source_type?: true
-    points_souce_id?: true
+    points_source_id?: true
     earned_at?: true
     expires_at?: true
     points_remaining?: true
@@ -5154,7 +5168,7 @@ export namespace Prisma {
     id?: true
     points?: true
     points_source_type?: true
-    points_souce_id?: true
+    points_source_id?: true
     earned_at?: true
     expires_at?: true
     points_remaining?: true
@@ -5252,7 +5266,7 @@ export namespace Prisma {
     id: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date
     expires_at: Date
     points_remaining: number
@@ -5282,7 +5296,7 @@ export namespace Prisma {
     id?: boolean
     points?: boolean
     points_source_type?: boolean
-    points_souce_id?: boolean
+    points_source_id?: boolean
     earned_at?: boolean
     expires_at?: boolean
     points_remaining?: boolean
@@ -5296,7 +5310,7 @@ export namespace Prisma {
     id?: boolean
     points?: boolean
     points_source_type?: boolean
-    points_souce_id?: boolean
+    points_source_id?: boolean
     earned_at?: boolean
     expires_at?: boolean
     points_remaining?: boolean
@@ -5308,7 +5322,7 @@ export namespace Prisma {
     id?: boolean
     points?: boolean
     points_source_type?: boolean
-    points_souce_id?: boolean
+    points_source_id?: boolean
     earned_at?: boolean
     expires_at?: boolean
     points_remaining?: boolean
@@ -5320,14 +5334,14 @@ export namespace Prisma {
     id?: boolean
     points?: boolean
     points_source_type?: boolean
-    points_souce_id?: boolean
+    points_source_id?: boolean
     earned_at?: boolean
     expires_at?: boolean
     points_remaining?: boolean
     user_id?: boolean
   }
 
-  export type user_pointsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "points" | "points_source_type" | "points_souce_id" | "earned_at" | "expires_at" | "points_remaining" | "user_id", ExtArgs["result"]["user_points"]>
+  export type user_pointsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "points" | "points_source_type" | "points_source_id" | "earned_at" | "expires_at" | "points_remaining" | "user_id", ExtArgs["result"]["user_points"]>
   export type user_pointsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     points_redemption_items?: boolean | user_points$points_redemption_itemsArgs<ExtArgs>
@@ -5350,7 +5364,7 @@ export namespace Prisma {
       id: number
       points: number
       points_source_type: string
-      points_souce_id: number
+      points_source_id: number
       earned_at: Date
       expires_at: Date
       points_remaining: number
@@ -5783,7 +5797,7 @@ export namespace Prisma {
     readonly id: FieldRef<"user_points", 'Int'>
     readonly points: FieldRef<"user_points", 'Int'>
     readonly points_source_type: FieldRef<"user_points", 'String'>
-    readonly points_souce_id: FieldRef<"user_points", 'Int'>
+    readonly points_source_id: FieldRef<"user_points", 'Int'>
     readonly earned_at: FieldRef<"user_points", 'DateTime'>
     readonly expires_at: FieldRef<"user_points", 'DateTime'>
     readonly points_remaining: FieldRef<"user_points", 'Int'>
@@ -20179,7 +20193,7 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     referral_code: 'referral_code',
-    referred_by_user_id: 'referred_by_user_id',
+    referred_by_code: 'referred_by_code',
     imgProfile: 'imgProfile',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -20204,7 +20218,7 @@ export namespace Prisma {
     id: 'id',
     points: 'points',
     points_source_type: 'points_source_type',
-    points_souce_id: 'points_souce_id',
+    points_source_id: 'points_source_id',
     earned_at: 'earned_at',
     expires_at: 'expires_at',
     points_remaining: 'points_remaining',
@@ -20419,16 +20433,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ROLE'
+   * Reference to a field of type 'ACCOUNT_ROLE'
    */
-  export type EnumROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ROLE'>
+  export type EnumACCOUNT_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_ROLE'>
     
 
 
   /**
-   * Reference to a field of type 'ROLE[]'
+   * Reference to a field of type 'ACCOUNT_ROLE[]'
    */
-  export type ListEnumROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ROLE[]'>
+  export type ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_ROLE[]'>
     
 
 
@@ -20520,9 +20534,9 @@ export namespace Prisma {
     username?: StringFilter<"user_account"> | string
     email?: StringFilter<"user_account"> | string
     password?: StringFilter<"user_account"> | string
-    role?: EnumROLEFilter<"user_account"> | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFilter<"user_account"> | $Enums.ACCOUNT_ROLE
     referral_code?: StringFilter<"user_account"> | string
-    referred_by_user_id?: StringFilter<"user_account"> | string
+    referred_by_code?: StringNullableFilter<"user_account"> | string | null
     imgProfile?: StringNullableFilter<"user_account"> | string | null
     createdAt?: DateTimeFilter<"user_account"> | Date | string
     updatedAt?: DateTimeNullableFilter<"user_account"> | Date | string | null
@@ -20543,7 +20557,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     referral_code?: SortOrder
-    referred_by_user_id?: SortOrder
+    referred_by_code?: SortOrderInput | SortOrder
     imgProfile?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
@@ -20566,8 +20580,8 @@ export namespace Prisma {
     OR?: user_accountWhereInput[]
     NOT?: user_accountWhereInput | user_accountWhereInput[]
     password?: StringFilter<"user_account"> | string
-    role?: EnumROLEFilter<"user_account"> | $Enums.ROLE
-    referred_by_user_id?: StringFilter<"user_account"> | string
+    role?: EnumACCOUNT_ROLEFilter<"user_account"> | $Enums.ACCOUNT_ROLE
+    referred_by_code?: StringNullableFilter<"user_account"> | string | null
     imgProfile?: StringNullableFilter<"user_account"> | string | null
     createdAt?: DateTimeFilter<"user_account"> | Date | string
     updatedAt?: DateTimeNullableFilter<"user_account"> | Date | string | null
@@ -20588,7 +20602,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     referral_code?: SortOrder
-    referred_by_user_id?: SortOrder
+    referred_by_code?: SortOrderInput | SortOrder
     imgProfile?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
@@ -20607,9 +20621,9 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"user_account"> | string
     email?: StringWithAggregatesFilter<"user_account"> | string
     password?: StringWithAggregatesFilter<"user_account"> | string
-    role?: EnumROLEWithAggregatesFilter<"user_account"> | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEWithAggregatesFilter<"user_account"> | $Enums.ACCOUNT_ROLE
     referral_code?: StringWithAggregatesFilter<"user_account"> | string
-    referred_by_user_id?: StringWithAggregatesFilter<"user_account"> | string
+    referred_by_code?: StringNullableWithAggregatesFilter<"user_account"> | string | null
     imgProfile?: StringNullableWithAggregatesFilter<"user_account"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"user_account"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"user_account"> | Date | string | null
@@ -20684,7 +20698,7 @@ export namespace Prisma {
     id?: IntFilter<"user_points"> | number
     points?: IntFilter<"user_points"> | number
     points_source_type?: StringFilter<"user_points"> | string
-    points_souce_id?: IntFilter<"user_points"> | number
+    points_source_id?: IntFilter<"user_points"> | number
     earned_at?: DateTimeFilter<"user_points"> | Date | string
     expires_at?: DateTimeFilter<"user_points"> | Date | string
     points_remaining?: IntFilter<"user_points"> | number
@@ -20697,7 +20711,7 @@ export namespace Prisma {
     id?: SortOrder
     points?: SortOrder
     points_source_type?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     earned_at?: SortOrder
     expires_at?: SortOrder
     points_remaining?: SortOrder
@@ -20713,7 +20727,7 @@ export namespace Prisma {
     NOT?: user_pointsWhereInput | user_pointsWhereInput[]
     points?: IntFilter<"user_points"> | number
     points_source_type?: StringFilter<"user_points"> | string
-    points_souce_id?: IntFilter<"user_points"> | number
+    points_source_id?: IntFilter<"user_points"> | number
     earned_at?: DateTimeFilter<"user_points"> | Date | string
     expires_at?: DateTimeFilter<"user_points"> | Date | string
     points_remaining?: IntFilter<"user_points"> | number
@@ -20726,7 +20740,7 @@ export namespace Prisma {
     id?: SortOrder
     points?: SortOrder
     points_source_type?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     earned_at?: SortOrder
     expires_at?: SortOrder
     points_remaining?: SortOrder
@@ -20745,7 +20759,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"user_points"> | number
     points?: IntWithAggregatesFilter<"user_points"> | number
     points_source_type?: StringWithAggregatesFilter<"user_points"> | string
-    points_souce_id?: IntWithAggregatesFilter<"user_points"> | number
+    points_source_id?: IntWithAggregatesFilter<"user_points"> | number
     earned_at?: DateTimeWithAggregatesFilter<"user_points"> | Date | string
     expires_at?: DateTimeWithAggregatesFilter<"user_points"> | Date | string
     points_remaining?: IntWithAggregatesFilter<"user_points"> | number
@@ -21592,9 +21606,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -21613,9 +21627,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -21633,9 +21647,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21654,9 +21668,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21675,9 +21689,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -21687,9 +21701,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21700,9 +21714,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21770,7 +21784,7 @@ export namespace Prisma {
   export type user_pointsCreateInput = {
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -21782,7 +21796,7 @@ export namespace Prisma {
     id?: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -21793,7 +21807,7 @@ export namespace Prisma {
   export type user_pointsUpdateInput = {
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -21805,7 +21819,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -21817,7 +21831,7 @@ export namespace Prisma {
     id?: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -21827,7 +21841,7 @@ export namespace Prisma {
   export type user_pointsUpdateManyMutationInput = {
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -21837,7 +21851,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -22650,11 +22664,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type EnumROLEFilter<$PrismaModel = never> = {
-    equals?: $Enums.ROLE | EnumROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumROLEFilter<$PrismaModel> | $Enums.ROLE
+  export type EnumACCOUNT_ROLEFilter<$PrismaModel = never> = {
+    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    not?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -22781,7 +22795,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     referral_code?: SortOrder
-    referred_by_user_id?: SortOrder
+    referred_by_code?: SortOrder
     imgProfile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22798,7 +22812,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     referral_code?: SortOrder
-    referred_by_user_id?: SortOrder
+    referred_by_code?: SortOrder
     imgProfile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22811,7 +22825,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     referral_code?: SortOrder
-    referred_by_user_id?: SortOrder
+    referred_by_code?: SortOrder
     imgProfile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22855,14 +22869,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type EnumROLEWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ROLE | EnumROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumROLEWithAggregatesFilter<$PrismaModel> | $Enums.ROLE
+  export type EnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    not?: NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumROLEFilter<$PrismaModel>
-    _max?: NestedEnumROLEFilter<$PrismaModel>
+    _min?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
+    _max?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -22969,7 +22983,7 @@ export namespace Prisma {
     id?: SortOrder
     points?: SortOrder
     points_source_type?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     earned_at?: SortOrder
     expires_at?: SortOrder
     points_remaining?: SortOrder
@@ -22979,7 +22993,7 @@ export namespace Prisma {
   export type user_pointsAvgOrderByAggregateInput = {
     id?: SortOrder
     points?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     points_remaining?: SortOrder
     user_id?: SortOrder
   }
@@ -22988,7 +23002,7 @@ export namespace Prisma {
     id?: SortOrder
     points?: SortOrder
     points_source_type?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     earned_at?: SortOrder
     expires_at?: SortOrder
     points_remaining?: SortOrder
@@ -22999,7 +23013,7 @@ export namespace Prisma {
     id?: SortOrder
     points?: SortOrder
     points_source_type?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     earned_at?: SortOrder
     expires_at?: SortOrder
     points_remaining?: SortOrder
@@ -23009,7 +23023,7 @@ export namespace Prisma {
   export type user_pointsSumOrderByAggregateInput = {
     id?: SortOrder
     points?: SortOrder
-    points_souce_id?: SortOrder
+    points_source_id?: SortOrder
     points_remaining?: SortOrder
     user_id?: SortOrder
   }
@@ -23769,8 +23783,8 @@ export namespace Prisma {
     set?: string
   }
 
-  export type EnumROLEFieldUpdateOperationsInput = {
-    set?: $Enums.ROLE
+  export type EnumACCOUNT_ROLEFieldUpdateOperationsInput = {
+    set?: $Enums.ACCOUNT_ROLE
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -25048,11 +25062,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedEnumROLEFilter<$PrismaModel = never> = {
-    equals?: $Enums.ROLE | EnumROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumROLEFilter<$PrismaModel> | $Enums.ROLE
+  export type NestedEnumACCOUNT_ROLEFilter<$PrismaModel = never> = {
+    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    not?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -25135,14 +25149,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedEnumROLEWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ROLE | EnumROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ROLE[] | ListEnumROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumROLEWithAggregatesFilter<$PrismaModel> | $Enums.ROLE
+  export type NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
+    not?: NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumROLEFilter<$PrismaModel>
-    _max?: NestedEnumROLEFilter<$PrismaModel>
+    _min?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
+    _max?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -25288,7 +25302,7 @@ export namespace Prisma {
   export type user_pointsCreateWithoutUserInput = {
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -25299,7 +25313,7 @@ export namespace Prisma {
     id?: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -25529,7 +25543,7 @@ export namespace Prisma {
     id?: IntFilter<"user_points"> | number
     points?: IntFilter<"user_points"> | number
     points_source_type?: StringFilter<"user_points"> | string
-    points_souce_id?: IntFilter<"user_points"> | number
+    points_source_id?: IntFilter<"user_points"> | number
     earned_at?: DateTimeFilter<"user_points"> | Date | string
     expires_at?: DateTimeFilter<"user_points"> | Date | string
     points_remaining?: IntFilter<"user_points"> | number
@@ -25713,9 +25727,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -25733,9 +25747,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -25768,9 +25782,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -25788,9 +25802,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -25807,9 +25821,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -25827,9 +25841,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -25881,9 +25895,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -25901,9 +25915,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -25945,9 +25959,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -25965,9 +25979,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -26019,9 +26033,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26039,9 +26053,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26073,7 +26087,7 @@ export namespace Prisma {
   export type user_pointsCreateWithoutPoints_redemption_itemsInput = {
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -26084,7 +26098,7 @@ export namespace Prisma {
     id?: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -26128,7 +26142,7 @@ export namespace Prisma {
   export type user_pointsUpdateWithoutPoints_redemption_itemsInput = {
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -26139,7 +26153,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -26174,9 +26188,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -26194,9 +26208,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -26229,9 +26243,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26249,9 +26263,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26657,9 +26671,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -26677,9 +26691,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -26790,9 +26804,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26810,9 +26824,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27202,9 +27216,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27222,9 +27236,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27345,9 +27359,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27365,9 +27379,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27635,9 +27649,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27655,9 +27669,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27768,9 +27782,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27788,9 +27802,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27807,9 +27821,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27827,9 +27841,9 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ROLE
+    role: $Enums.ACCOUNT_ROLE
     referral_code: string
-    referred_by_user_id: string
+    referred_by_code?: string | null
     imgProfile?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
@@ -27953,9 +27967,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27973,9 +27987,9 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
     referral_code?: StringFieldUpdateOperationsInput | string
-    referred_by_user_id?: StringFieldUpdateOperationsInput | string
+    referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28269,7 +28283,7 @@ export namespace Prisma {
     id?: number
     points: number
     points_source_type: string
-    points_souce_id: number
+    points_source_id: number
     earned_at: Date | string
     expires_at: Date | string
     points_remaining: number
@@ -28331,7 +28345,7 @@ export namespace Prisma {
   export type user_pointsUpdateWithoutUserInput = {
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -28342,7 +28356,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
@@ -28353,7 +28367,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     points?: IntFieldUpdateOperationsInput | number
     points_source_type?: StringFieldUpdateOperationsInput | string
-    points_souce_id?: IntFieldUpdateOperationsInput | number
+    points_source_id?: IntFieldUpdateOperationsInput | number
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     points_remaining?: IntFieldUpdateOperationsInput | number
