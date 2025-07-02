@@ -57,7 +57,45 @@ class UserAuthController {
 
       const referralCode = await referralCodeGeneration(req.body.username);
 
+      // Registering User
+      const { email, username, password, referred_by_code } = req.body
+      const newUser = await prisma.user_account.create({
+        data: {
+          email,
+          username,
+          password: password,
+          role: "user",
+          referral_code: referralCode,
+          referred_by_code: referred_by_code || ""
+        },
+      });
+
       // Rewarding Used Referral Code
+
+      // Register with Referral Discount Coupon
+      const referral_coupon = await prisma.coupon_table.findUnique({
+        where: {
+          code: "REFERRAL10"
+        },
+        select: {
+          id:true,
+        }
+      })
+
+      if (!referral_coupon) {
+        throw new Error("Referral coupon not found");
+      }
+
+      if (req.body.referred_by_code) {
+        await prisma.user_coupon.create({
+          data: {
+            user_id: newUser.id,
+            coupon_id: referral_coupon.id,        
+          }
+        })
+      }
+
+      // Referral 10,000 points
       let referrer = null;
       if (req.body.referred_by_code) {
         referrer = await prisma.user_account.findUnique({
@@ -86,18 +124,7 @@ class UserAuthController {
         });
       }
 
-      // Registering User
-      const { email, username, password, role, referred_by_code } = req.body
-      const registerUser = await prisma.user_account.create({
-        data: {
-          email,
-          username,
-          password: password,
-          role: "user",
-          referral_code: referralCode,
-          referred_by_code: referred_by_code || ""
-        },
-      });
+      
 
       // Sending response
       res.status(201).send({
