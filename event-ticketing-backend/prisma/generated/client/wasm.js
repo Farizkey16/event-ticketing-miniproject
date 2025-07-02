@@ -168,12 +168,24 @@ exports.Prisma.Points_redemption_itemsScalarFieldEnum = {
 
 exports.Prisma.Coupon_tableScalarFieldEnum = {
   id: 'id',
-  user_id: 'user_id',
+  event_id: 'event_id',
+  code: 'code',
+  discount_type: 'discount_type',
+  discount_value: 'discount_value',
   created_at: 'created_at',
   expires_at: 'expires_at',
   used_at: 'used_at',
+  usage_limit: 'usage_limit',
+  used_count: 'used_count',
   status: 'status',
-  coupon_amount: 'coupon_amount'
+  issued_by: 'issued_by'
+};
+
+exports.Prisma.User_couponScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  coupon_id: 'coupon_id',
+  used_at: 'used_at'
 };
 
 exports.Prisma.Organizer_accountScalarFieldEnum = {
@@ -181,7 +193,7 @@ exports.Prisma.Organizer_accountScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
-  is_admin: 'is_admin'
+  role: 'role'
 };
 
 exports.Prisma.Organizer_profileScalarFieldEnum = {
@@ -261,7 +273,9 @@ exports.Prisma.Voucher_tableScalarFieldEnum = {
   event_id: 'event_id',
   start_at: 'start_at',
   expires_at: 'expires_at',
-  usage_limit: 'usage_limit'
+  usage_limit: 'usage_limit',
+  discount_type: 'discount_type',
+  discount_value: 'discount_value'
 };
 
 exports.Prisma.SortOrder = {
@@ -278,25 +292,36 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.ACCOUNT_ROLE = exports.$Enums.ACCOUNT_ROLE = {
+exports.account_role = exports.$Enums.account_role = {
   user: 'user',
   organizer: 'organizer',
   admin: 'admin'
 };
 
-exports.STATUS = exports.$Enums.STATUS = {
+exports.discount_type = exports.$Enums.discount_type = {
+  fixed: 'fixed',
+  percentage: 'percentage'
+};
+
+exports.coupon_status = exports.$Enums.coupon_status = {
   active: 'active',
   used: 'used',
   expired: 'expired'
 };
 
-exports.EVENT_STATUS = exports.$Enums.EVENT_STATUS = {
+exports.issuer = exports.$Enums.issuer = {
+  system: 'system',
+  organizer: 'organizer',
+  admin: 'admin'
+};
+
+exports.event_status = exports.$Enums.event_status = {
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
 };
 
-exports.transactions_STATUS = exports.$Enums.transactions_STATUS = {
+exports.transactions_status = exports.$Enums.transactions_status = {
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
@@ -312,6 +337,7 @@ exports.Prisma.ModelName = {
   points_redemption: 'points_redemption',
   points_redemption_items: 'points_redemption_items',
   coupon_table: 'coupon_table',
+  user_coupon: 'user_coupon',
   organizer_account: 'organizer_account',
   organizer_profile: 'organizer_profile',
   organizer_reviews: 'organizer_reviews',

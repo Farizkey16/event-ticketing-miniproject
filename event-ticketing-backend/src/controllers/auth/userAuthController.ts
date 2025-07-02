@@ -1,18 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { compare } from "bcrypt";
 import { Jwt } from "jsonwebtoken";
-import { prisma } from "../config/prisma";
+import { sign } from "jsonwebtoken";
+import { prisma } from "../../config/prisma";
 import dayjs from "dayjs";
-import { totalUserPoints } from "../../prisma/generated/client/sql";
+import { totalUserPoints } from "../../../prisma/generated/client/sql";
 
-class TicketingController {
+class UserAuthController {
   // Registration
 
-  public async register(
+  public register = async (
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> {
+  ): Promise<void> => {
     try {
       // Check availability
       const checkUser = await prisma.user_account.findUnique({
@@ -29,7 +30,7 @@ class TicketingController {
       }
 
       // Generating Referral Code
-      async function referralCodeGeneration(username: string) {
+      const referralCodeGeneration = async (username: string) => {
         const cleanUsername = (username || "").trim().toUpperCase();
         const prefix = cleanUsername.slice(0, 4).toUpperCase();
 
@@ -86,13 +87,15 @@ class TicketingController {
       }
 
       // Registering User
+      const { email, username, password, role, referred_by_code } = req.body
       const registerUser = await prisma.user_account.create({
         data: {
-          ...req.body,
-          password: req.body.password,
-          role: req.body.role || "user",
+          email,
+          username,
+          password: password,
+          role: "user",
           referral_code: referralCode,
-          referred_by_code: req.body.referred_by_code || ""
+          referred_by_code: referred_by_code || ""
         },
       });
 
@@ -100,12 +103,44 @@ class TicketingController {
       res.status(201).send({
         success: true,
         message: `New user for ${req.body.email} has been registered.`,
-        data: registerUser,
       });
     } catch (err) {
       next(err);
     }
   }
+
+  public login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    // Check User
+    const checkUser = await prisma.user_account.findUnique({
+      where: {
+        email: req.body.email
+      }
+    })
+
+    if (!checkUser) {
+      throw new Error("No account with that email exists.")
+    }
+
+    // Comparing Password
+    const passwordCompare = compare(req.body.password, checkUser.password)
+
+    if (!passwordCompare){
+      throw new Error("Your entered password is incorrect.")
+    }
+
+    // Token
+    const token = sign({id: checkUser.id, email: checkUser.email}, process.env.JWT_TOKEN as string, { expiresIn: '2h'})
+
+    res.status(200).send({
+      success: true,
+      message: "Log in successful",
+      data: checkUser,
+      token: token,
+    })
+    
+  }
+
 }
 
-export default TicketingController;
+  
+export default UserAuthController;

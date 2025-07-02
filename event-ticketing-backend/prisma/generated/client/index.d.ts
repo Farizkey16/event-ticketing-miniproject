@@ -44,6 +44,11 @@ export type points_redemption_items = $Result.DefaultSelection<Prisma.$points_re
  */
 export type coupon_table = $Result.DefaultSelection<Prisma.$coupon_tablePayload>
 /**
+ * Model user_coupon
+ * 
+ */
+export type user_coupon = $Result.DefaultSelection<Prisma.$user_couponPayload>
+/**
  * Model organizer_account
  * 
  */
@@ -93,34 +98,43 @@ export type voucher_table = $Result.DefaultSelection<Prisma.$voucher_tablePayloa
  * Enums
  */
 export namespace $Enums {
-  export const ACCOUNT_ROLE: {
+  export const account_role: {
   user: 'user',
   organizer: 'organizer',
   admin: 'admin'
 };
 
-export type ACCOUNT_ROLE = (typeof ACCOUNT_ROLE)[keyof typeof ACCOUNT_ROLE]
+export type account_role = (typeof account_role)[keyof typeof account_role]
 
 
-export const STATUS: {
+export const coupon_status: {
   active: 'active',
   used: 'used',
   expired: 'expired'
 };
 
-export type STATUS = (typeof STATUS)[keyof typeof STATUS]
+export type coupon_status = (typeof coupon_status)[keyof typeof coupon_status]
 
 
-export const EVENT_STATUS: {
+export const issuer: {
+  system: 'system',
+  organizer: 'organizer',
+  admin: 'admin'
+};
+
+export type issuer = (typeof issuer)[keyof typeof issuer]
+
+
+export const event_status: {
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
 };
 
-export type EVENT_STATUS = (typeof EVENT_STATUS)[keyof typeof EVENT_STATUS]
+export type event_status = (typeof event_status)[keyof typeof event_status]
 
 
-export const transactions_STATUS: {
+export const transactions_status: {
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
@@ -129,25 +143,41 @@ export const transactions_STATUS: {
   canceled: 'canceled'
 };
 
-export type transactions_STATUS = (typeof transactions_STATUS)[keyof typeof transactions_STATUS]
+export type transactions_status = (typeof transactions_status)[keyof typeof transactions_status]
+
+
+export const discount_type: {
+  fixed: 'fixed',
+  percentage: 'percentage'
+};
+
+export type discount_type = (typeof discount_type)[keyof typeof discount_type]
 
 }
 
-export type ACCOUNT_ROLE = $Enums.ACCOUNT_ROLE
+export type account_role = $Enums.account_role
 
-export const ACCOUNT_ROLE: typeof $Enums.ACCOUNT_ROLE
+export const account_role: typeof $Enums.account_role
 
-export type STATUS = $Enums.STATUS
+export type coupon_status = $Enums.coupon_status
 
-export const STATUS: typeof $Enums.STATUS
+export const coupon_status: typeof $Enums.coupon_status
 
-export type EVENT_STATUS = $Enums.EVENT_STATUS
+export type issuer = $Enums.issuer
 
-export const EVENT_STATUS: typeof $Enums.EVENT_STATUS
+export const issuer: typeof $Enums.issuer
 
-export type transactions_STATUS = $Enums.transactions_STATUS
+export type event_status = $Enums.event_status
 
-export const transactions_STATUS: typeof $Enums.transactions_STATUS
+export const event_status: typeof $Enums.event_status
+
+export type transactions_status = $Enums.transactions_status
+
+export const transactions_status: typeof $Enums.transactions_status
+
+export type discount_type = $Enums.discount_type
+
+export const discount_type: typeof $Enums.discount_type
 
 /**
  * ##  Prisma Client ʲˢ
@@ -343,6 +373,16 @@ export class PrismaClient<
     * ```
     */
   get coupon_table(): Prisma.coupon_tableDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.user_coupon`: Exposes CRUD operations for the **user_coupon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more User_coupons
+    * const user_coupons = await prisma.user_coupon.findMany()
+    * ```
+    */
+  get user_coupon(): Prisma.user_couponDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.organizer_account`: Exposes CRUD operations for the **organizer_account** model.
@@ -879,6 +919,7 @@ export namespace Prisma {
     points_redemption: 'points_redemption',
     points_redemption_items: 'points_redemption_items',
     coupon_table: 'coupon_table',
+    user_coupon: 'user_coupon',
     organizer_account: 'organizer_account',
     organizer_profile: 'organizer_profile',
     organizer_reviews: 'organizer_reviews',
@@ -906,7 +947,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user_account" | "user_profile" | "user_points" | "points_redemption" | "points_redemption_items" | "coupon_table" | "organizer_account" | "organizer_profile" | "organizer_reviews" | "event_table" | "ticket_holds" | "ticket_type" | "event_attendees" | "transactions_table" | "voucher_table"
+      modelProps: "user_account" | "user_profile" | "user_points" | "points_redemption" | "points_redemption_items" | "coupon_table" | "user_coupon" | "organizer_account" | "organizer_profile" | "organizer_reviews" | "event_table" | "ticket_holds" | "ticket_type" | "event_attendees" | "transactions_table" | "voucher_table"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1351,6 +1392,80 @@ export namespace Prisma {
           count: {
             args: Prisma.coupon_tableCountArgs<ExtArgs>
             result: $Utils.Optional<Coupon_tableCountAggregateOutputType> | number
+          }
+        }
+      }
+      user_coupon: {
+        payload: Prisma.$user_couponPayload<ExtArgs>
+        fields: Prisma.user_couponFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.user_couponFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.user_couponFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          findFirst: {
+            args: Prisma.user_couponFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.user_couponFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          findMany: {
+            args: Prisma.user_couponFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>[]
+          }
+          create: {
+            args: Prisma.user_couponCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          createMany: {
+            args: Prisma.user_couponCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.user_couponCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>[]
+          }
+          delete: {
+            args: Prisma.user_couponDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          update: {
+            args: Prisma.user_couponUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          deleteMany: {
+            args: Prisma.user_couponDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.user_couponUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.user_couponUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>[]
+          }
+          upsert: {
+            args: Prisma.user_couponUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$user_couponPayload>
+          }
+          aggregate: {
+            args: Prisma.User_couponAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser_coupon>
+          }
+          groupBy: {
+            args: Prisma.user_couponGroupByArgs<ExtArgs>
+            result: $Utils.Optional<User_couponGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.user_couponCountArgs<ExtArgs>
+            result: $Utils.Optional<User_couponCountAggregateOutputType> | number
           }
         }
       }
@@ -2114,6 +2229,7 @@ export namespace Prisma {
     points_redemption?: points_redemptionOmit
     points_redemption_items?: points_redemption_itemsOmit
     coupon_table?: coupon_tableOmit
+    user_coupon?: user_couponOmit
     organizer_account?: organizer_accountOmit
     organizer_profile?: organizer_profileOmit
     organizer_reviews?: organizer_reviewsOmit
@@ -2219,21 +2335,21 @@ export namespace Prisma {
   export type User_accountCountOutputType = {
     user_points: number
     points_redemption: number
-    coupon_table: number
     organizer_reviews: number
     ticket_holds: number
     event_attendees: number
     transactions: number
+    user_coupon: number
   }
 
   export type User_accountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user_points?: boolean | User_accountCountOutputTypeCountUser_pointsArgs
     points_redemption?: boolean | User_accountCountOutputTypeCountPoints_redemptionArgs
-    coupon_table?: boolean | User_accountCountOutputTypeCountCoupon_tableArgs
     organizer_reviews?: boolean | User_accountCountOutputTypeCountOrganizer_reviewsArgs
     ticket_holds?: boolean | User_accountCountOutputTypeCountTicket_holdsArgs
     event_attendees?: boolean | User_accountCountOutputTypeCountEvent_attendeesArgs
     transactions?: boolean | User_accountCountOutputTypeCountTransactionsArgs
+    user_coupon?: boolean | User_accountCountOutputTypeCountUser_couponArgs
   }
 
   // Custom InputTypes
@@ -2264,13 +2380,6 @@ export namespace Prisma {
   /**
    * User_accountCountOutputType without action
    */
-  export type User_accountCountOutputTypeCountCoupon_tableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: coupon_tableWhereInput
-  }
-
-  /**
-   * User_accountCountOutputType without action
-   */
   export type User_accountCountOutputTypeCountOrganizer_reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: organizer_reviewsWhereInput
   }
@@ -2294,6 +2403,13 @@ export namespace Prisma {
    */
   export type User_accountCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: transactions_tableWhereInput
+  }
+
+  /**
+   * User_accountCountOutputType without action
+   */
+  export type User_accountCountOutputTypeCountUser_couponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: user_couponWhereInput
   }
 
 
@@ -2356,6 +2472,37 @@ export namespace Prisma {
    */
   export type Points_redemptionCountOutputTypeCountPoints_redemption_itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: points_redemption_itemsWhereInput
+  }
+
+
+  /**
+   * Count Type Coupon_tableCountOutputType
+   */
+
+  export type Coupon_tableCountOutputType = {
+    user_coupon: number
+  }
+
+  export type Coupon_tableCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user_coupon?: boolean | Coupon_tableCountOutputTypeCountUser_couponArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Coupon_tableCountOutputType without action
+   */
+  export type Coupon_tableCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon_tableCountOutputType
+     */
+    select?: Coupon_tableCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Coupon_tableCountOutputType without action
+   */
+  export type Coupon_tableCountOutputTypeCountUser_couponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: user_couponWhereInput
   }
 
 
@@ -2615,7 +2762,7 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    role: $Enums.ACCOUNT_ROLE | null
+    role: $Enums.account_role | null
     referral_code: string | null
     referred_by_code: string | null
     imgProfile: string | null
@@ -2628,7 +2775,7 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    role: $Enums.ACCOUNT_ROLE | null
+    role: $Enums.account_role | null
     referral_code: string | null
     referred_by_code: string | null
     imgProfile: string | null
@@ -2790,7 +2937,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code: string | null
     imgProfile: string | null
@@ -2831,11 +2978,11 @@ export namespace Prisma {
     user_profile?: boolean | user_account$user_profileArgs<ExtArgs>
     user_points?: boolean | user_account$user_pointsArgs<ExtArgs>
     points_redemption?: boolean | user_account$points_redemptionArgs<ExtArgs>
-    coupon_table?: boolean | user_account$coupon_tableArgs<ExtArgs>
     organizer_reviews?: boolean | user_account$organizer_reviewsArgs<ExtArgs>
     ticket_holds?: boolean | user_account$ticket_holdsArgs<ExtArgs>
     event_attendees?: boolean | user_account$event_attendeesArgs<ExtArgs>
     transactions?: boolean | user_account$transactionsArgs<ExtArgs>
+    user_coupon?: boolean | user_account$user_couponArgs<ExtArgs>
     _count?: boolean | User_accountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_account"]>
 
@@ -2883,11 +3030,11 @@ export namespace Prisma {
     user_profile?: boolean | user_account$user_profileArgs<ExtArgs>
     user_points?: boolean | user_account$user_pointsArgs<ExtArgs>
     points_redemption?: boolean | user_account$points_redemptionArgs<ExtArgs>
-    coupon_table?: boolean | user_account$coupon_tableArgs<ExtArgs>
     organizer_reviews?: boolean | user_account$organizer_reviewsArgs<ExtArgs>
     ticket_holds?: boolean | user_account$ticket_holdsArgs<ExtArgs>
     event_attendees?: boolean | user_account$event_attendeesArgs<ExtArgs>
     transactions?: boolean | user_account$transactionsArgs<ExtArgs>
+    user_coupon?: boolean | user_account$user_couponArgs<ExtArgs>
     _count?: boolean | User_accountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type user_accountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2899,18 +3046,18 @@ export namespace Prisma {
       user_profile: Prisma.$user_profilePayload<ExtArgs> | null
       user_points: Prisma.$user_pointsPayload<ExtArgs>[]
       points_redemption: Prisma.$points_redemptionPayload<ExtArgs>[]
-      coupon_table: Prisma.$coupon_tablePayload<ExtArgs>[]
       organizer_reviews: Prisma.$organizer_reviewsPayload<ExtArgs>[]
       ticket_holds: Prisma.$ticket_holdsPayload<ExtArgs>[]
       event_attendees: Prisma.$event_attendeesPayload<ExtArgs>[]
       transactions: Prisma.$transactions_tablePayload<ExtArgs>[]
+      user_coupon: Prisma.$user_couponPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       username: string
       email: string
       password: string
-      role: $Enums.ACCOUNT_ROLE
+      role: $Enums.account_role
       referral_code: string
       referred_by_code: string | null
       imgProfile: string | null
@@ -3313,11 +3460,11 @@ export namespace Prisma {
     user_profile<T extends user_account$user_profileArgs<ExtArgs> = {}>(args?: Subset<T, user_account$user_profileArgs<ExtArgs>>): Prisma__user_profileClient<$Result.GetResult<Prisma.$user_profilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user_points<T extends user_account$user_pointsArgs<ExtArgs> = {}>(args?: Subset<T, user_account$user_pointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_pointsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     points_redemption<T extends user_account$points_redemptionArgs<ExtArgs> = {}>(args?: Subset<T, user_account$points_redemptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$points_redemptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    coupon_table<T extends user_account$coupon_tableArgs<ExtArgs> = {}>(args?: Subset<T, user_account$coupon_tableArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$coupon_tablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     organizer_reviews<T extends user_account$organizer_reviewsArgs<ExtArgs> = {}>(args?: Subset<T, user_account$organizer_reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizer_reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ticket_holds<T extends user_account$ticket_holdsArgs<ExtArgs> = {}>(args?: Subset<T, user_account$ticket_holdsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ticket_holdsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     event_attendees<T extends user_account$event_attendeesArgs<ExtArgs> = {}>(args?: Subset<T, user_account$event_attendeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$event_attendeesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends user_account$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, user_account$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactions_tablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user_coupon<T extends user_account$user_couponArgs<ExtArgs> = {}>(args?: Subset<T, user_account$user_couponArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3351,7 +3498,7 @@ export namespace Prisma {
     readonly username: FieldRef<"user_account", 'String'>
     readonly email: FieldRef<"user_account", 'String'>
     readonly password: FieldRef<"user_account", 'String'>
-    readonly role: FieldRef<"user_account", 'ACCOUNT_ROLE'>
+    readonly role: FieldRef<"user_account", 'account_role'>
     readonly referral_code: FieldRef<"user_account", 'String'>
     readonly referred_by_code: FieldRef<"user_account", 'String'>
     readonly imgProfile: FieldRef<"user_account", 'String'>
@@ -3812,30 +3959,6 @@ export namespace Prisma {
   }
 
   /**
-   * user_account.coupon_table
-   */
-  export type user_account$coupon_tableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the coupon_table
-     */
-    select?: coupon_tableSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the coupon_table
-     */
-    omit?: coupon_tableOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: coupon_tableInclude<ExtArgs> | null
-    where?: coupon_tableWhereInput
-    orderBy?: coupon_tableOrderByWithRelationInput | coupon_tableOrderByWithRelationInput[]
-    cursor?: coupon_tableWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Coupon_tableScalarFieldEnum | Coupon_tableScalarFieldEnum[]
-  }
-
-  /**
    * user_account.organizer_reviews
    */
   export type user_account$organizer_reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3929,6 +4052,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Transactions_tableScalarFieldEnum | Transactions_tableScalarFieldEnum[]
+  }
+
+  /**
+   * user_account.user_coupon
+   */
+  export type user_account$user_couponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    where?: user_couponWhereInput
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    cursor?: user_couponWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: User_couponScalarFieldEnum | User_couponScalarFieldEnum[]
   }
 
   /**
@@ -8453,88 +8600,126 @@ export namespace Prisma {
 
   export type Coupon_tableAvgAggregateOutputType = {
     id: number | null
-    user_id: number | null
-    coupon_amount: number | null
+    event_id: number | null
+    discount_value: number | null
+    usage_limit: number | null
+    used_count: number | null
   }
 
   export type Coupon_tableSumAggregateOutputType = {
     id: number | null
-    user_id: number | null
-    coupon_amount: number | null
+    event_id: number | null
+    discount_value: number | null
+    usage_limit: number | null
+    used_count: number | null
   }
 
   export type Coupon_tableMinAggregateOutputType = {
     id: number | null
-    user_id: number | null
+    event_id: number | null
+    code: string | null
+    discount_type: $Enums.discount_type | null
+    discount_value: number | null
     created_at: Date | null
     expires_at: Date | null
     used_at: Date | null
-    status: $Enums.STATUS | null
-    coupon_amount: number | null
+    usage_limit: number | null
+    used_count: number | null
+    status: $Enums.coupon_status | null
+    issued_by: $Enums.issuer | null
   }
 
   export type Coupon_tableMaxAggregateOutputType = {
     id: number | null
-    user_id: number | null
+    event_id: number | null
+    code: string | null
+    discount_type: $Enums.discount_type | null
+    discount_value: number | null
     created_at: Date | null
     expires_at: Date | null
     used_at: Date | null
-    status: $Enums.STATUS | null
-    coupon_amount: number | null
+    usage_limit: number | null
+    used_count: number | null
+    status: $Enums.coupon_status | null
+    issued_by: $Enums.issuer | null
   }
 
   export type Coupon_tableCountAggregateOutputType = {
     id: number
-    user_id: number
+    event_id: number
+    code: number
+    discount_type: number
+    discount_value: number
     created_at: number
     expires_at: number
     used_at: number
+    usage_limit: number
+    used_count: number
     status: number
-    coupon_amount: number
+    issued_by: number
     _all: number
   }
 
 
   export type Coupon_tableAvgAggregateInputType = {
     id?: true
-    user_id?: true
-    coupon_amount?: true
+    event_id?: true
+    discount_value?: true
+    usage_limit?: true
+    used_count?: true
   }
 
   export type Coupon_tableSumAggregateInputType = {
     id?: true
-    user_id?: true
-    coupon_amount?: true
+    event_id?: true
+    discount_value?: true
+    usage_limit?: true
+    used_count?: true
   }
 
   export type Coupon_tableMinAggregateInputType = {
     id?: true
-    user_id?: true
+    event_id?: true
+    code?: true
+    discount_type?: true
+    discount_value?: true
     created_at?: true
     expires_at?: true
     used_at?: true
+    usage_limit?: true
+    used_count?: true
     status?: true
-    coupon_amount?: true
+    issued_by?: true
   }
 
   export type Coupon_tableMaxAggregateInputType = {
     id?: true
-    user_id?: true
+    event_id?: true
+    code?: true
+    discount_type?: true
+    discount_value?: true
     created_at?: true
     expires_at?: true
     used_at?: true
+    usage_limit?: true
+    used_count?: true
     status?: true
-    coupon_amount?: true
+    issued_by?: true
   }
 
   export type Coupon_tableCountAggregateInputType = {
     id?: true
-    user_id?: true
+    event_id?: true
+    code?: true
+    discount_type?: true
+    discount_value?: true
     created_at?: true
     expires_at?: true
     used_at?: true
+    usage_limit?: true
+    used_count?: true
     status?: true
-    coupon_amount?: true
+    issued_by?: true
     _all?: true
   }
 
@@ -8626,12 +8811,17 @@ export namespace Prisma {
 
   export type Coupon_tableGroupByOutputType = {
     id: number
-    user_id: number
+    event_id: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
     created_at: Date
     expires_at: Date
     used_at: Date | null
-    status: $Enums.STATUS
-    coupon_amount: number
+    usage_limit: number
+    used_count: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
     _count: Coupon_tableCountAggregateOutputType | null
     _avg: Coupon_tableAvgAggregateOutputType | null
     _sum: Coupon_tableSumAggregateOutputType | null
@@ -8655,71 +8845,92 @@ export namespace Prisma {
 
   export type coupon_tableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
+    event_id?: boolean
+    code?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     created_at?: boolean
     expires_at?: boolean
     used_at?: boolean
+    usage_limit?: boolean
+    used_count?: boolean
     status?: boolean
-    coupon_amount?: boolean
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    issued_by?: boolean
+    user_coupon?: boolean | coupon_table$user_couponArgs<ExtArgs>
+    _count?: boolean | Coupon_tableCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["coupon_table"]>
 
   export type coupon_tableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
+    event_id?: boolean
+    code?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     created_at?: boolean
     expires_at?: boolean
     used_at?: boolean
+    usage_limit?: boolean
+    used_count?: boolean
     status?: boolean
-    coupon_amount?: boolean
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    issued_by?: boolean
   }, ExtArgs["result"]["coupon_table"]>
 
   export type coupon_tableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
+    event_id?: boolean
+    code?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     created_at?: boolean
     expires_at?: boolean
     used_at?: boolean
+    usage_limit?: boolean
+    used_count?: boolean
     status?: boolean
-    coupon_amount?: boolean
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    issued_by?: boolean
   }, ExtArgs["result"]["coupon_table"]>
 
   export type coupon_tableSelectScalar = {
     id?: boolean
-    user_id?: boolean
+    event_id?: boolean
+    code?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     created_at?: boolean
     expires_at?: boolean
     used_at?: boolean
+    usage_limit?: boolean
+    used_count?: boolean
     status?: boolean
-    coupon_amount?: boolean
+    issued_by?: boolean
   }
 
-  export type coupon_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "created_at" | "expires_at" | "used_at" | "status" | "coupon_amount", ExtArgs["result"]["coupon_table"]>
+  export type coupon_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_id" | "code" | "discount_type" | "discount_value" | "created_at" | "expires_at" | "used_at" | "usage_limit" | "used_count" | "status" | "issued_by", ExtArgs["result"]["coupon_table"]>
   export type coupon_tableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    user_coupon?: boolean | coupon_table$user_couponArgs<ExtArgs>
+    _count?: boolean | Coupon_tableCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type coupon_tableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
-  }
-  export type coupon_tableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | user_accountDefaultArgs<ExtArgs>
-  }
+  export type coupon_tableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type coupon_tableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $coupon_tablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "coupon_table"
     objects: {
-      user: Prisma.$user_accountPayload<ExtArgs>
+      user_coupon: Prisma.$user_couponPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      user_id: number
+      event_id: number | null
+      code: string
+      discount_type: $Enums.discount_type
+      discount_value: number
       created_at: Date
       expires_at: Date
       used_at: Date | null
-      status: $Enums.STATUS
-      coupon_amount: number
+      usage_limit: number
+      used_count: number
+      status: $Enums.coupon_status
+      issued_by: $Enums.issuer
     }, ExtArgs["result"]["coupon_table"]>
     composites: {}
   }
@@ -9114,7 +9325,7 @@ export namespace Prisma {
    */
   export interface Prisma__coupon_tableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends user_accountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, user_accountDefaultArgs<ExtArgs>>): Prisma__user_accountClient<$Result.GetResult<Prisma.$user_accountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user_coupon<T extends coupon_table$user_couponArgs<ExtArgs> = {}>(args?: Subset<T, coupon_table$user_couponArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9145,12 +9356,17 @@ export namespace Prisma {
    */
   interface coupon_tableFieldRefs {
     readonly id: FieldRef<"coupon_table", 'Int'>
-    readonly user_id: FieldRef<"coupon_table", 'Int'>
+    readonly event_id: FieldRef<"coupon_table", 'Int'>
+    readonly code: FieldRef<"coupon_table", 'String'>
+    readonly discount_type: FieldRef<"coupon_table", 'discount_type'>
+    readonly discount_value: FieldRef<"coupon_table", 'Int'>
     readonly created_at: FieldRef<"coupon_table", 'DateTime'>
     readonly expires_at: FieldRef<"coupon_table", 'DateTime'>
     readonly used_at: FieldRef<"coupon_table", 'DateTime'>
-    readonly status: FieldRef<"coupon_table", 'STATUS'>
-    readonly coupon_amount: FieldRef<"coupon_table", 'Int'>
+    readonly usage_limit: FieldRef<"coupon_table", 'Int'>
+    readonly used_count: FieldRef<"coupon_table", 'Int'>
+    readonly status: FieldRef<"coupon_table", 'coupon_status'>
+    readonly issued_by: FieldRef<"coupon_table", 'issuer'>
   }
     
 
@@ -9400,10 +9616,6 @@ export namespace Prisma {
      */
     data: coupon_tableCreateManyInput | coupon_tableCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: coupon_tableIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9474,10 +9686,6 @@ export namespace Prisma {
      * Limit how many coupon_tables to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: coupon_tableIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9547,6 +9755,30 @@ export namespace Prisma {
   }
 
   /**
+   * coupon_table.user_coupon
+   */
+  export type coupon_table$user_couponArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    where?: user_couponWhereInput
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    cursor?: user_couponWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: User_couponScalarFieldEnum | User_couponScalarFieldEnum[]
+  }
+
+  /**
    * coupon_table without action
    */
   export type coupon_tableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9562,6 +9794,1101 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: coupon_tableInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model user_coupon
+   */
+
+  export type AggregateUser_coupon = {
+    _count: User_couponCountAggregateOutputType | null
+    _avg: User_couponAvgAggregateOutputType | null
+    _sum: User_couponSumAggregateOutputType | null
+    _min: User_couponMinAggregateOutputType | null
+    _max: User_couponMaxAggregateOutputType | null
+  }
+
+  export type User_couponAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    coupon_id: number | null
+  }
+
+  export type User_couponSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    coupon_id: number | null
+  }
+
+  export type User_couponMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    coupon_id: number | null
+    used_at: Date | null
+  }
+
+  export type User_couponMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    coupon_id: number | null
+    used_at: Date | null
+  }
+
+  export type User_couponCountAggregateOutputType = {
+    id: number
+    user_id: number
+    coupon_id: number
+    used_at: number
+    _all: number
+  }
+
+
+  export type User_couponAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+    coupon_id?: true
+  }
+
+  export type User_couponSumAggregateInputType = {
+    id?: true
+    user_id?: true
+    coupon_id?: true
+  }
+
+  export type User_couponMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    coupon_id?: true
+    used_at?: true
+  }
+
+  export type User_couponMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    coupon_id?: true
+    used_at?: true
+  }
+
+  export type User_couponCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    coupon_id?: true
+    used_at?: true
+    _all?: true
+  }
+
+  export type User_couponAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which user_coupon to aggregate.
+     */
+    where?: user_couponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of user_coupons to fetch.
+     */
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: user_couponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` user_coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` user_coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned user_coupons
+    **/
+    _count?: true | User_couponCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: User_couponAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: User_couponSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: User_couponMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: User_couponMaxAggregateInputType
+  }
+
+  export type GetUser_couponAggregateType<T extends User_couponAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser_coupon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser_coupon[P]>
+      : GetScalarType<T[P], AggregateUser_coupon[P]>
+  }
+
+
+
+
+  export type user_couponGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: user_couponWhereInput
+    orderBy?: user_couponOrderByWithAggregationInput | user_couponOrderByWithAggregationInput[]
+    by: User_couponScalarFieldEnum[] | User_couponScalarFieldEnum
+    having?: user_couponScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: User_couponCountAggregateInputType | true
+    _avg?: User_couponAvgAggregateInputType
+    _sum?: User_couponSumAggregateInputType
+    _min?: User_couponMinAggregateInputType
+    _max?: User_couponMaxAggregateInputType
+  }
+
+  export type User_couponGroupByOutputType = {
+    id: number
+    user_id: number
+    coupon_id: number
+    used_at: Date | null
+    _count: User_couponCountAggregateOutputType | null
+    _avg: User_couponAvgAggregateOutputType | null
+    _sum: User_couponSumAggregateOutputType | null
+    _min: User_couponMinAggregateOutputType | null
+    _max: User_couponMaxAggregateOutputType | null
+  }
+
+  type GetUser_couponGroupByPayload<T extends user_couponGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<User_couponGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof User_couponGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], User_couponGroupByOutputType[P]>
+            : GetScalarType<T[P], User_couponGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type user_couponSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    coupon_id?: boolean
+    used_at?: boolean
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user_coupon"]>
+
+  export type user_couponSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    coupon_id?: boolean
+    used_at?: boolean
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user_coupon"]>
+
+  export type user_couponSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    coupon_id?: boolean
+    used_at?: boolean
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user_coupon"]>
+
+  export type user_couponSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    coupon_id?: boolean
+    used_at?: boolean
+  }
+
+  export type user_couponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "coupon_id" | "used_at", ExtArgs["result"]["user_coupon"]>
+  export type user_couponInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }
+  export type user_couponIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }
+  export type user_couponIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | user_accountDefaultArgs<ExtArgs>
+    coupon?: boolean | coupon_tableDefaultArgs<ExtArgs>
+  }
+
+  export type $user_couponPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "user_coupon"
+    objects: {
+      user: Prisma.$user_accountPayload<ExtArgs>
+      coupon: Prisma.$coupon_tablePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      user_id: number
+      coupon_id: number
+      used_at: Date | null
+    }, ExtArgs["result"]["user_coupon"]>
+    composites: {}
+  }
+
+  type user_couponGetPayload<S extends boolean | null | undefined | user_couponDefaultArgs> = $Result.GetResult<Prisma.$user_couponPayload, S>
+
+  type user_couponCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<user_couponFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: User_couponCountAggregateInputType | true
+    }
+
+  export interface user_couponDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['user_coupon'], meta: { name: 'user_coupon' } }
+    /**
+     * Find zero or one User_coupon that matches the filter.
+     * @param {user_couponFindUniqueArgs} args - Arguments to find a User_coupon
+     * @example
+     * // Get one User_coupon
+     * const user_coupon = await prisma.user_coupon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends user_couponFindUniqueArgs>(args: SelectSubset<T, user_couponFindUniqueArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User_coupon that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {user_couponFindUniqueOrThrowArgs} args - Arguments to find a User_coupon
+     * @example
+     * // Get one User_coupon
+     * const user_coupon = await prisma.user_coupon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends user_couponFindUniqueOrThrowArgs>(args: SelectSubset<T, user_couponFindUniqueOrThrowArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User_coupon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponFindFirstArgs} args - Arguments to find a User_coupon
+     * @example
+     * // Get one User_coupon
+     * const user_coupon = await prisma.user_coupon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends user_couponFindFirstArgs>(args?: SelectSubset<T, user_couponFindFirstArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User_coupon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponFindFirstOrThrowArgs} args - Arguments to find a User_coupon
+     * @example
+     * // Get one User_coupon
+     * const user_coupon = await prisma.user_coupon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends user_couponFindFirstOrThrowArgs>(args?: SelectSubset<T, user_couponFindFirstOrThrowArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more User_coupons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all User_coupons
+     * const user_coupons = await prisma.user_coupon.findMany()
+     * 
+     * // Get first 10 User_coupons
+     * const user_coupons = await prisma.user_coupon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const user_couponWithIdOnly = await prisma.user_coupon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends user_couponFindManyArgs>(args?: SelectSubset<T, user_couponFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User_coupon.
+     * @param {user_couponCreateArgs} args - Arguments to create a User_coupon.
+     * @example
+     * // Create one User_coupon
+     * const User_coupon = await prisma.user_coupon.create({
+     *   data: {
+     *     // ... data to create a User_coupon
+     *   }
+     * })
+     * 
+     */
+    create<T extends user_couponCreateArgs>(args: SelectSubset<T, user_couponCreateArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many User_coupons.
+     * @param {user_couponCreateManyArgs} args - Arguments to create many User_coupons.
+     * @example
+     * // Create many User_coupons
+     * const user_coupon = await prisma.user_coupon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends user_couponCreateManyArgs>(args?: SelectSubset<T, user_couponCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many User_coupons and returns the data saved in the database.
+     * @param {user_couponCreateManyAndReturnArgs} args - Arguments to create many User_coupons.
+     * @example
+     * // Create many User_coupons
+     * const user_coupon = await prisma.user_coupon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many User_coupons and only return the `id`
+     * const user_couponWithIdOnly = await prisma.user_coupon.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends user_couponCreateManyAndReturnArgs>(args?: SelectSubset<T, user_couponCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User_coupon.
+     * @param {user_couponDeleteArgs} args - Arguments to delete one User_coupon.
+     * @example
+     * // Delete one User_coupon
+     * const User_coupon = await prisma.user_coupon.delete({
+     *   where: {
+     *     // ... filter to delete one User_coupon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends user_couponDeleteArgs>(args: SelectSubset<T, user_couponDeleteArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User_coupon.
+     * @param {user_couponUpdateArgs} args - Arguments to update one User_coupon.
+     * @example
+     * // Update one User_coupon
+     * const user_coupon = await prisma.user_coupon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends user_couponUpdateArgs>(args: SelectSubset<T, user_couponUpdateArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more User_coupons.
+     * @param {user_couponDeleteManyArgs} args - Arguments to filter User_coupons to delete.
+     * @example
+     * // Delete a few User_coupons
+     * const { count } = await prisma.user_coupon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends user_couponDeleteManyArgs>(args?: SelectSubset<T, user_couponDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more User_coupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many User_coupons
+     * const user_coupon = await prisma.user_coupon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends user_couponUpdateManyArgs>(args: SelectSubset<T, user_couponUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more User_coupons and returns the data updated in the database.
+     * @param {user_couponUpdateManyAndReturnArgs} args - Arguments to update many User_coupons.
+     * @example
+     * // Update many User_coupons
+     * const user_coupon = await prisma.user_coupon.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more User_coupons and only return the `id`
+     * const user_couponWithIdOnly = await prisma.user_coupon.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends user_couponUpdateManyAndReturnArgs>(args: SelectSubset<T, user_couponUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User_coupon.
+     * @param {user_couponUpsertArgs} args - Arguments to update or create a User_coupon.
+     * @example
+     * // Update or create a User_coupon
+     * const user_coupon = await prisma.user_coupon.upsert({
+     *   create: {
+     *     // ... data to create a User_coupon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User_coupon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends user_couponUpsertArgs>(args: SelectSubset<T, user_couponUpsertArgs<ExtArgs>>): Prisma__user_couponClient<$Result.GetResult<Prisma.$user_couponPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of User_coupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponCountArgs} args - Arguments to filter User_coupons to count.
+     * @example
+     * // Count the number of User_coupons
+     * const count = await prisma.user_coupon.count({
+     *   where: {
+     *     // ... the filter for the User_coupons we want to count
+     *   }
+     * })
+    **/
+    count<T extends user_couponCountArgs>(
+      args?: Subset<T, user_couponCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], User_couponCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User_coupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {User_couponAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends User_couponAggregateArgs>(args: Subset<T, User_couponAggregateArgs>): Prisma.PrismaPromise<GetUser_couponAggregateType<T>>
+
+    /**
+     * Group by User_coupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {user_couponGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends user_couponGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: user_couponGroupByArgs['orderBy'] }
+        : { orderBy?: user_couponGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, user_couponGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUser_couponGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the user_coupon model
+   */
+  readonly fields: user_couponFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for user_coupon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__user_couponClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends user_accountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, user_accountDefaultArgs<ExtArgs>>): Prisma__user_accountClient<$Result.GetResult<Prisma.$user_accountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    coupon<T extends coupon_tableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, coupon_tableDefaultArgs<ExtArgs>>): Prisma__coupon_tableClient<$Result.GetResult<Prisma.$coupon_tablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the user_coupon model
+   */
+  interface user_couponFieldRefs {
+    readonly id: FieldRef<"user_coupon", 'Int'>
+    readonly user_id: FieldRef<"user_coupon", 'Int'>
+    readonly coupon_id: FieldRef<"user_coupon", 'Int'>
+    readonly used_at: FieldRef<"user_coupon", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * user_coupon findUnique
+   */
+  export type user_couponFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter, which user_coupon to fetch.
+     */
+    where: user_couponWhereUniqueInput
+  }
+
+  /**
+   * user_coupon findUniqueOrThrow
+   */
+  export type user_couponFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter, which user_coupon to fetch.
+     */
+    where: user_couponWhereUniqueInput
+  }
+
+  /**
+   * user_coupon findFirst
+   */
+  export type user_couponFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter, which user_coupon to fetch.
+     */
+    where?: user_couponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of user_coupons to fetch.
+     */
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for user_coupons.
+     */
+    cursor?: user_couponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` user_coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` user_coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of user_coupons.
+     */
+    distinct?: User_couponScalarFieldEnum | User_couponScalarFieldEnum[]
+  }
+
+  /**
+   * user_coupon findFirstOrThrow
+   */
+  export type user_couponFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter, which user_coupon to fetch.
+     */
+    where?: user_couponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of user_coupons to fetch.
+     */
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for user_coupons.
+     */
+    cursor?: user_couponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` user_coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` user_coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of user_coupons.
+     */
+    distinct?: User_couponScalarFieldEnum | User_couponScalarFieldEnum[]
+  }
+
+  /**
+   * user_coupon findMany
+   */
+  export type user_couponFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter, which user_coupons to fetch.
+     */
+    where?: user_couponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of user_coupons to fetch.
+     */
+    orderBy?: user_couponOrderByWithRelationInput | user_couponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing user_coupons.
+     */
+    cursor?: user_couponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` user_coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` user_coupons.
+     */
+    skip?: number
+    distinct?: User_couponScalarFieldEnum | User_couponScalarFieldEnum[]
+  }
+
+  /**
+   * user_coupon create
+   */
+  export type user_couponCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * The data needed to create a user_coupon.
+     */
+    data: XOR<user_couponCreateInput, user_couponUncheckedCreateInput>
+  }
+
+  /**
+   * user_coupon createMany
+   */
+  export type user_couponCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many user_coupons.
+     */
+    data: user_couponCreateManyInput | user_couponCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * user_coupon createManyAndReturn
+   */
+  export type user_couponCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * The data used to create many user_coupons.
+     */
+    data: user_couponCreateManyInput | user_couponCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * user_coupon update
+   */
+  export type user_couponUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * The data needed to update a user_coupon.
+     */
+    data: XOR<user_couponUpdateInput, user_couponUncheckedUpdateInput>
+    /**
+     * Choose, which user_coupon to update.
+     */
+    where: user_couponWhereUniqueInput
+  }
+
+  /**
+   * user_coupon updateMany
+   */
+  export type user_couponUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update user_coupons.
+     */
+    data: XOR<user_couponUpdateManyMutationInput, user_couponUncheckedUpdateManyInput>
+    /**
+     * Filter which user_coupons to update
+     */
+    where?: user_couponWhereInput
+    /**
+     * Limit how many user_coupons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * user_coupon updateManyAndReturn
+   */
+  export type user_couponUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * The data used to update user_coupons.
+     */
+    data: XOR<user_couponUpdateManyMutationInput, user_couponUncheckedUpdateManyInput>
+    /**
+     * Filter which user_coupons to update
+     */
+    where?: user_couponWhereInput
+    /**
+     * Limit how many user_coupons to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * user_coupon upsert
+   */
+  export type user_couponUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * The filter to search for the user_coupon to update in case it exists.
+     */
+    where: user_couponWhereUniqueInput
+    /**
+     * In case the user_coupon found by the `where` argument doesn't exist, create a new user_coupon with this data.
+     */
+    create: XOR<user_couponCreateInput, user_couponUncheckedCreateInput>
+    /**
+     * In case the user_coupon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<user_couponUpdateInput, user_couponUncheckedUpdateInput>
+  }
+
+  /**
+   * user_coupon delete
+   */
+  export type user_couponDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
+    /**
+     * Filter which user_coupon to delete.
+     */
+    where: user_couponWhereUniqueInput
+  }
+
+  /**
+   * user_coupon deleteMany
+   */
+  export type user_couponDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which user_coupons to delete
+     */
+    where?: user_couponWhereInput
+    /**
+     * Limit how many user_coupons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * user_coupon without action
+   */
+  export type user_couponDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_coupon
+     */
+    select?: user_couponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_coupon
+     */
+    omit?: user_couponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_couponInclude<ExtArgs> | null
   }
 
 
@@ -9590,7 +10917,7 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    is_admin: boolean | null
+    role: $Enums.account_role | null
   }
 
   export type Organizer_accountMaxAggregateOutputType = {
@@ -9598,7 +10925,7 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
-    is_admin: boolean | null
+    role: $Enums.account_role | null
   }
 
   export type Organizer_accountCountAggregateOutputType = {
@@ -9606,7 +10933,7 @@ export namespace Prisma {
     username: number
     email: number
     password: number
-    is_admin: number
+    role: number
     _all: number
   }
 
@@ -9624,7 +10951,7 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
-    is_admin?: true
+    role?: true
   }
 
   export type Organizer_accountMaxAggregateInputType = {
@@ -9632,7 +10959,7 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
-    is_admin?: true
+    role?: true
   }
 
   export type Organizer_accountCountAggregateInputType = {
@@ -9640,7 +10967,7 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
-    is_admin?: true
+    role?: true
     _all?: true
   }
 
@@ -9735,7 +11062,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     _count: Organizer_accountCountAggregateOutputType | null
     _avg: Organizer_accountAvgAggregateOutputType | null
     _sum: Organizer_accountSumAggregateOutputType | null
@@ -9762,7 +11089,7 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
-    is_admin?: boolean
+    role?: boolean
     organizer_profile?: boolean | organizer_account$organizer_profileArgs<ExtArgs>
     organizer_reviews?: boolean | organizer_account$organizer_reviewsArgs<ExtArgs>
     event_table?: boolean | organizer_account$event_tableArgs<ExtArgs>
@@ -9776,7 +11103,7 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
-    is_admin?: boolean
+    role?: boolean
   }, ExtArgs["result"]["organizer_account"]>
 
   export type organizer_accountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9784,7 +11111,7 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
-    is_admin?: boolean
+    role?: boolean
   }, ExtArgs["result"]["organizer_account"]>
 
   export type organizer_accountSelectScalar = {
@@ -9792,10 +11119,10 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
-    is_admin?: boolean
+    role?: boolean
   }
 
-  export type organizer_accountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "is_admin", ExtArgs["result"]["organizer_account"]>
+  export type organizer_accountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "role", ExtArgs["result"]["organizer_account"]>
   export type organizer_accountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer_profile?: boolean | organizer_account$organizer_profileArgs<ExtArgs>
     organizer_reviews?: boolean | organizer_account$organizer_reviewsArgs<ExtArgs>
@@ -9821,7 +11148,7 @@ export namespace Prisma {
       username: string
       email: string
       password: string
-      is_admin: boolean
+      role: $Enums.account_role
     }, ExtArgs["result"]["organizer_account"]>
     composites: {}
   }
@@ -10254,7 +11581,7 @@ export namespace Prisma {
     readonly username: FieldRef<"organizer_account", 'String'>
     readonly email: FieldRef<"organizer_account", 'String'>
     readonly password: FieldRef<"organizer_account", 'String'>
-    readonly is_admin: FieldRef<"organizer_account", 'Boolean'>
+    readonly role: FieldRef<"organizer_account", 'account_role'>
   }
     
 
@@ -14404,7 +15731,7 @@ export namespace Prisma {
     held_at: Date | null
     expires_at: Date | null
     transactions_id: number | null
-    status: $Enums.STATUS | null
+    status: $Enums.coupon_status | null
   }
 
   export type Ticket_holdsMaxAggregateOutputType = {
@@ -14416,7 +15743,7 @@ export namespace Prisma {
     held_at: Date | null
     expires_at: Date | null
     transactions_id: number | null
-    status: $Enums.STATUS | null
+    status: $Enums.coupon_status | null
   }
 
   export type Ticket_holdsCountAggregateOutputType = {
@@ -14583,7 +15910,7 @@ export namespace Prisma {
     held_at: Date
     expires_at: Date
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     _count: Ticket_holdsCountAggregateOutputType | null
     _avg: Ticket_holdsAvgAggregateOutputType | null
     _sum: Ticket_holdsSumAggregateOutputType | null
@@ -14702,7 +16029,7 @@ export namespace Prisma {
       held_at: Date
       expires_at: Date
       transactions_id: number
-      status: $Enums.STATUS
+      status: $Enums.coupon_status
     }, ExtArgs["result"]["ticket_holds"]>
     composites: {}
   }
@@ -15138,7 +16465,7 @@ export namespace Prisma {
     readonly held_at: FieldRef<"ticket_holds", 'DateTime'>
     readonly expires_at: FieldRef<"ticket_holds", 'DateTime'>
     readonly transactions_id: FieldRef<"ticket_holds", 'Int'>
-    readonly status: FieldRef<"ticket_holds", 'STATUS'>
+    readonly status: FieldRef<"ticket_holds", 'coupon_status'>
   }
     
 
@@ -16724,7 +18051,7 @@ export namespace Prisma {
     user_id: number | null
     ticket_quantity: number | null
     total_price_paid: number | null
-    status: $Enums.EVENT_STATUS | null
+    status: $Enums.event_status | null
   }
 
   export type Event_attendeesMaxAggregateOutputType = {
@@ -16734,7 +18061,7 @@ export namespace Prisma {
     user_id: number | null
     ticket_quantity: number | null
     total_price_paid: number | null
-    status: $Enums.EVENT_STATUS | null
+    status: $Enums.event_status | null
   }
 
   export type Event_attendeesCountAggregateOutputType = {
@@ -16891,7 +18218,7 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
     _count: Event_attendeesCountAggregateOutputType | null
     _avg: Event_attendeesAvgAggregateOutputType | null
     _sum: Event_attendeesSumAggregateOutputType | null
@@ -16993,7 +18320,7 @@ export namespace Prisma {
       user_id: number
       ticket_quantity: number
       total_price_paid: number
-      status: $Enums.EVENT_STATUS
+      status: $Enums.event_status
     }, ExtArgs["result"]["event_attendees"]>
     composites: {}
   }
@@ -17426,7 +18753,7 @@ export namespace Prisma {
     readonly user_id: FieldRef<"event_attendees", 'Int'>
     readonly ticket_quantity: FieldRef<"event_attendees", 'Int'>
     readonly total_price_paid: FieldRef<"event_attendees", 'Int'>
-    readonly status: FieldRef<"event_attendees", 'EVENT_STATUS'>
+    readonly status: FieldRef<"event_attendees", 'event_status'>
   }
     
 
@@ -17873,7 +19200,7 @@ export namespace Prisma {
     event_id: number | null
     voucher_id: number | null
     created_at: Date | null
-    status: $Enums.transactions_STATUS | null
+    status: $Enums.transactions_status | null
     payment_proof_url: string | null
   }
 
@@ -17883,7 +19210,7 @@ export namespace Prisma {
     event_id: number | null
     voucher_id: number | null
     created_at: Date | null
-    status: $Enums.transactions_STATUS | null
+    status: $Enums.transactions_status | null
     payment_proof_url: string | null
   }
 
@@ -18034,9 +19361,9 @@ export namespace Prisma {
     id: number
     user_id: number
     event_id: number
-    voucher_id: number
+    voucher_id: number | null
     created_at: Date
-    status: $Enums.transactions_STATUS
+    status: $Enums.transactions_status
     payment_proof_url: string
     _count: Transactions_tableCountAggregateOutputType | null
     _avg: Transactions_tableAvgAggregateOutputType | null
@@ -18070,7 +19397,7 @@ export namespace Prisma {
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
     ticket?: boolean | transactions_table$ticketArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
     _count?: boolean | Transactions_tableCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transactions_table"]>
 
@@ -18084,7 +19411,7 @@ export namespace Prisma {
     payment_proof_url?: boolean
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
   }, ExtArgs["result"]["transactions_table"]>
 
   export type transactions_tableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18097,7 +19424,7 @@ export namespace Prisma {
     payment_proof_url?: boolean
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
   }, ExtArgs["result"]["transactions_table"]>
 
   export type transactions_tableSelectScalar = {
@@ -18115,18 +19442,18 @@ export namespace Prisma {
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
     ticket?: boolean | transactions_table$ticketArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
     _count?: boolean | Transactions_tableCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type transactions_tableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
   }
   export type transactions_tableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | user_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
-    voucher?: boolean | voucher_tableDefaultArgs<ExtArgs>
+    voucher?: boolean | transactions_table$voucherArgs<ExtArgs>
   }
 
   export type $transactions_tablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18135,15 +19462,15 @@ export namespace Prisma {
       user: Prisma.$user_accountPayload<ExtArgs>
       event: Prisma.$event_tablePayload<ExtArgs>
       ticket: Prisma.$ticket_holdsPayload<ExtArgs>[]
-      voucher: Prisma.$voucher_tablePayload<ExtArgs>
+      voucher: Prisma.$voucher_tablePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
       event_id: number
-      voucher_id: number
+      voucher_id: number | null
       created_at: Date
-      status: $Enums.transactions_STATUS
+      status: $Enums.transactions_status
       payment_proof_url: string
     }, ExtArgs["result"]["transactions_table"]>
     composites: {}
@@ -18542,7 +19869,7 @@ export namespace Prisma {
     user<T extends user_accountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, user_accountDefaultArgs<ExtArgs>>): Prisma__user_accountClient<$Result.GetResult<Prisma.$user_accountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     event<T extends event_tableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, event_tableDefaultArgs<ExtArgs>>): Prisma__event_tableClient<$Result.GetResult<Prisma.$event_tablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ticket<T extends transactions_table$ticketArgs<ExtArgs> = {}>(args?: Subset<T, transactions_table$ticketArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ticket_holdsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    voucher<T extends voucher_tableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, voucher_tableDefaultArgs<ExtArgs>>): Prisma__voucher_tableClient<$Result.GetResult<Prisma.$voucher_tablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    voucher<T extends transactions_table$voucherArgs<ExtArgs> = {}>(args?: Subset<T, transactions_table$voucherArgs<ExtArgs>>): Prisma__voucher_tableClient<$Result.GetResult<Prisma.$voucher_tablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18577,7 +19904,7 @@ export namespace Prisma {
     readonly event_id: FieldRef<"transactions_table", 'Int'>
     readonly voucher_id: FieldRef<"transactions_table", 'Int'>
     readonly created_at: FieldRef<"transactions_table", 'DateTime'>
-    readonly status: FieldRef<"transactions_table", 'transactions_STATUS'>
+    readonly status: FieldRef<"transactions_table", 'transactions_status'>
     readonly payment_proof_url: FieldRef<"transactions_table", 'String'>
   }
     
@@ -18999,6 +20326,25 @@ export namespace Prisma {
   }
 
   /**
+   * transactions_table.voucher
+   */
+  export type transactions_table$voucherArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the voucher_table
+     */
+    select?: voucher_tableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the voucher_table
+     */
+    omit?: voucher_tableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: voucher_tableInclude<ExtArgs> | null
+    where?: voucher_tableWhereInput
+  }
+
+  /**
    * transactions_table without action
    */
   export type transactions_tableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19034,6 +20380,7 @@ export namespace Prisma {
     organizer_id: number | null
     event_id: number | null
     usage_limit: number | null
+    discount_value: number | null
   }
 
   export type Voucher_tableSumAggregateOutputType = {
@@ -19041,6 +20388,7 @@ export namespace Prisma {
     organizer_id: number | null
     event_id: number | null
     usage_limit: number | null
+    discount_value: number | null
   }
 
   export type Voucher_tableMinAggregateOutputType = {
@@ -19050,6 +20398,8 @@ export namespace Prisma {
     start_at: Date | null
     expires_at: Date | null
     usage_limit: number | null
+    discount_type: $Enums.discount_type | null
+    discount_value: number | null
   }
 
   export type Voucher_tableMaxAggregateOutputType = {
@@ -19059,6 +20409,8 @@ export namespace Prisma {
     start_at: Date | null
     expires_at: Date | null
     usage_limit: number | null
+    discount_type: $Enums.discount_type | null
+    discount_value: number | null
   }
 
   export type Voucher_tableCountAggregateOutputType = {
@@ -19068,6 +20420,8 @@ export namespace Prisma {
     start_at: number
     expires_at: number
     usage_limit: number
+    discount_type: number
+    discount_value: number
     _all: number
   }
 
@@ -19077,6 +20431,7 @@ export namespace Prisma {
     organizer_id?: true
     event_id?: true
     usage_limit?: true
+    discount_value?: true
   }
 
   export type Voucher_tableSumAggregateInputType = {
@@ -19084,6 +20439,7 @@ export namespace Prisma {
     organizer_id?: true
     event_id?: true
     usage_limit?: true
+    discount_value?: true
   }
 
   export type Voucher_tableMinAggregateInputType = {
@@ -19093,6 +20449,8 @@ export namespace Prisma {
     start_at?: true
     expires_at?: true
     usage_limit?: true
+    discount_type?: true
+    discount_value?: true
   }
 
   export type Voucher_tableMaxAggregateInputType = {
@@ -19102,6 +20460,8 @@ export namespace Prisma {
     start_at?: true
     expires_at?: true
     usage_limit?: true
+    discount_type?: true
+    discount_value?: true
   }
 
   export type Voucher_tableCountAggregateInputType = {
@@ -19111,6 +20471,8 @@ export namespace Prisma {
     start_at?: true
     expires_at?: true
     usage_limit?: true
+    discount_type?: true
+    discount_value?: true
     _all?: true
   }
 
@@ -19207,6 +20569,8 @@ export namespace Prisma {
     start_at: Date
     expires_at: Date | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     _count: Voucher_tableCountAggregateOutputType | null
     _avg: Voucher_tableAvgAggregateOutputType | null
     _sum: Voucher_tableSumAggregateOutputType | null
@@ -19235,6 +20599,8 @@ export namespace Prisma {
     start_at?: boolean
     expires_at?: boolean
     usage_limit?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
     transactions_table?: boolean | voucher_table$transactions_tableArgs<ExtArgs>
@@ -19248,6 +20614,8 @@ export namespace Prisma {
     start_at?: boolean
     expires_at?: boolean
     usage_limit?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["voucher_table"]>
@@ -19259,6 +20627,8 @@ export namespace Prisma {
     start_at?: boolean
     expires_at?: boolean
     usage_limit?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["voucher_table"]>
@@ -19270,9 +20640,11 @@ export namespace Prisma {
     start_at?: boolean
     expires_at?: boolean
     usage_limit?: boolean
+    discount_type?: boolean
+    discount_value?: boolean
   }
 
-  export type voucher_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "event_id" | "start_at" | "expires_at" | "usage_limit", ExtArgs["result"]["voucher_table"]>
+  export type voucher_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "event_id" | "start_at" | "expires_at" | "usage_limit" | "discount_type" | "discount_value", ExtArgs["result"]["voucher_table"]>
   export type voucher_tableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     event?: boolean | event_tableDefaultArgs<ExtArgs>
@@ -19302,6 +20674,8 @@ export namespace Prisma {
       start_at: Date
       expires_at: Date | null
       usage_limit: number
+      discount_type: $Enums.discount_type
+      discount_value: number
     }, ExtArgs["result"]["voucher_table"]>
     composites: {}
   }
@@ -19734,6 +21108,8 @@ export namespace Prisma {
     readonly start_at: FieldRef<"voucher_table", 'DateTime'>
     readonly expires_at: FieldRef<"voucher_table", 'DateTime'>
     readonly usage_limit: FieldRef<"voucher_table", 'Int'>
+    readonly discount_type: FieldRef<"voucher_table", 'discount_type'>
+    readonly discount_value: FieldRef<"voucher_table", 'Int'>
   }
     
 
@@ -20249,15 +21625,30 @@ export namespace Prisma {
 
   export const Coupon_tableScalarFieldEnum: {
     id: 'id',
-    user_id: 'user_id',
+    event_id: 'event_id',
+    code: 'code',
+    discount_type: 'discount_type',
+    discount_value: 'discount_value',
     created_at: 'created_at',
     expires_at: 'expires_at',
     used_at: 'used_at',
+    usage_limit: 'usage_limit',
+    used_count: 'used_count',
     status: 'status',
-    coupon_amount: 'coupon_amount'
+    issued_by: 'issued_by'
   };
 
   export type Coupon_tableScalarFieldEnum = (typeof Coupon_tableScalarFieldEnum)[keyof typeof Coupon_tableScalarFieldEnum]
+
+
+  export const User_couponScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    coupon_id: 'coupon_id',
+    used_at: 'used_at'
+  };
+
+  export type User_couponScalarFieldEnum = (typeof User_couponScalarFieldEnum)[keyof typeof User_couponScalarFieldEnum]
 
 
   export const Organizer_accountScalarFieldEnum: {
@@ -20265,7 +21656,7 @@ export namespace Prisma {
     username: 'username',
     email: 'email',
     password: 'password',
-    is_admin: 'is_admin'
+    role: 'role'
   };
 
   export type Organizer_accountScalarFieldEnum = (typeof Organizer_accountScalarFieldEnum)[keyof typeof Organizer_accountScalarFieldEnum]
@@ -20369,7 +21760,9 @@ export namespace Prisma {
     event_id: 'event_id',
     start_at: 'start_at',
     expires_at: 'expires_at',
-    usage_limit: 'usage_limit'
+    usage_limit: 'usage_limit',
+    discount_type: 'discount_type',
+    discount_value: 'discount_value'
   };
 
   export type Voucher_tableScalarFieldEnum = (typeof Voucher_tableScalarFieldEnum)[keyof typeof Voucher_tableScalarFieldEnum]
@@ -20433,16 +21826,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ACCOUNT_ROLE'
+   * Reference to a field of type 'account_role'
    */
-  export type EnumACCOUNT_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_ROLE'>
+  export type Enumaccount_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'account_role'>
     
 
 
   /**
-   * Reference to a field of type 'ACCOUNT_ROLE[]'
+   * Reference to a field of type 'account_role[]'
    */
-  export type ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_ROLE[]'>
+  export type ListEnumaccount_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'account_role[]'>
     
 
 
@@ -20461,51 +21854,72 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'STATUS'
+   * Reference to a field of type 'discount_type'
    */
-  export type EnumSTATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'STATUS'>
+  export type Enumdiscount_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'discount_type'>
     
 
 
   /**
-   * Reference to a field of type 'STATUS[]'
+   * Reference to a field of type 'discount_type[]'
    */
-  export type ListEnumSTATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'STATUS[]'>
+  export type ListEnumdiscount_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'discount_type[]'>
     
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'coupon_status'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type Enumcoupon_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'coupon_status'>
     
 
 
   /**
-   * Reference to a field of type 'EVENT_STATUS'
+   * Reference to a field of type 'coupon_status[]'
    */
-  export type EnumEVENT_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EVENT_STATUS'>
+  export type ListEnumcoupon_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'coupon_status[]'>
     
 
 
   /**
-   * Reference to a field of type 'EVENT_STATUS[]'
+   * Reference to a field of type 'issuer'
    */
-  export type ListEnumEVENT_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EVENT_STATUS[]'>
+  export type EnumissuerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'issuer'>
     
 
 
   /**
-   * Reference to a field of type 'transactions_STATUS'
+   * Reference to a field of type 'issuer[]'
    */
-  export type Enumtransactions_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transactions_STATUS'>
+  export type ListEnumissuerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'issuer[]'>
     
 
 
   /**
-   * Reference to a field of type 'transactions_STATUS[]'
+   * Reference to a field of type 'event_status'
    */
-  export type ListEnumtransactions_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transactions_STATUS[]'>
+  export type Enumevent_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'event_status'>
+    
+
+
+  /**
+   * Reference to a field of type 'event_status[]'
+   */
+  export type ListEnumevent_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'event_status[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'transactions_status'
+   */
+  export type Enumtransactions_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transactions_status'>
+    
+
+
+  /**
+   * Reference to a field of type 'transactions_status[]'
+   */
+  export type ListEnumtransactions_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transactions_status[]'>
     
 
 
@@ -20534,7 +21948,7 @@ export namespace Prisma {
     username?: StringFilter<"user_account"> | string
     email?: StringFilter<"user_account"> | string
     password?: StringFilter<"user_account"> | string
-    role?: EnumACCOUNT_ROLEFilter<"user_account"> | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFilter<"user_account"> | $Enums.account_role
     referral_code?: StringFilter<"user_account"> | string
     referred_by_code?: StringNullableFilter<"user_account"> | string | null
     imgProfile?: StringNullableFilter<"user_account"> | string | null
@@ -20543,11 +21957,11 @@ export namespace Prisma {
     user_profile?: XOR<User_profileNullableScalarRelationFilter, user_profileWhereInput> | null
     user_points?: User_pointsListRelationFilter
     points_redemption?: Points_redemptionListRelationFilter
-    coupon_table?: Coupon_tableListRelationFilter
     organizer_reviews?: Organizer_reviewsListRelationFilter
     ticket_holds?: Ticket_holdsListRelationFilter
     event_attendees?: Event_attendeesListRelationFilter
     transactions?: Transactions_tableListRelationFilter
+    user_coupon?: User_couponListRelationFilter
   }
 
   export type user_accountOrderByWithRelationInput = {
@@ -20564,11 +21978,11 @@ export namespace Prisma {
     user_profile?: user_profileOrderByWithRelationInput
     user_points?: user_pointsOrderByRelationAggregateInput
     points_redemption?: points_redemptionOrderByRelationAggregateInput
-    coupon_table?: coupon_tableOrderByRelationAggregateInput
     organizer_reviews?: organizer_reviewsOrderByRelationAggregateInput
     ticket_holds?: ticket_holdsOrderByRelationAggregateInput
     event_attendees?: event_attendeesOrderByRelationAggregateInput
     transactions?: transactions_tableOrderByRelationAggregateInput
+    user_coupon?: user_couponOrderByRelationAggregateInput
   }
 
   export type user_accountWhereUniqueInput = Prisma.AtLeast<{
@@ -20580,7 +21994,7 @@ export namespace Prisma {
     OR?: user_accountWhereInput[]
     NOT?: user_accountWhereInput | user_accountWhereInput[]
     password?: StringFilter<"user_account"> | string
-    role?: EnumACCOUNT_ROLEFilter<"user_account"> | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFilter<"user_account"> | $Enums.account_role
     referred_by_code?: StringNullableFilter<"user_account"> | string | null
     imgProfile?: StringNullableFilter<"user_account"> | string | null
     createdAt?: DateTimeFilter<"user_account"> | Date | string
@@ -20588,11 +22002,11 @@ export namespace Prisma {
     user_profile?: XOR<User_profileNullableScalarRelationFilter, user_profileWhereInput> | null
     user_points?: User_pointsListRelationFilter
     points_redemption?: Points_redemptionListRelationFilter
-    coupon_table?: Coupon_tableListRelationFilter
     organizer_reviews?: Organizer_reviewsListRelationFilter
     ticket_holds?: Ticket_holdsListRelationFilter
     event_attendees?: Event_attendeesListRelationFilter
     transactions?: Transactions_tableListRelationFilter
+    user_coupon?: User_couponListRelationFilter
   }, "id" | "username" | "email" | "referral_code">
 
   export type user_accountOrderByWithAggregationInput = {
@@ -20621,7 +22035,7 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"user_account"> | string
     email?: StringWithAggregatesFilter<"user_account"> | string
     password?: StringWithAggregatesFilter<"user_account"> | string
-    role?: EnumACCOUNT_ROLEWithAggregatesFilter<"user_account"> | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleWithAggregatesFilter<"user_account"> | $Enums.account_role
     referral_code?: StringWithAggregatesFilter<"user_account"> | string
     referred_by_code?: StringNullableWithAggregatesFilter<"user_account"> | string | null
     imgProfile?: StringNullableWithAggregatesFilter<"user_account"> | string | null
@@ -20877,48 +22291,68 @@ export namespace Prisma {
     OR?: coupon_tableWhereInput[]
     NOT?: coupon_tableWhereInput | coupon_tableWhereInput[]
     id?: IntFilter<"coupon_table"> | number
-    user_id?: IntFilter<"coupon_table"> | number
+    event_id?: IntNullableFilter<"coupon_table"> | number | null
+    code?: StringFilter<"coupon_table"> | string
+    discount_type?: Enumdiscount_typeFilter<"coupon_table"> | $Enums.discount_type
+    discount_value?: IntFilter<"coupon_table"> | number
     created_at?: DateTimeFilter<"coupon_table"> | Date | string
     expires_at?: DateTimeFilter<"coupon_table"> | Date | string
     used_at?: DateTimeNullableFilter<"coupon_table"> | Date | string | null
-    status?: EnumSTATUSFilter<"coupon_table"> | $Enums.STATUS
-    coupon_amount?: IntFilter<"coupon_table"> | number
-    user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
+    usage_limit?: IntFilter<"coupon_table"> | number
+    used_count?: IntFilter<"coupon_table"> | number
+    status?: Enumcoupon_statusFilter<"coupon_table"> | $Enums.coupon_status
+    issued_by?: EnumissuerFilter<"coupon_table"> | $Enums.issuer
+    user_coupon?: User_couponListRelationFilter
   }
 
   export type coupon_tableOrderByWithRelationInput = {
     id?: SortOrder
-    user_id?: SortOrder
+    event_id?: SortOrderInput | SortOrder
+    code?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     created_at?: SortOrder
     expires_at?: SortOrder
     used_at?: SortOrderInput | SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
     status?: SortOrder
-    coupon_amount?: SortOrder
-    user?: user_accountOrderByWithRelationInput
+    issued_by?: SortOrder
+    user_coupon?: user_couponOrderByRelationAggregateInput
   }
 
   export type coupon_tableWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    code?: string
     AND?: coupon_tableWhereInput | coupon_tableWhereInput[]
     OR?: coupon_tableWhereInput[]
     NOT?: coupon_tableWhereInput | coupon_tableWhereInput[]
-    user_id?: IntFilter<"coupon_table"> | number
+    event_id?: IntNullableFilter<"coupon_table"> | number | null
+    discount_type?: Enumdiscount_typeFilter<"coupon_table"> | $Enums.discount_type
+    discount_value?: IntFilter<"coupon_table"> | number
     created_at?: DateTimeFilter<"coupon_table"> | Date | string
     expires_at?: DateTimeFilter<"coupon_table"> | Date | string
     used_at?: DateTimeNullableFilter<"coupon_table"> | Date | string | null
-    status?: EnumSTATUSFilter<"coupon_table"> | $Enums.STATUS
-    coupon_amount?: IntFilter<"coupon_table"> | number
-    user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
-  }, "id">
+    usage_limit?: IntFilter<"coupon_table"> | number
+    used_count?: IntFilter<"coupon_table"> | number
+    status?: Enumcoupon_statusFilter<"coupon_table"> | $Enums.coupon_status
+    issued_by?: EnumissuerFilter<"coupon_table"> | $Enums.issuer
+    user_coupon?: User_couponListRelationFilter
+  }, "id" | "code">
 
   export type coupon_tableOrderByWithAggregationInput = {
     id?: SortOrder
-    user_id?: SortOrder
+    event_id?: SortOrderInput | SortOrder
+    code?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     created_at?: SortOrder
     expires_at?: SortOrder
     used_at?: SortOrderInput | SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
     status?: SortOrder
-    coupon_amount?: SortOrder
+    issued_by?: SortOrder
     _count?: coupon_tableCountOrderByAggregateInput
     _avg?: coupon_tableAvgOrderByAggregateInput
     _max?: coupon_tableMaxOrderByAggregateInput
@@ -20931,12 +22365,73 @@ export namespace Prisma {
     OR?: coupon_tableScalarWhereWithAggregatesInput[]
     NOT?: coupon_tableScalarWhereWithAggregatesInput | coupon_tableScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"coupon_table"> | number
-    user_id?: IntWithAggregatesFilter<"coupon_table"> | number
+    event_id?: IntNullableWithAggregatesFilter<"coupon_table"> | number | null
+    code?: StringWithAggregatesFilter<"coupon_table"> | string
+    discount_type?: Enumdiscount_typeWithAggregatesFilter<"coupon_table"> | $Enums.discount_type
+    discount_value?: IntWithAggregatesFilter<"coupon_table"> | number
     created_at?: DateTimeWithAggregatesFilter<"coupon_table"> | Date | string
     expires_at?: DateTimeWithAggregatesFilter<"coupon_table"> | Date | string
     used_at?: DateTimeNullableWithAggregatesFilter<"coupon_table"> | Date | string | null
-    status?: EnumSTATUSWithAggregatesFilter<"coupon_table"> | $Enums.STATUS
-    coupon_amount?: IntWithAggregatesFilter<"coupon_table"> | number
+    usage_limit?: IntWithAggregatesFilter<"coupon_table"> | number
+    used_count?: IntWithAggregatesFilter<"coupon_table"> | number
+    status?: Enumcoupon_statusWithAggregatesFilter<"coupon_table"> | $Enums.coupon_status
+    issued_by?: EnumissuerWithAggregatesFilter<"coupon_table"> | $Enums.issuer
+  }
+
+  export type user_couponWhereInput = {
+    AND?: user_couponWhereInput | user_couponWhereInput[]
+    OR?: user_couponWhereInput[]
+    NOT?: user_couponWhereInput | user_couponWhereInput[]
+    id?: IntFilter<"user_coupon"> | number
+    user_id?: IntFilter<"user_coupon"> | number
+    coupon_id?: IntFilter<"user_coupon"> | number
+    used_at?: DateTimeNullableFilter<"user_coupon"> | Date | string | null
+    user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
+    coupon?: XOR<Coupon_tableScalarRelationFilter, coupon_tableWhereInput>
+  }
+
+  export type user_couponOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    user?: user_accountOrderByWithRelationInput
+    coupon?: coupon_tableOrderByWithRelationInput
+  }
+
+  export type user_couponWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    user_id_coupon_id?: user_couponUser_idCoupon_idCompoundUniqueInput
+    AND?: user_couponWhereInput | user_couponWhereInput[]
+    OR?: user_couponWhereInput[]
+    NOT?: user_couponWhereInput | user_couponWhereInput[]
+    user_id?: IntFilter<"user_coupon"> | number
+    coupon_id?: IntFilter<"user_coupon"> | number
+    used_at?: DateTimeNullableFilter<"user_coupon"> | Date | string | null
+    user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
+    coupon?: XOR<Coupon_tableScalarRelationFilter, coupon_tableWhereInput>
+  }, "id" | "user_id_coupon_id">
+
+  export type user_couponOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    _count?: user_couponCountOrderByAggregateInput
+    _avg?: user_couponAvgOrderByAggregateInput
+    _max?: user_couponMaxOrderByAggregateInput
+    _min?: user_couponMinOrderByAggregateInput
+    _sum?: user_couponSumOrderByAggregateInput
+  }
+
+  export type user_couponScalarWhereWithAggregatesInput = {
+    AND?: user_couponScalarWhereWithAggregatesInput | user_couponScalarWhereWithAggregatesInput[]
+    OR?: user_couponScalarWhereWithAggregatesInput[]
+    NOT?: user_couponScalarWhereWithAggregatesInput | user_couponScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"user_coupon"> | number
+    user_id?: IntWithAggregatesFilter<"user_coupon"> | number
+    coupon_id?: IntWithAggregatesFilter<"user_coupon"> | number
+    used_at?: DateTimeNullableWithAggregatesFilter<"user_coupon"> | Date | string | null
   }
 
   export type organizer_accountWhereInput = {
@@ -20947,7 +22442,7 @@ export namespace Prisma {
     username?: StringFilter<"organizer_account"> | string
     email?: StringFilter<"organizer_account"> | string
     password?: StringFilter<"organizer_account"> | string
-    is_admin?: BoolFilter<"organizer_account"> | boolean
+    role?: Enumaccount_roleFilter<"organizer_account"> | $Enums.account_role
     organizer_profile?: XOR<Organizer_profileNullableScalarRelationFilter, organizer_profileWhereInput> | null
     organizer_reviews?: Organizer_reviewsListRelationFilter
     event_table?: Event_tableListRelationFilter
@@ -20960,7 +22455,7 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    is_admin?: SortOrder
+    role?: SortOrder
     organizer_profile?: organizer_profileOrderByWithRelationInput
     organizer_reviews?: organizer_reviewsOrderByRelationAggregateInput
     event_table?: event_tableOrderByRelationAggregateInput
@@ -20976,7 +22471,7 @@ export namespace Prisma {
     NOT?: organizer_accountWhereInput | organizer_accountWhereInput[]
     username?: StringFilter<"organizer_account"> | string
     password?: StringFilter<"organizer_account"> | string
-    is_admin?: BoolFilter<"organizer_account"> | boolean
+    role?: Enumaccount_roleFilter<"organizer_account"> | $Enums.account_role
     organizer_profile?: XOR<Organizer_profileNullableScalarRelationFilter, organizer_profileWhereInput> | null
     organizer_reviews?: Organizer_reviewsListRelationFilter
     event_table?: Event_tableListRelationFilter
@@ -20989,7 +22484,7 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    is_admin?: SortOrder
+    role?: SortOrder
     _count?: organizer_accountCountOrderByAggregateInput
     _avg?: organizer_accountAvgOrderByAggregateInput
     _max?: organizer_accountMaxOrderByAggregateInput
@@ -21005,7 +22500,7 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"organizer_account"> | string
     email?: StringWithAggregatesFilter<"organizer_account"> | string
     password?: StringWithAggregatesFilter<"organizer_account"> | string
-    is_admin?: BoolWithAggregatesFilter<"organizer_account"> | boolean
+    role?: Enumaccount_roleWithAggregatesFilter<"organizer_account"> | $Enums.account_role
   }
 
   export type organizer_profileWhereInput = {
@@ -21250,7 +22745,7 @@ export namespace Prisma {
     held_at?: DateTimeFilter<"ticket_holds"> | Date | string
     expires_at?: DateTimeFilter<"ticket_holds"> | Date | string
     transactions_id?: IntFilter<"ticket_holds"> | number
-    status?: EnumSTATUSFilter<"ticket_holds"> | $Enums.STATUS
+    status?: Enumcoupon_statusFilter<"ticket_holds"> | $Enums.coupon_status
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
     ticket_type?: XOR<Ticket_typeScalarRelationFilter, ticket_typeWhereInput>
@@ -21285,7 +22780,7 @@ export namespace Prisma {
     held_at?: DateTimeFilter<"ticket_holds"> | Date | string
     expires_at?: DateTimeFilter<"ticket_holds"> | Date | string
     transactions_id?: IntFilter<"ticket_holds"> | number
-    status?: EnumSTATUSFilter<"ticket_holds"> | $Enums.STATUS
+    status?: Enumcoupon_statusFilter<"ticket_holds"> | $Enums.coupon_status
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
     ticket_type?: XOR<Ticket_typeScalarRelationFilter, ticket_typeWhereInput>
@@ -21321,7 +22816,7 @@ export namespace Prisma {
     held_at?: DateTimeWithAggregatesFilter<"ticket_holds"> | Date | string
     expires_at?: DateTimeWithAggregatesFilter<"ticket_holds"> | Date | string
     transactions_id?: IntWithAggregatesFilter<"ticket_holds"> | number
-    status?: EnumSTATUSWithAggregatesFilter<"ticket_holds"> | $Enums.STATUS
+    status?: Enumcoupon_statusWithAggregatesFilter<"ticket_holds"> | $Enums.coupon_status
   }
 
   export type ticket_typeWhereInput = {
@@ -21394,7 +22889,7 @@ export namespace Prisma {
     user_id?: IntFilter<"event_attendees"> | number
     ticket_quantity?: IntFilter<"event_attendees"> | number
     total_price_paid?: IntFilter<"event_attendees"> | number
-    status?: EnumEVENT_STATUSFilter<"event_attendees"> | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFilter<"event_attendees"> | $Enums.event_status
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
@@ -21424,7 +22919,7 @@ export namespace Prisma {
     user_id?: IntFilter<"event_attendees"> | number
     ticket_quantity?: IntFilter<"event_attendees"> | number
     total_price_paid?: IntFilter<"event_attendees"> | number
-    status?: EnumEVENT_STATUSFilter<"event_attendees"> | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFilter<"event_attendees"> | $Enums.event_status
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
@@ -21455,7 +22950,7 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"event_attendees"> | number
     ticket_quantity?: IntWithAggregatesFilter<"event_attendees"> | number
     total_price_paid?: IntWithAggregatesFilter<"event_attendees"> | number
-    status?: EnumEVENT_STATUSWithAggregatesFilter<"event_attendees"> | $Enums.EVENT_STATUS
+    status?: Enumevent_statusWithAggregatesFilter<"event_attendees"> | $Enums.event_status
   }
 
   export type transactions_tableWhereInput = {
@@ -21465,21 +22960,21 @@ export namespace Prisma {
     id?: IntFilter<"transactions_table"> | number
     user_id?: IntFilter<"transactions_table"> | number
     event_id?: IntFilter<"transactions_table"> | number
-    voucher_id?: IntFilter<"transactions_table"> | number
+    voucher_id?: IntNullableFilter<"transactions_table"> | number | null
     created_at?: DateTimeFilter<"transactions_table"> | Date | string
-    status?: Enumtransactions_STATUSFilter<"transactions_table"> | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFilter<"transactions_table"> | $Enums.transactions_status
     payment_proof_url?: StringFilter<"transactions_table"> | string
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     ticket?: Ticket_holdsListRelationFilter
-    voucher?: XOR<Voucher_tableScalarRelationFilter, voucher_tableWhereInput>
+    voucher?: XOR<Voucher_tableNullableScalarRelationFilter, voucher_tableWhereInput> | null
   }
 
   export type transactions_tableOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
-    voucher_id?: SortOrder
+    voucher_id?: SortOrderInput | SortOrder
     created_at?: SortOrder
     status?: SortOrder
     payment_proof_url?: SortOrder
@@ -21496,21 +22991,21 @@ export namespace Prisma {
     NOT?: transactions_tableWhereInput | transactions_tableWhereInput[]
     user_id?: IntFilter<"transactions_table"> | number
     event_id?: IntFilter<"transactions_table"> | number
-    voucher_id?: IntFilter<"transactions_table"> | number
+    voucher_id?: IntNullableFilter<"transactions_table"> | number | null
     created_at?: DateTimeFilter<"transactions_table"> | Date | string
-    status?: Enumtransactions_STATUSFilter<"transactions_table"> | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFilter<"transactions_table"> | $Enums.transactions_status
     payment_proof_url?: StringFilter<"transactions_table"> | string
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     ticket?: Ticket_holdsListRelationFilter
-    voucher?: XOR<Voucher_tableScalarRelationFilter, voucher_tableWhereInput>
+    voucher?: XOR<Voucher_tableNullableScalarRelationFilter, voucher_tableWhereInput> | null
   }, "id">
 
   export type transactions_tableOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
     event_id?: SortOrder
-    voucher_id?: SortOrder
+    voucher_id?: SortOrderInput | SortOrder
     created_at?: SortOrder
     status?: SortOrder
     payment_proof_url?: SortOrder
@@ -21528,9 +23023,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"transactions_table"> | number
     user_id?: IntWithAggregatesFilter<"transactions_table"> | number
     event_id?: IntWithAggregatesFilter<"transactions_table"> | number
-    voucher_id?: IntWithAggregatesFilter<"transactions_table"> | number
+    voucher_id?: IntNullableWithAggregatesFilter<"transactions_table"> | number | null
     created_at?: DateTimeWithAggregatesFilter<"transactions_table"> | Date | string
-    status?: Enumtransactions_STATUSWithAggregatesFilter<"transactions_table"> | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusWithAggregatesFilter<"transactions_table"> | $Enums.transactions_status
     payment_proof_url?: StringWithAggregatesFilter<"transactions_table"> | string
   }
 
@@ -21544,6 +23039,8 @@ export namespace Prisma {
     start_at?: DateTimeFilter<"voucher_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"voucher_table"> | Date | string | null
     usage_limit?: IntFilter<"voucher_table"> | number
+    discount_type?: Enumdiscount_typeFilter<"voucher_table"> | $Enums.discount_type
+    discount_value?: IntFilter<"voucher_table"> | number
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     transactions_table?: Transactions_tableListRelationFilter
@@ -21556,6 +23053,8 @@ export namespace Prisma {
     start_at?: SortOrder
     expires_at?: SortOrderInput | SortOrder
     usage_limit?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     organizer?: organizer_accountOrderByWithRelationInput
     event?: event_tableOrderByWithRelationInput
     transactions_table?: transactions_tableOrderByRelationAggregateInput
@@ -21571,6 +23070,8 @@ export namespace Prisma {
     start_at?: DateTimeFilter<"voucher_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"voucher_table"> | Date | string | null
     usage_limit?: IntFilter<"voucher_table"> | number
+    discount_type?: Enumdiscount_typeFilter<"voucher_table"> | $Enums.discount_type
+    discount_value?: IntFilter<"voucher_table"> | number
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     event?: XOR<Event_tableScalarRelationFilter, event_tableWhereInput>
     transactions_table?: Transactions_tableListRelationFilter
@@ -21583,6 +23084,8 @@ export namespace Prisma {
     start_at?: SortOrder
     expires_at?: SortOrderInput | SortOrder
     usage_limit?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     _count?: voucher_tableCountOrderByAggregateInput
     _avg?: voucher_tableAvgOrderByAggregateInput
     _max?: voucher_tableMaxOrderByAggregateInput
@@ -21600,13 +23103,15 @@ export namespace Prisma {
     start_at?: DateTimeWithAggregatesFilter<"voucher_table"> | Date | string
     expires_at?: DateTimeNullableWithAggregatesFilter<"voucher_table"> | Date | string | null
     usage_limit?: IntWithAggregatesFilter<"voucher_table"> | number
+    discount_type?: Enumdiscount_typeWithAggregatesFilter<"voucher_table"> | $Enums.discount_type
+    discount_value?: IntWithAggregatesFilter<"voucher_table"> | number
   }
 
   export type user_accountCreateInput = {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -21615,11 +23120,11 @@ export namespace Prisma {
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateInput = {
@@ -21627,7 +23132,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -21636,18 +23141,18 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUpdateInput = {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21656,11 +23161,11 @@ export namespace Prisma {
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateInput = {
@@ -21668,7 +23173,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21677,11 +23182,11 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountCreateManyInput = {
@@ -21689,7 +23194,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -21701,7 +23206,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21714,7 +23219,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21946,76 +23451,160 @@ export namespace Prisma {
   }
 
   export type coupon_tableCreateInput = {
-    created_at: Date | string
+    event_id?: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
+    created_at?: Date | string
     expires_at: Date | string
     used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
-    user: user_accountCreateNestedOneWithoutCoupon_tableInput
+    usage_limit: number
+    used_count?: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
+    user_coupon?: user_couponCreateNestedManyWithoutCouponInput
   }
 
   export type coupon_tableUncheckedCreateInput = {
     id?: number
-    user_id: number
-    created_at: Date | string
+    event_id?: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
+    created_at?: Date | string
     expires_at: Date | string
     used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
+    usage_limit: number
+    used_count?: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutCouponInput
   }
 
   export type coupon_tableUpdateInput = {
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
-    user?: user_accountUpdateOneRequiredWithoutCoupon_tableNestedInput
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
+    user_coupon?: user_couponUpdateManyWithoutCouponNestedInput
   }
 
   export type coupon_tableUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
+    user_coupon?: user_couponUncheckedUpdateManyWithoutCouponNestedInput
   }
 
   export type coupon_tableCreateManyInput = {
     id?: number
-    user_id: number
-    created_at: Date | string
+    event_id?: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
+    created_at?: Date | string
     expires_at: Date | string
     used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
+    usage_limit: number
+    used_count?: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
   }
 
   export type coupon_tableUpdateManyMutationInput = {
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
   }
 
   export type coupon_tableUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
+  }
+
+  export type user_couponCreateInput = {
+    used_at?: Date | string | null
+    user: user_accountCreateNestedOneWithoutUser_couponInput
+    coupon: coupon_tableCreateNestedOneWithoutUser_couponInput
+  }
+
+  export type user_couponUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    coupon_id: number
+    used_at?: Date | string | null
+  }
+
+  export type user_couponUpdateInput = {
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: user_accountUpdateOneRequiredWithoutUser_couponNestedInput
+    coupon?: coupon_tableUpdateOneRequiredWithoutUser_couponNestedInput
+  }
+
+  export type user_couponUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type user_couponCreateManyInput = {
+    id?: number
+    user_id: number
+    coupon_id: number
+    used_at?: Date | string | null
+  }
+
+  export type user_couponUpdateManyMutationInput = {
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type user_couponUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type organizer_accountCreateInput = {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableCreateNestedManyWithoutOrganizerInput
@@ -22028,7 +23617,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileUncheckedCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableUncheckedCreateNestedManyWithoutOrganizerInput
@@ -22040,7 +23629,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUpdateManyWithoutOrganizerNestedInput
@@ -22053,7 +23642,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUncheckedUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -22066,14 +23655,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
   }
 
   export type organizer_accountUpdateManyMutationInput = {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
   }
 
   export type organizer_accountUncheckedUpdateManyInput = {
@@ -22081,7 +23670,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
   }
 
   export type organizer_profileCreateInput = {
@@ -22146,7 +23735,7 @@ export namespace Prisma {
   export type organizer_reviewsCreateInput = {
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutOrganizer_reviewsInput
     event: event_tableCreateNestedOneWithoutOrganizer_reviewsInput
     user: user_accountCreateNestedOneWithoutOrganizer_reviewsInput
@@ -22159,7 +23748,7 @@ export namespace Prisma {
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type organizer_reviewsUpdateInput = {
@@ -22188,7 +23777,7 @@ export namespace Prisma {
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type organizer_reviewsUpdateManyMutationInput = {
@@ -22214,7 +23803,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -22233,7 +23822,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -22286,7 +23875,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type event_tableUpdateManyMutationInput = {
@@ -22315,7 +23904,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     event: event_tableCreateNestedOneWithoutTicket_holdsInput
     user: user_accountCreateNestedOneWithoutTicket_holdsInput
     ticket_type: ticket_typeCreateNestedOneWithoutTicket_holdsInput
@@ -22331,14 +23920,14 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsUpdateInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
     event?: event_tableUpdateOneRequiredWithoutTicket_holdsNestedInput
     user?: user_accountUpdateOneRequiredWithoutTicket_holdsNestedInput
     ticket_type?: ticket_typeUpdateOneRequiredWithoutTicket_holdsNestedInput
@@ -22354,7 +23943,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsCreateManyInput = {
@@ -22366,14 +23955,14 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsUpdateManyMutationInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsUncheckedUpdateManyInput = {
@@ -22385,7 +23974,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_typeCreateInput = {
@@ -22447,7 +24036,7 @@ export namespace Prisma {
   export type event_attendeesCreateInput = {
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
     event: event_tableCreateNestedOneWithoutEvent_attendeesInput
     organizer: organizer_accountCreateNestedOneWithoutEvent_attendeesInput
     user: user_accountCreateNestedOneWithoutEvent_attendeesInput
@@ -22460,13 +24049,13 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type event_attendeesUpdateInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
     event?: event_tableUpdateOneRequiredWithoutEvent_attendeesNestedInput
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
     user?: user_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
@@ -22479,7 +24068,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type event_attendeesCreateManyInput = {
@@ -22489,13 +24078,13 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type event_attendeesUpdateManyMutationInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type event_attendeesUncheckedUpdateManyInput = {
@@ -22505,47 +24094,47 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type transactions_tableCreateInput = {
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     user: user_accountCreateNestedOneWithoutTransactionsInput
     event: event_tableCreateNestedOneWithoutTransactionsInput
     ticket?: ticket_holdsCreateNestedManyWithoutTransactionsInput
-    voucher: voucher_tableCreateNestedOneWithoutTransactions_tableInput
+    voucher?: voucher_tableCreateNestedOneWithoutTransactions_tableInput
   }
 
   export type transactions_tableUncheckedCreateInput = {
     id?: number
     user_id: number
     event_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     ticket?: ticket_holdsUncheckedCreateNestedManyWithoutTransactionsInput
   }
 
   export type transactions_tableUpdateInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     user?: user_accountUpdateOneRequiredWithoutTransactionsNestedInput
     event?: event_tableUpdateOneRequiredWithoutTransactionsNestedInput
     ticket?: ticket_holdsUpdateManyWithoutTransactionsNestedInput
-    voucher?: voucher_tableUpdateOneRequiredWithoutTransactions_tableNestedInput
+    voucher?: voucher_tableUpdateOneWithoutTransactions_tableNestedInput
   }
 
   export type transactions_tableUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     ticket?: ticket_holdsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -22554,15 +24143,15 @@ export namespace Prisma {
     id?: number
     user_id: number
     event_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
   }
 
   export type transactions_tableUpdateManyMutationInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22570,9 +24159,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
   }
 
@@ -22580,6 +24169,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     organizer: organizer_accountCreateNestedOneWithoutVoucherInput
     event: event_tableCreateNestedOneWithoutVoucherInput
     transactions_table?: transactions_tableCreateNestedManyWithoutVoucherInput
@@ -22592,6 +24183,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     transactions_table?: transactions_tableUncheckedCreateNestedManyWithoutVoucherInput
   }
 
@@ -22599,6 +24192,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     organizer?: organizer_accountUpdateOneRequiredWithoutVoucherNestedInput
     event?: event_tableUpdateOneRequiredWithoutVoucherNestedInput
     transactions_table?: transactions_tableUpdateManyWithoutVoucherNestedInput
@@ -22611,6 +24206,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     transactions_table?: transactions_tableUncheckedUpdateManyWithoutVoucherNestedInput
   }
 
@@ -22621,12 +24218,16 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
   }
 
   export type voucher_tableUpdateManyMutationInput = {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
   }
 
   export type voucher_tableUncheckedUpdateManyInput = {
@@ -22636,6 +24237,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -22664,11 +24267,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type EnumACCOUNT_ROLEFilter<$PrismaModel = never> = {
-    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
+  export type Enumaccount_roleFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_role | Enumaccount_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_roleFilter<$PrismaModel> | $Enums.account_role
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -22725,12 +24328,6 @@ export namespace Prisma {
     none?: points_redemptionWhereInput
   }
 
-  export type Coupon_tableListRelationFilter = {
-    every?: coupon_tableWhereInput
-    some?: coupon_tableWhereInput
-    none?: coupon_tableWhereInput
-  }
-
   export type Organizer_reviewsListRelationFilter = {
     every?: organizer_reviewsWhereInput
     some?: organizer_reviewsWhereInput
@@ -22755,6 +24352,12 @@ export namespace Prisma {
     none?: transactions_tableWhereInput
   }
 
+  export type User_couponListRelationFilter = {
+    every?: user_couponWhereInput
+    some?: user_couponWhereInput
+    none?: user_couponWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -22765,10 +24368,6 @@ export namespace Prisma {
   }
 
   export type points_redemptionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type coupon_tableOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22785,6 +24384,10 @@ export namespace Prisma {
   }
 
   export type transactions_tableOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type user_couponOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22869,14 +24472,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type EnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
+  export type Enumaccount_roleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_role | Enumaccount_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_roleWithAggregatesFilter<$PrismaModel> | $Enums.account_role
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
-    _max?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
+    _min?: NestedEnumaccount_roleFilter<$PrismaModel>
+    _max?: NestedEnumaccount_roleFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23106,68 +24709,186 @@ export namespace Prisma {
     redemption_id?: SortOrder
   }
 
-  export type EnumSTATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.STATUS | EnumSTATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumSTATUSFilter<$PrismaModel> | $Enums.STATUS
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type Enumdiscount_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.discount_type | Enumdiscount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumdiscount_typeFilter<$PrismaModel> | $Enums.discount_type
+  }
+
+  export type Enumcoupon_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.coupon_status | Enumcoupon_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumcoupon_statusFilter<$PrismaModel> | $Enums.coupon_status
+  }
+
+  export type EnumissuerFilter<$PrismaModel = never> = {
+    equals?: $Enums.issuer | EnumissuerFieldRefInput<$PrismaModel>
+    in?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    notIn?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    not?: NestedEnumissuerFilter<$PrismaModel> | $Enums.issuer
   }
 
   export type coupon_tableCountOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
+    event_id?: SortOrder
+    code?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     created_at?: SortOrder
     expires_at?: SortOrder
     used_at?: SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
     status?: SortOrder
-    coupon_amount?: SortOrder
+    issued_by?: SortOrder
   }
 
   export type coupon_tableAvgOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
-    coupon_amount?: SortOrder
+    event_id?: SortOrder
+    discount_value?: SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
   }
 
   export type coupon_tableMaxOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
+    event_id?: SortOrder
+    code?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     created_at?: SortOrder
     expires_at?: SortOrder
     used_at?: SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
     status?: SortOrder
-    coupon_amount?: SortOrder
+    issued_by?: SortOrder
   }
 
   export type coupon_tableMinOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
+    event_id?: SortOrder
+    code?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
     created_at?: SortOrder
     expires_at?: SortOrder
     used_at?: SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
     status?: SortOrder
-    coupon_amount?: SortOrder
+    issued_by?: SortOrder
   }
 
   export type coupon_tableSumOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
-    coupon_amount?: SortOrder
+    event_id?: SortOrder
+    discount_value?: SortOrder
+    usage_limit?: SortOrder
+    used_count?: SortOrder
   }
 
-  export type EnumSTATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.STATUS | EnumSTATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumSTATUSWithAggregatesFilter<$PrismaModel> | $Enums.STATUS
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type Enumdiscount_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.discount_type | Enumdiscount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumdiscount_typeWithAggregatesFilter<$PrismaModel> | $Enums.discount_type
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSTATUSFilter<$PrismaModel>
-    _max?: NestedEnumSTATUSFilter<$PrismaModel>
+    _min?: NestedEnumdiscount_typeFilter<$PrismaModel>
+    _max?: NestedEnumdiscount_typeFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type Enumcoupon_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.coupon_status | Enumcoupon_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumcoupon_statusWithAggregatesFilter<$PrismaModel> | $Enums.coupon_status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumcoupon_statusFilter<$PrismaModel>
+    _max?: NestedEnumcoupon_statusFilter<$PrismaModel>
+  }
+
+  export type EnumissuerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.issuer | EnumissuerFieldRefInput<$PrismaModel>
+    in?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    notIn?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    not?: NestedEnumissuerWithAggregatesFilter<$PrismaModel> | $Enums.issuer
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumissuerFilter<$PrismaModel>
+    _max?: NestedEnumissuerFilter<$PrismaModel>
+  }
+
+  export type Coupon_tableScalarRelationFilter = {
+    is?: coupon_tableWhereInput
+    isNot?: coupon_tableWhereInput
+  }
+
+  export type user_couponUser_idCoupon_idCompoundUniqueInput = {
+    user_id: number
+    coupon_id: number
+  }
+
+  export type user_couponCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type user_couponAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+  }
+
+  export type user_couponMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type user_couponMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type user_couponSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    coupon_id?: SortOrder
   }
 
   export type Organizer_profileNullableScalarRelationFilter = {
@@ -23200,7 +24921,7 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    is_admin?: SortOrder
+    role?: SortOrder
   }
 
   export type organizer_accountAvgOrderByAggregateInput = {
@@ -23212,7 +24933,7 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    is_admin?: SortOrder
+    role?: SortOrder
   }
 
   export type organizer_accountMinOrderByAggregateInput = {
@@ -23220,19 +24941,11 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    is_admin?: SortOrder
+    role?: SortOrder
   }
 
   export type organizer_accountSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type Organizer_accountScalarRelationFilter = {
@@ -23492,11 +25205,11 @@ export namespace Prisma {
     quota?: SortOrder
   }
 
-  export type EnumEVENT_STATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.EVENT_STATUS | EnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumEVENT_STATUSFilter<$PrismaModel> | $Enums.EVENT_STATUS
+  export type Enumevent_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.event_status | Enumevent_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumevent_statusFilter<$PrismaModel> | $Enums.event_status
   }
 
   export type event_attendeesEvent_idUser_idCompoundUniqueInput = {
@@ -23552,26 +25265,26 @@ export namespace Prisma {
     total_price_paid?: SortOrder
   }
 
-  export type EnumEVENT_STATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EVENT_STATUS | EnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumEVENT_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.EVENT_STATUS
+  export type Enumevent_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.event_status | Enumevent_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumevent_statusWithAggregatesFilter<$PrismaModel> | $Enums.event_status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEVENT_STATUSFilter<$PrismaModel>
-    _max?: NestedEnumEVENT_STATUSFilter<$PrismaModel>
+    _min?: NestedEnumevent_statusFilter<$PrismaModel>
+    _max?: NestedEnumevent_statusFilter<$PrismaModel>
   }
 
-  export type Enumtransactions_STATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.transactions_STATUS | Enumtransactions_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransactions_STATUSFilter<$PrismaModel> | $Enums.transactions_STATUS
+  export type Enumtransactions_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.transactions_status | Enumtransactions_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumtransactions_statusFilter<$PrismaModel> | $Enums.transactions_status
   }
 
-  export type Voucher_tableScalarRelationFilter = {
-    is?: voucher_tableWhereInput
-    isNot?: voucher_tableWhereInput
+  export type Voucher_tableNullableScalarRelationFilter = {
+    is?: voucher_tableWhereInput | null
+    isNot?: voucher_tableWhereInput | null
   }
 
   export type transactions_tableCountOrderByAggregateInput = {
@@ -23618,14 +25331,14 @@ export namespace Prisma {
     voucher_id?: SortOrder
   }
 
-  export type Enumtransactions_STATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.transactions_STATUS | Enumtransactions_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransactions_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.transactions_STATUS
+  export type Enumtransactions_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.transactions_status | Enumtransactions_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumtransactions_statusWithAggregatesFilter<$PrismaModel> | $Enums.transactions_status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumtransactions_STATUSFilter<$PrismaModel>
-    _max?: NestedEnumtransactions_STATUSFilter<$PrismaModel>
+    _min?: NestedEnumtransactions_statusFilter<$PrismaModel>
+    _max?: NestedEnumtransactions_statusFilter<$PrismaModel>
   }
 
   export type voucher_tableCountOrderByAggregateInput = {
@@ -23635,6 +25348,8 @@ export namespace Prisma {
     start_at?: SortOrder
     expires_at?: SortOrder
     usage_limit?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
   }
 
   export type voucher_tableAvgOrderByAggregateInput = {
@@ -23642,6 +25357,7 @@ export namespace Prisma {
     organizer_id?: SortOrder
     event_id?: SortOrder
     usage_limit?: SortOrder
+    discount_value?: SortOrder
   }
 
   export type voucher_tableMaxOrderByAggregateInput = {
@@ -23651,6 +25367,8 @@ export namespace Prisma {
     start_at?: SortOrder
     expires_at?: SortOrder
     usage_limit?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
   }
 
   export type voucher_tableMinOrderByAggregateInput = {
@@ -23660,6 +25378,8 @@ export namespace Prisma {
     start_at?: SortOrder
     expires_at?: SortOrder
     usage_limit?: SortOrder
+    discount_type?: SortOrder
+    discount_value?: SortOrder
   }
 
   export type voucher_tableSumOrderByAggregateInput = {
@@ -23667,6 +25387,7 @@ export namespace Prisma {
     organizer_id?: SortOrder
     event_id?: SortOrder
     usage_limit?: SortOrder
+    discount_value?: SortOrder
   }
 
   export type user_profileCreateNestedOneWithoutUserInput = {
@@ -23687,13 +25408,6 @@ export namespace Prisma {
     connectOrCreate?: points_redemptionCreateOrConnectWithoutUserInput | points_redemptionCreateOrConnectWithoutUserInput[]
     createMany?: points_redemptionCreateManyUserInputEnvelope
     connect?: points_redemptionWhereUniqueInput | points_redemptionWhereUniqueInput[]
-  }
-
-  export type coupon_tableCreateNestedManyWithoutUserInput = {
-    create?: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput> | coupon_tableCreateWithoutUserInput[] | coupon_tableUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: coupon_tableCreateOrConnectWithoutUserInput | coupon_tableCreateOrConnectWithoutUserInput[]
-    createMany?: coupon_tableCreateManyUserInputEnvelope
-    connect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
   }
 
   export type organizer_reviewsCreateNestedManyWithoutUserInput = {
@@ -23724,6 +25438,13 @@ export namespace Prisma {
     connect?: transactions_tableWhereUniqueInput | transactions_tableWhereUniqueInput[]
   }
 
+  export type user_couponCreateNestedManyWithoutUserInput = {
+    create?: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput> | user_couponCreateWithoutUserInput[] | user_couponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutUserInput | user_couponCreateOrConnectWithoutUserInput[]
+    createMany?: user_couponCreateManyUserInputEnvelope
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+  }
+
   export type user_profileUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<user_profileCreateWithoutUserInput, user_profileUncheckedCreateWithoutUserInput>
     connectOrCreate?: user_profileCreateOrConnectWithoutUserInput
@@ -23742,13 +25463,6 @@ export namespace Prisma {
     connectOrCreate?: points_redemptionCreateOrConnectWithoutUserInput | points_redemptionCreateOrConnectWithoutUserInput[]
     createMany?: points_redemptionCreateManyUserInputEnvelope
     connect?: points_redemptionWhereUniqueInput | points_redemptionWhereUniqueInput[]
-  }
-
-  export type coupon_tableUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput> | coupon_tableCreateWithoutUserInput[] | coupon_tableUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: coupon_tableCreateOrConnectWithoutUserInput | coupon_tableCreateOrConnectWithoutUserInput[]
-    createMany?: coupon_tableCreateManyUserInputEnvelope
-    connect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
   }
 
   export type organizer_reviewsUncheckedCreateNestedManyWithoutUserInput = {
@@ -23779,12 +25493,19 @@ export namespace Prisma {
     connect?: transactions_tableWhereUniqueInput | transactions_tableWhereUniqueInput[]
   }
 
+  export type user_couponUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput> | user_couponCreateWithoutUserInput[] | user_couponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutUserInput | user_couponCreateOrConnectWithoutUserInput[]
+    createMany?: user_couponCreateManyUserInputEnvelope
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type EnumACCOUNT_ROLEFieldUpdateOperationsInput = {
-    set?: $Enums.ACCOUNT_ROLE
+  export type Enumaccount_roleFieldUpdateOperationsInput = {
+    set?: $Enums.account_role
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -23835,20 +25556,6 @@ export namespace Prisma {
     update?: points_redemptionUpdateWithWhereUniqueWithoutUserInput | points_redemptionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: points_redemptionUpdateManyWithWhereWithoutUserInput | points_redemptionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: points_redemptionScalarWhereInput | points_redemptionScalarWhereInput[]
-  }
-
-  export type coupon_tableUpdateManyWithoutUserNestedInput = {
-    create?: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput> | coupon_tableCreateWithoutUserInput[] | coupon_tableUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: coupon_tableCreateOrConnectWithoutUserInput | coupon_tableCreateOrConnectWithoutUserInput[]
-    upsert?: coupon_tableUpsertWithWhereUniqueWithoutUserInput | coupon_tableUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: coupon_tableCreateManyUserInputEnvelope
-    set?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    disconnect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    delete?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    connect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    update?: coupon_tableUpdateWithWhereUniqueWithoutUserInput | coupon_tableUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: coupon_tableUpdateManyWithWhereWithoutUserInput | coupon_tableUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: coupon_tableScalarWhereInput | coupon_tableScalarWhereInput[]
   }
 
   export type organizer_reviewsUpdateManyWithoutUserNestedInput = {
@@ -23907,6 +25614,20 @@ export namespace Prisma {
     deleteMany?: transactions_tableScalarWhereInput | transactions_tableScalarWhereInput[]
   }
 
+  export type user_couponUpdateManyWithoutUserNestedInput = {
+    create?: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput> | user_couponCreateWithoutUserInput[] | user_couponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutUserInput | user_couponCreateOrConnectWithoutUserInput[]
+    upsert?: user_couponUpsertWithWhereUniqueWithoutUserInput | user_couponUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: user_couponCreateManyUserInputEnvelope
+    set?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    disconnect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    delete?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    update?: user_couponUpdateWithWhereUniqueWithoutUserInput | user_couponUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: user_couponUpdateManyWithWhereWithoutUserInput | user_couponUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -23951,20 +25672,6 @@ export namespace Prisma {
     update?: points_redemptionUpdateWithWhereUniqueWithoutUserInput | points_redemptionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: points_redemptionUpdateManyWithWhereWithoutUserInput | points_redemptionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: points_redemptionScalarWhereInput | points_redemptionScalarWhereInput[]
-  }
-
-  export type coupon_tableUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput> | coupon_tableCreateWithoutUserInput[] | coupon_tableUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: coupon_tableCreateOrConnectWithoutUserInput | coupon_tableCreateOrConnectWithoutUserInput[]
-    upsert?: coupon_tableUpsertWithWhereUniqueWithoutUserInput | coupon_tableUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: coupon_tableCreateManyUserInputEnvelope
-    set?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    disconnect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    delete?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    connect?: coupon_tableWhereUniqueInput | coupon_tableWhereUniqueInput[]
-    update?: coupon_tableUpdateWithWhereUniqueWithoutUserInput | coupon_tableUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: coupon_tableUpdateManyWithWhereWithoutUserInput | coupon_tableUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: coupon_tableScalarWhereInput | coupon_tableScalarWhereInput[]
   }
 
   export type organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput = {
@@ -24021,6 +25728,20 @@ export namespace Prisma {
     update?: transactions_tableUpdateWithWhereUniqueWithoutUserInput | transactions_tableUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: transactions_tableUpdateManyWithWhereWithoutUserInput | transactions_tableUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: transactions_tableScalarWhereInput | transactions_tableScalarWhereInput[]
+  }
+
+  export type user_couponUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput> | user_couponCreateWithoutUserInput[] | user_couponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutUserInput | user_couponCreateOrConnectWithoutUserInput[]
+    upsert?: user_couponUpsertWithWhereUniqueWithoutUserInput | user_couponUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: user_couponCreateManyUserInputEnvelope
+    set?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    disconnect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    delete?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    update?: user_couponUpdateWithWhereUniqueWithoutUserInput | user_couponUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: user_couponUpdateManyWithWhereWithoutUserInput | user_couponUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
   }
 
   export type user_accountCreateNestedOneWithoutUser_profileInput = {
@@ -24177,22 +25898,94 @@ export namespace Prisma {
     update?: XOR<XOR<points_redemptionUpdateToOneWithWhereWithoutPoints_redemption_itemsInput, points_redemptionUpdateWithoutPoints_redemption_itemsInput>, points_redemptionUncheckedUpdateWithoutPoints_redemption_itemsInput>
   }
 
-  export type user_accountCreateNestedOneWithoutCoupon_tableInput = {
-    create?: XOR<user_accountCreateWithoutCoupon_tableInput, user_accountUncheckedCreateWithoutCoupon_tableInput>
-    connectOrCreate?: user_accountCreateOrConnectWithoutCoupon_tableInput
+  export type user_couponCreateNestedManyWithoutCouponInput = {
+    create?: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput> | user_couponCreateWithoutCouponInput[] | user_couponUncheckedCreateWithoutCouponInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutCouponInput | user_couponCreateOrConnectWithoutCouponInput[]
+    createMany?: user_couponCreateManyCouponInputEnvelope
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+  }
+
+  export type user_couponUncheckedCreateNestedManyWithoutCouponInput = {
+    create?: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput> | user_couponCreateWithoutCouponInput[] | user_couponUncheckedCreateWithoutCouponInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutCouponInput | user_couponCreateOrConnectWithoutCouponInput[]
+    createMany?: user_couponCreateManyCouponInputEnvelope
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type Enumdiscount_typeFieldUpdateOperationsInput = {
+    set?: $Enums.discount_type
+  }
+
+  export type Enumcoupon_statusFieldUpdateOperationsInput = {
+    set?: $Enums.coupon_status
+  }
+
+  export type EnumissuerFieldUpdateOperationsInput = {
+    set?: $Enums.issuer
+  }
+
+  export type user_couponUpdateManyWithoutCouponNestedInput = {
+    create?: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput> | user_couponCreateWithoutCouponInput[] | user_couponUncheckedCreateWithoutCouponInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutCouponInput | user_couponCreateOrConnectWithoutCouponInput[]
+    upsert?: user_couponUpsertWithWhereUniqueWithoutCouponInput | user_couponUpsertWithWhereUniqueWithoutCouponInput[]
+    createMany?: user_couponCreateManyCouponInputEnvelope
+    set?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    disconnect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    delete?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    update?: user_couponUpdateWithWhereUniqueWithoutCouponInput | user_couponUpdateWithWhereUniqueWithoutCouponInput[]
+    updateMany?: user_couponUpdateManyWithWhereWithoutCouponInput | user_couponUpdateManyWithWhereWithoutCouponInput[]
+    deleteMany?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
+  }
+
+  export type user_couponUncheckedUpdateManyWithoutCouponNestedInput = {
+    create?: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput> | user_couponCreateWithoutCouponInput[] | user_couponUncheckedCreateWithoutCouponInput[]
+    connectOrCreate?: user_couponCreateOrConnectWithoutCouponInput | user_couponCreateOrConnectWithoutCouponInput[]
+    upsert?: user_couponUpsertWithWhereUniqueWithoutCouponInput | user_couponUpsertWithWhereUniqueWithoutCouponInput[]
+    createMany?: user_couponCreateManyCouponInputEnvelope
+    set?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    disconnect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    delete?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    connect?: user_couponWhereUniqueInput | user_couponWhereUniqueInput[]
+    update?: user_couponUpdateWithWhereUniqueWithoutCouponInput | user_couponUpdateWithWhereUniqueWithoutCouponInput[]
+    updateMany?: user_couponUpdateManyWithWhereWithoutCouponInput | user_couponUpdateManyWithWhereWithoutCouponInput[]
+    deleteMany?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
+  }
+
+  export type user_accountCreateNestedOneWithoutUser_couponInput = {
+    create?: XOR<user_accountCreateWithoutUser_couponInput, user_accountUncheckedCreateWithoutUser_couponInput>
+    connectOrCreate?: user_accountCreateOrConnectWithoutUser_couponInput
     connect?: user_accountWhereUniqueInput
   }
 
-  export type EnumSTATUSFieldUpdateOperationsInput = {
-    set?: $Enums.STATUS
+  export type coupon_tableCreateNestedOneWithoutUser_couponInput = {
+    create?: XOR<coupon_tableCreateWithoutUser_couponInput, coupon_tableUncheckedCreateWithoutUser_couponInput>
+    connectOrCreate?: coupon_tableCreateOrConnectWithoutUser_couponInput
+    connect?: coupon_tableWhereUniqueInput
   }
 
-  export type user_accountUpdateOneRequiredWithoutCoupon_tableNestedInput = {
-    create?: XOR<user_accountCreateWithoutCoupon_tableInput, user_accountUncheckedCreateWithoutCoupon_tableInput>
-    connectOrCreate?: user_accountCreateOrConnectWithoutCoupon_tableInput
-    upsert?: user_accountUpsertWithoutCoupon_tableInput
+  export type user_accountUpdateOneRequiredWithoutUser_couponNestedInput = {
+    create?: XOR<user_accountCreateWithoutUser_couponInput, user_accountUncheckedCreateWithoutUser_couponInput>
+    connectOrCreate?: user_accountCreateOrConnectWithoutUser_couponInput
+    upsert?: user_accountUpsertWithoutUser_couponInput
     connect?: user_accountWhereUniqueInput
-    update?: XOR<XOR<user_accountUpdateToOneWithWhereWithoutCoupon_tableInput, user_accountUpdateWithoutCoupon_tableInput>, user_accountUncheckedUpdateWithoutCoupon_tableInput>
+    update?: XOR<XOR<user_accountUpdateToOneWithWhereWithoutUser_couponInput, user_accountUpdateWithoutUser_couponInput>, user_accountUncheckedUpdateWithoutUser_couponInput>
+  }
+
+  export type coupon_tableUpdateOneRequiredWithoutUser_couponNestedInput = {
+    create?: XOR<coupon_tableCreateWithoutUser_couponInput, coupon_tableUncheckedCreateWithoutUser_couponInput>
+    connectOrCreate?: coupon_tableCreateOrConnectWithoutUser_couponInput
+    upsert?: coupon_tableUpsertWithoutUser_couponInput
+    connect?: coupon_tableWhereUniqueInput
+    update?: XOR<XOR<coupon_tableUpdateToOneWithWhereWithoutUser_couponInput, coupon_tableUpdateWithoutUser_couponInput>, coupon_tableUncheckedUpdateWithoutUser_couponInput>
   }
 
   export type organizer_profileCreateNestedOneWithoutOrganizerInput = {
@@ -24261,10 +26054,6 @@ export namespace Prisma {
     connectOrCreate?: voucher_tableCreateOrConnectWithoutOrganizerInput | voucher_tableCreateOrConnectWithoutOrganizerInput[]
     createMany?: voucher_tableCreateManyOrganizerInputEnvelope
     connect?: voucher_tableWhereUniqueInput | voucher_tableWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type organizer_profileUpdateOneWithoutOrganizerNestedInput = {
@@ -24851,8 +26640,8 @@ export namespace Prisma {
     connect?: user_accountWhereUniqueInput
   }
 
-  export type EnumEVENT_STATUSFieldUpdateOperationsInput = {
-    set?: $Enums.EVENT_STATUS
+  export type Enumevent_statusFieldUpdateOperationsInput = {
+    set?: $Enums.event_status
   }
 
   export type event_tableUpdateOneRequiredWithoutEvent_attendeesNestedInput = {
@@ -24911,8 +26700,8 @@ export namespace Prisma {
     connect?: ticket_holdsWhereUniqueInput | ticket_holdsWhereUniqueInput[]
   }
 
-  export type Enumtransactions_STATUSFieldUpdateOperationsInput = {
-    set?: $Enums.transactions_STATUS
+  export type Enumtransactions_statusFieldUpdateOperationsInput = {
+    set?: $Enums.transactions_status
   }
 
   export type user_accountUpdateOneRequiredWithoutTransactionsNestedInput = {
@@ -24945,10 +26734,12 @@ export namespace Prisma {
     deleteMany?: ticket_holdsScalarWhereInput | ticket_holdsScalarWhereInput[]
   }
 
-  export type voucher_tableUpdateOneRequiredWithoutTransactions_tableNestedInput = {
+  export type voucher_tableUpdateOneWithoutTransactions_tableNestedInput = {
     create?: XOR<voucher_tableCreateWithoutTransactions_tableInput, voucher_tableUncheckedCreateWithoutTransactions_tableInput>
     connectOrCreate?: voucher_tableCreateOrConnectWithoutTransactions_tableInput
     upsert?: voucher_tableUpsertWithoutTransactions_tableInput
+    disconnect?: voucher_tableWhereInput | boolean
+    delete?: voucher_tableWhereInput | boolean
     connect?: voucher_tableWhereUniqueInput
     update?: XOR<XOR<voucher_tableUpdateToOneWithWhereWithoutTransactions_tableInput, voucher_tableUpdateWithoutTransactions_tableInput>, voucher_tableUncheckedUpdateWithoutTransactions_tableInput>
   }
@@ -25062,11 +26853,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedEnumACCOUNT_ROLEFilter<$PrismaModel = never> = {
-    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
+  export type NestedEnumaccount_roleFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_role | Enumaccount_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_roleFilter<$PrismaModel> | $Enums.account_role
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -25149,14 +26940,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ACCOUNT_ROLE | EnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    in?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ACCOUNT_ROLE[] | ListEnumACCOUNT_ROLEFieldRefInput<$PrismaModel>
-    not?: NestedEnumACCOUNT_ROLEWithAggregatesFilter<$PrismaModel> | $Enums.ACCOUNT_ROLE
+  export type NestedEnumaccount_roleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_role | Enumaccount_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_role[] | ListEnumaccount_roleFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_roleWithAggregatesFilter<$PrismaModel> | $Enums.account_role
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
-    _max?: NestedEnumACCOUNT_ROLEFilter<$PrismaModel>
+    _min?: NestedEnumaccount_roleFilter<$PrismaModel>
+    _max?: NestedEnumaccount_roleFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -25215,68 +27006,116 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumSTATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.STATUS | EnumSTATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumSTATUSFilter<$PrismaModel> | $Enums.STATUS
+  export type NestedEnumdiscount_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.discount_type | Enumdiscount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumdiscount_typeFilter<$PrismaModel> | $Enums.discount_type
   }
 
-  export type NestedEnumSTATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.STATUS | EnumSTATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.STATUS[] | ListEnumSTATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumSTATUSWithAggregatesFilter<$PrismaModel> | $Enums.STATUS
+  export type NestedEnumcoupon_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.coupon_status | Enumcoupon_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumcoupon_statusFilter<$PrismaModel> | $Enums.coupon_status
+  }
+
+  export type NestedEnumissuerFilter<$PrismaModel = never> = {
+    equals?: $Enums.issuer | EnumissuerFieldRefInput<$PrismaModel>
+    in?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    notIn?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    not?: NestedEnumissuerFilter<$PrismaModel> | $Enums.issuer
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumdiscount_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.discount_type | Enumdiscount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.discount_type[] | ListEnumdiscount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumdiscount_typeWithAggregatesFilter<$PrismaModel> | $Enums.discount_type
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSTATUSFilter<$PrismaModel>
-    _max?: NestedEnumSTATUSFilter<$PrismaModel>
+    _min?: NestedEnumdiscount_typeFilter<$PrismaModel>
+    _max?: NestedEnumdiscount_typeFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type NestedEnumcoupon_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.coupon_status | Enumcoupon_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.coupon_status[] | ListEnumcoupon_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumcoupon_statusWithAggregatesFilter<$PrismaModel> | $Enums.coupon_status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _min?: NestedEnumcoupon_statusFilter<$PrismaModel>
+    _max?: NestedEnumcoupon_statusFilter<$PrismaModel>
   }
 
-  export type NestedEnumEVENT_STATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.EVENT_STATUS | EnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumEVENT_STATUSFilter<$PrismaModel> | $Enums.EVENT_STATUS
-  }
-
-  export type NestedEnumEVENT_STATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EVENT_STATUS | EnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EVENT_STATUS[] | ListEnumEVENT_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumEVENT_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.EVENT_STATUS
+  export type NestedEnumissuerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.issuer | EnumissuerFieldRefInput<$PrismaModel>
+    in?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    notIn?: $Enums.issuer[] | ListEnumissuerFieldRefInput<$PrismaModel>
+    not?: NestedEnumissuerWithAggregatesFilter<$PrismaModel> | $Enums.issuer
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEVENT_STATUSFilter<$PrismaModel>
-    _max?: NestedEnumEVENT_STATUSFilter<$PrismaModel>
+    _min?: NestedEnumissuerFilter<$PrismaModel>
+    _max?: NestedEnumissuerFilter<$PrismaModel>
   }
 
-  export type NestedEnumtransactions_STATUSFilter<$PrismaModel = never> = {
-    equals?: $Enums.transactions_STATUS | Enumtransactions_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransactions_STATUSFilter<$PrismaModel> | $Enums.transactions_STATUS
+  export type NestedEnumevent_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.event_status | Enumevent_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumevent_statusFilter<$PrismaModel> | $Enums.event_status
   }
 
-  export type NestedEnumtransactions_STATUSWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.transactions_STATUS | Enumtransactions_STATUSFieldRefInput<$PrismaModel>
-    in?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transactions_STATUS[] | ListEnumtransactions_STATUSFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransactions_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.transactions_STATUS
+  export type NestedEnumevent_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.event_status | Enumevent_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.event_status[] | ListEnumevent_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumevent_statusWithAggregatesFilter<$PrismaModel> | $Enums.event_status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumtransactions_STATUSFilter<$PrismaModel>
-    _max?: NestedEnumtransactions_STATUSFilter<$PrismaModel>
+    _min?: NestedEnumevent_statusFilter<$PrismaModel>
+    _max?: NestedEnumevent_statusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumtransactions_statusFilter<$PrismaModel = never> = {
+    equals?: $Enums.transactions_status | Enumtransactions_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumtransactions_statusFilter<$PrismaModel> | $Enums.transactions_status
+  }
+
+  export type NestedEnumtransactions_statusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.transactions_status | Enumtransactions_statusFieldRefInput<$PrismaModel>
+    in?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.transactions_status[] | ListEnumtransactions_statusFieldRefInput<$PrismaModel>
+    not?: NestedEnumtransactions_statusWithAggregatesFilter<$PrismaModel> | $Enums.transactions_status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumtransactions_statusFilter<$PrismaModel>
+    _max?: NestedEnumtransactions_statusFilter<$PrismaModel>
   }
 
   export type user_profileCreateWithoutUserInput = {
@@ -25353,37 +27192,10 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type coupon_tableCreateWithoutUserInput = {
-    created_at: Date | string
-    expires_at: Date | string
-    used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
-  }
-
-  export type coupon_tableUncheckedCreateWithoutUserInput = {
-    id?: number
-    created_at: Date | string
-    expires_at: Date | string
-    used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
-  }
-
-  export type coupon_tableCreateOrConnectWithoutUserInput = {
-    where: coupon_tableWhereUniqueInput
-    create: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput>
-  }
-
-  export type coupon_tableCreateManyUserInputEnvelope = {
-    data: coupon_tableCreateManyUserInput | coupon_tableCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type organizer_reviewsCreateWithoutUserInput = {
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutOrganizer_reviewsInput
     event: event_tableCreateNestedOneWithoutOrganizer_reviewsInput
   }
@@ -25394,7 +27206,7 @@ export namespace Prisma {
     event_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type organizer_reviewsCreateOrConnectWithoutUserInput = {
@@ -25411,7 +27223,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     event: event_tableCreateNestedOneWithoutTicket_holdsInput
     ticket_type: ticket_typeCreateNestedOneWithoutTicket_holdsInput
     transactions: transactions_tableCreateNestedOneWithoutTicketInput
@@ -25425,7 +27237,7 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsCreateOrConnectWithoutUserInput = {
@@ -25441,7 +27253,7 @@ export namespace Prisma {
   export type event_attendeesCreateWithoutUserInput = {
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
     event: event_tableCreateNestedOneWithoutEvent_attendeesInput
     organizer: organizer_accountCreateNestedOneWithoutEvent_attendeesInput
   }
@@ -25452,7 +27264,7 @@ export namespace Prisma {
     organizer_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type event_attendeesCreateOrConnectWithoutUserInput = {
@@ -25466,20 +27278,20 @@ export namespace Prisma {
   }
 
   export type transactions_tableCreateWithoutUserInput = {
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     event: event_tableCreateNestedOneWithoutTransactionsInput
     ticket?: ticket_holdsCreateNestedManyWithoutTransactionsInput
-    voucher: voucher_tableCreateNestedOneWithoutTransactions_tableInput
+    voucher?: voucher_tableCreateNestedOneWithoutTransactions_tableInput
   }
 
   export type transactions_tableUncheckedCreateWithoutUserInput = {
     id?: number
     event_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     ticket?: ticket_holdsUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -25491,6 +27303,27 @@ export namespace Prisma {
 
   export type transactions_tableCreateManyUserInputEnvelope = {
     data: transactions_tableCreateManyUserInput | transactions_tableCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type user_couponCreateWithoutUserInput = {
+    used_at?: Date | string | null
+    coupon: coupon_tableCreateNestedOneWithoutUser_couponInput
+  }
+
+  export type user_couponUncheckedCreateWithoutUserInput = {
+    id?: number
+    coupon_id: number
+    used_at?: Date | string | null
+  }
+
+  export type user_couponCreateOrConnectWithoutUserInput = {
+    where: user_couponWhereUniqueInput
+    create: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput>
+  }
+
+  export type user_couponCreateManyUserInputEnvelope = {
+    data: user_couponCreateManyUserInput | user_couponCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -25576,35 +27409,6 @@ export namespace Prisma {
     redeemed_at?: DateTimeFilter<"points_redemption"> | Date | string
   }
 
-  export type coupon_tableUpsertWithWhereUniqueWithoutUserInput = {
-    where: coupon_tableWhereUniqueInput
-    update: XOR<coupon_tableUpdateWithoutUserInput, coupon_tableUncheckedUpdateWithoutUserInput>
-    create: XOR<coupon_tableCreateWithoutUserInput, coupon_tableUncheckedCreateWithoutUserInput>
-  }
-
-  export type coupon_tableUpdateWithWhereUniqueWithoutUserInput = {
-    where: coupon_tableWhereUniqueInput
-    data: XOR<coupon_tableUpdateWithoutUserInput, coupon_tableUncheckedUpdateWithoutUserInput>
-  }
-
-  export type coupon_tableUpdateManyWithWhereWithoutUserInput = {
-    where: coupon_tableScalarWhereInput
-    data: XOR<coupon_tableUpdateManyMutationInput, coupon_tableUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type coupon_tableScalarWhereInput = {
-    AND?: coupon_tableScalarWhereInput | coupon_tableScalarWhereInput[]
-    OR?: coupon_tableScalarWhereInput[]
-    NOT?: coupon_tableScalarWhereInput | coupon_tableScalarWhereInput[]
-    id?: IntFilter<"coupon_table"> | number
-    user_id?: IntFilter<"coupon_table"> | number
-    created_at?: DateTimeFilter<"coupon_table"> | Date | string
-    expires_at?: DateTimeFilter<"coupon_table"> | Date | string
-    used_at?: DateTimeNullableFilter<"coupon_table"> | Date | string | null
-    status?: EnumSTATUSFilter<"coupon_table"> | $Enums.STATUS
-    coupon_amount?: IntFilter<"coupon_table"> | number
-  }
-
   export type organizer_reviewsUpsertWithWhereUniqueWithoutUserInput = {
     where: organizer_reviewsWhereUniqueInput
     update: XOR<organizer_reviewsUpdateWithoutUserInput, organizer_reviewsUncheckedUpdateWithoutUserInput>
@@ -25662,7 +27466,7 @@ export namespace Prisma {
     held_at?: DateTimeFilter<"ticket_holds"> | Date | string
     expires_at?: DateTimeFilter<"ticket_holds"> | Date | string
     transactions_id?: IntFilter<"ticket_holds"> | number
-    status?: EnumSTATUSFilter<"ticket_holds"> | $Enums.STATUS
+    status?: Enumcoupon_statusFilter<"ticket_holds"> | $Enums.coupon_status
   }
 
   export type event_attendeesUpsertWithWhereUniqueWithoutUserInput = {
@@ -25691,7 +27495,7 @@ export namespace Prisma {
     user_id?: IntFilter<"event_attendees"> | number
     ticket_quantity?: IntFilter<"event_attendees"> | number
     total_price_paid?: IntFilter<"event_attendees"> | number
-    status?: EnumEVENT_STATUSFilter<"event_attendees"> | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFilter<"event_attendees"> | $Enums.event_status
   }
 
   export type transactions_tableUpsertWithWhereUniqueWithoutUserInput = {
@@ -25717,17 +27521,43 @@ export namespace Prisma {
     id?: IntFilter<"transactions_table"> | number
     user_id?: IntFilter<"transactions_table"> | number
     event_id?: IntFilter<"transactions_table"> | number
-    voucher_id?: IntFilter<"transactions_table"> | number
+    voucher_id?: IntNullableFilter<"transactions_table"> | number | null
     created_at?: DateTimeFilter<"transactions_table"> | Date | string
-    status?: Enumtransactions_STATUSFilter<"transactions_table"> | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFilter<"transactions_table"> | $Enums.transactions_status
     payment_proof_url?: StringFilter<"transactions_table"> | string
+  }
+
+  export type user_couponUpsertWithWhereUniqueWithoutUserInput = {
+    where: user_couponWhereUniqueInput
+    update: XOR<user_couponUpdateWithoutUserInput, user_couponUncheckedUpdateWithoutUserInput>
+    create: XOR<user_couponCreateWithoutUserInput, user_couponUncheckedCreateWithoutUserInput>
+  }
+
+  export type user_couponUpdateWithWhereUniqueWithoutUserInput = {
+    where: user_couponWhereUniqueInput
+    data: XOR<user_couponUpdateWithoutUserInput, user_couponUncheckedUpdateWithoutUserInput>
+  }
+
+  export type user_couponUpdateManyWithWhereWithoutUserInput = {
+    where: user_couponScalarWhereInput
+    data: XOR<user_couponUpdateManyMutationInput, user_couponUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type user_couponScalarWhereInput = {
+    AND?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
+    OR?: user_couponScalarWhereInput[]
+    NOT?: user_couponScalarWhereInput | user_couponScalarWhereInput[]
+    id?: IntFilter<"user_coupon"> | number
+    user_id?: IntFilter<"user_coupon"> | number
+    coupon_id?: IntFilter<"user_coupon"> | number
+    used_at?: DateTimeNullableFilter<"user_coupon"> | Date | string | null
   }
 
   export type user_accountCreateWithoutUser_profileInput = {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25735,11 +27565,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutUser_profileInput = {
@@ -25747,7 +27577,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25755,11 +27585,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutUser_profileInput = {
@@ -25782,7 +27612,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25790,11 +27620,11 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutUser_profileInput = {
@@ -25802,7 +27632,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25810,18 +27640,18 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountCreateWithoutUser_pointsInput = {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25829,11 +27659,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutUser_pointsInput = {
@@ -25841,7 +27671,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25849,11 +27679,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutUser_pointsInput = {
@@ -25895,7 +27725,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25903,11 +27733,11 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutUser_pointsInput = {
@@ -25915,7 +27745,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25923,11 +27753,11 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type points_redemption_itemsUpsertWithWhereUniqueWithoutUser_pointsInput = {
@@ -25959,7 +27789,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25967,11 +27797,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutPoints_redemptionInput = {
@@ -25979,7 +27809,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -25987,11 +27817,11 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutPoints_redemptionInput = {
@@ -26033,7 +27863,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26041,11 +27871,11 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutPoints_redemptionInput = {
@@ -26053,7 +27883,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26061,11 +27891,11 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type points_redemption_itemsUpsertWithWhereUniqueWithoutPoints_redemptionInput = {
@@ -26184,11 +28014,48 @@ export namespace Prisma {
     redeemed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type user_accountCreateWithoutCoupon_tableInput = {
+  export type user_couponCreateWithoutCouponInput = {
+    used_at?: Date | string | null
+    user: user_accountCreateNestedOneWithoutUser_couponInput
+  }
+
+  export type user_couponUncheckedCreateWithoutCouponInput = {
+    id?: number
+    user_id: number
+    used_at?: Date | string | null
+  }
+
+  export type user_couponCreateOrConnectWithoutCouponInput = {
+    where: user_couponWhereUniqueInput
+    create: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput>
+  }
+
+  export type user_couponCreateManyCouponInputEnvelope = {
+    data: user_couponCreateManyCouponInput | user_couponCreateManyCouponInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type user_couponUpsertWithWhereUniqueWithoutCouponInput = {
+    where: user_couponWhereUniqueInput
+    update: XOR<user_couponUpdateWithoutCouponInput, user_couponUncheckedUpdateWithoutCouponInput>
+    create: XOR<user_couponCreateWithoutCouponInput, user_couponUncheckedCreateWithoutCouponInput>
+  }
+
+  export type user_couponUpdateWithWhereUniqueWithoutCouponInput = {
+    where: user_couponWhereUniqueInput
+    data: XOR<user_couponUpdateWithoutCouponInput, user_couponUncheckedUpdateWithoutCouponInput>
+  }
+
+  export type user_couponUpdateManyWithWhereWithoutCouponInput = {
+    where: user_couponScalarWhereInput
+    data: XOR<user_couponUpdateManyMutationInput, user_couponUncheckedUpdateManyWithoutCouponInput>
+  }
+
+  export type user_accountCreateWithoutUser_couponInput = {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -26203,12 +28070,12 @@ export namespace Prisma {
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
   }
 
-  export type user_accountUncheckedCreateWithoutCoupon_tableInput = {
+  export type user_accountUncheckedCreateWithoutUser_couponInput = {
     id?: number
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -26223,27 +28090,61 @@ export namespace Prisma {
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type user_accountCreateOrConnectWithoutCoupon_tableInput = {
+  export type user_accountCreateOrConnectWithoutUser_couponInput = {
     where: user_accountWhereUniqueInput
-    create: XOR<user_accountCreateWithoutCoupon_tableInput, user_accountUncheckedCreateWithoutCoupon_tableInput>
+    create: XOR<user_accountCreateWithoutUser_couponInput, user_accountUncheckedCreateWithoutUser_couponInput>
   }
 
-  export type user_accountUpsertWithoutCoupon_tableInput = {
-    update: XOR<user_accountUpdateWithoutCoupon_tableInput, user_accountUncheckedUpdateWithoutCoupon_tableInput>
-    create: XOR<user_accountCreateWithoutCoupon_tableInput, user_accountUncheckedCreateWithoutCoupon_tableInput>
+  export type coupon_tableCreateWithoutUser_couponInput = {
+    event_id?: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
+    created_at?: Date | string
+    expires_at: Date | string
+    used_at?: Date | string | null
+    usage_limit: number
+    used_count?: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
+  }
+
+  export type coupon_tableUncheckedCreateWithoutUser_couponInput = {
+    id?: number
+    event_id?: number | null
+    code: string
+    discount_type: $Enums.discount_type
+    discount_value: number
+    created_at?: Date | string
+    expires_at: Date | string
+    used_at?: Date | string | null
+    usage_limit: number
+    used_count?: number
+    status: $Enums.coupon_status
+    issued_by: $Enums.issuer
+  }
+
+  export type coupon_tableCreateOrConnectWithoutUser_couponInput = {
+    where: coupon_tableWhereUniqueInput
+    create: XOR<coupon_tableCreateWithoutUser_couponInput, coupon_tableUncheckedCreateWithoutUser_couponInput>
+  }
+
+  export type user_accountUpsertWithoutUser_couponInput = {
+    update: XOR<user_accountUpdateWithoutUser_couponInput, user_accountUncheckedUpdateWithoutUser_couponInput>
+    create: XOR<user_accountCreateWithoutUser_couponInput, user_accountUncheckedCreateWithoutUser_couponInput>
     where?: user_accountWhereInput
   }
 
-  export type user_accountUpdateToOneWithWhereWithoutCoupon_tableInput = {
+  export type user_accountUpdateToOneWithWhereWithoutUser_couponInput = {
     where?: user_accountWhereInput
-    data: XOR<user_accountUpdateWithoutCoupon_tableInput, user_accountUncheckedUpdateWithoutCoupon_tableInput>
+    data: XOR<user_accountUpdateWithoutUser_couponInput, user_accountUncheckedUpdateWithoutUser_couponInput>
   }
 
-  export type user_accountUpdateWithoutCoupon_tableInput = {
+  export type user_accountUpdateWithoutUser_couponInput = {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26258,12 +28159,12 @@ export namespace Prisma {
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
   }
 
-  export type user_accountUncheckedUpdateWithoutCoupon_tableInput = {
+  export type user_accountUncheckedUpdateWithoutUser_couponInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26276,6 +28177,46 @@ export namespace Prisma {
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type coupon_tableUpsertWithoutUser_couponInput = {
+    update: XOR<coupon_tableUpdateWithoutUser_couponInput, coupon_tableUncheckedUpdateWithoutUser_couponInput>
+    create: XOR<coupon_tableCreateWithoutUser_couponInput, coupon_tableUncheckedCreateWithoutUser_couponInput>
+    where?: coupon_tableWhereInput
+  }
+
+  export type coupon_tableUpdateToOneWithWhereWithoutUser_couponInput = {
+    where?: coupon_tableWhereInput
+    data: XOR<coupon_tableUpdateWithoutUser_couponInput, coupon_tableUncheckedUpdateWithoutUser_couponInput>
+  }
+
+  export type coupon_tableUpdateWithoutUser_couponInput = {
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
+  }
+
+  export type coupon_tableUncheckedUpdateWithoutUser_couponInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    event_id?: NullableIntFieldUpdateOperationsInput | number | null
+    code?: StringFieldUpdateOperationsInput | string
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    used_count?: IntFieldUpdateOperationsInput | number
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
+    issued_by?: EnumissuerFieldUpdateOperationsInput | $Enums.issuer
   }
 
   export type organizer_profileCreateWithoutOrganizerInput = {
@@ -26301,7 +28242,7 @@ export namespace Prisma {
   export type organizer_reviewsCreateWithoutOrganizerInput = {
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
     event: event_tableCreateNestedOneWithoutOrganizer_reviewsInput
     user: user_accountCreateNestedOneWithoutOrganizer_reviewsInput
   }
@@ -26312,7 +28253,7 @@ export namespace Prisma {
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type organizer_reviewsCreateOrConnectWithoutOrganizerInput = {
@@ -26332,7 +28273,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -26349,7 +28290,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -26371,7 +28312,7 @@ export namespace Prisma {
   export type event_attendeesCreateWithoutOrganizerInput = {
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
     event: event_tableCreateNestedOneWithoutEvent_attendeesInput
     user: user_accountCreateNestedOneWithoutEvent_attendeesInput
   }
@@ -26382,7 +28323,7 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type event_attendeesCreateOrConnectWithoutOrganizerInput = {
@@ -26399,6 +28340,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     event: event_tableCreateNestedOneWithoutVoucherInput
     transactions_table?: transactions_tableCreateNestedManyWithoutVoucherInput
   }
@@ -26409,6 +28352,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     transactions_table?: transactions_tableUncheckedCreateNestedManyWithoutVoucherInput
   }
 
@@ -26537,13 +28482,15 @@ export namespace Prisma {
     start_at?: DateTimeFilter<"voucher_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"voucher_table"> | Date | string | null
     usage_limit?: IntFilter<"voucher_table"> | number
+    discount_type?: Enumdiscount_typeFilter<"voucher_table"> | $Enums.discount_type
+    discount_value?: IntFilter<"voucher_table"> | number
   }
 
   export type organizer_accountCreateWithoutOrganizer_profileInput = {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesCreateNestedManyWithoutOrganizerInput
@@ -26555,7 +28502,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableUncheckedCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutOrganizerInput
@@ -26582,7 +28529,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_reviews?: organizer_reviewsUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutOrganizerNestedInput
@@ -26594,7 +28541,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUncheckedUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -26605,7 +28552,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileCreateNestedOneWithoutOrganizerInput
     event_table?: event_tableCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesCreateNestedManyWithoutOrganizerInput
@@ -26617,7 +28564,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileUncheckedCreateNestedOneWithoutOrganizerInput
     event_table?: event_tableUncheckedCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutOrganizerInput
@@ -26636,7 +28583,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -26654,7 +28601,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -26671,7 +28618,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -26680,10 +28627,10 @@ export namespace Prisma {
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutOrganizer_reviewsInput = {
@@ -26691,7 +28638,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -26700,10 +28647,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutOrganizer_reviewsInput = {
@@ -26726,7 +28673,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUpdateOneWithoutOrganizerNestedInput
     event_table?: event_tableUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutOrganizerNestedInput
@@ -26738,7 +28685,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUncheckedUpdateOneWithoutOrganizerNestedInput
     event_table?: event_tableUncheckedUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -26804,7 +28751,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26813,10 +28760,10 @@ export namespace Prisma {
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutOrganizer_reviewsInput = {
@@ -26824,7 +28771,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26833,17 +28780,17 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type organizer_accountCreateWithoutEvent_tableInput = {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesCreateNestedManyWithoutOrganizerInput
@@ -26855,7 +28802,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileUncheckedCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutOrganizerInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutOrganizerInput
@@ -26870,7 +28817,7 @@ export namespace Prisma {
   export type organizer_reviewsCreateWithoutEventInput = {
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutOrganizer_reviewsInput
     user: user_accountCreateNestedOneWithoutOrganizer_reviewsInput
   }
@@ -26881,7 +28828,7 @@ export namespace Prisma {
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type organizer_reviewsCreateOrConnectWithoutEventInput = {
@@ -26898,7 +28845,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     user: user_accountCreateNestedOneWithoutTicket_holdsInput
     ticket_type: ticket_typeCreateNestedOneWithoutTicket_holdsInput
     transactions: transactions_tableCreateNestedOneWithoutTicketInput
@@ -26912,7 +28859,7 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsCreateOrConnectWithoutEventInput = {
@@ -26953,7 +28900,7 @@ export namespace Prisma {
   export type event_attendeesCreateWithoutEventInput = {
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
     organizer: organizer_accountCreateNestedOneWithoutEvent_attendeesInput
     user: user_accountCreateNestedOneWithoutEvent_attendeesInput
   }
@@ -26964,7 +28911,7 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type event_attendeesCreateOrConnectWithoutEventInput = {
@@ -26978,20 +28925,20 @@ export namespace Prisma {
   }
 
   export type transactions_tableCreateWithoutEventInput = {
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     user: user_accountCreateNestedOneWithoutTransactionsInput
     ticket?: ticket_holdsCreateNestedManyWithoutTransactionsInput
-    voucher: voucher_tableCreateNestedOneWithoutTransactions_tableInput
+    voucher?: voucher_tableCreateNestedOneWithoutTransactions_tableInput
   }
 
   export type transactions_tableUncheckedCreateWithoutEventInput = {
     id?: number
     user_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     ticket?: ticket_holdsUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -27010,6 +28957,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     organizer: organizer_accountCreateNestedOneWithoutVoucherInput
     transactions_table?: transactions_tableCreateNestedManyWithoutVoucherInput
   }
@@ -27020,6 +28969,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     transactions_table?: transactions_tableUncheckedCreateNestedManyWithoutVoucherInput
   }
 
@@ -27048,7 +28999,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutOrganizerNestedInput
@@ -27060,7 +29011,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUncheckedUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutOrganizerNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -27181,7 +29132,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -27199,7 +29150,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -27216,7 +29167,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27225,10 +29176,10 @@ export namespace Prisma {
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutTicket_holdsInput = {
@@ -27236,7 +29187,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27245,10 +29196,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutTicket_holdsInput = {
@@ -27277,21 +29228,21 @@ export namespace Prisma {
   }
 
   export type transactions_tableCreateWithoutTicketInput = {
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     user: user_accountCreateNestedOneWithoutTransactionsInput
     event: event_tableCreateNestedOneWithoutTransactionsInput
-    voucher: voucher_tableCreateNestedOneWithoutTransactions_tableInput
+    voucher?: voucher_tableCreateNestedOneWithoutTransactions_tableInput
   }
 
   export type transactions_tableUncheckedCreateWithoutTicketInput = {
     id?: number
     user_id: number
     event_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
   }
 
@@ -27359,7 +29310,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27368,10 +29319,10 @@ export namespace Prisma {
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutTicket_holdsInput = {
@@ -27379,7 +29330,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27388,10 +29339,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ticket_typeUpsertWithoutTicket_holdsInput = {
@@ -27433,20 +29384,20 @@ export namespace Prisma {
 
   export type transactions_tableUpdateWithoutTicketInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     user?: user_accountUpdateOneRequiredWithoutTransactionsNestedInput
     event?: event_tableUpdateOneRequiredWithoutTransactionsNestedInput
-    voucher?: voucher_tableUpdateOneRequiredWithoutTransactions_tableNestedInput
+    voucher?: voucher_tableUpdateOneWithoutTransactions_tableNestedInput
   }
 
   export type transactions_tableUncheckedUpdateWithoutTicketInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
   }
 
@@ -27457,7 +29408,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -27475,7 +29426,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -27492,7 +29443,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     event: event_tableCreateNestedOneWithoutTicket_holdsInput
     user: user_accountCreateNestedOneWithoutTicket_holdsInput
     transactions: transactions_tableCreateNestedOneWithoutTicketInput
@@ -27506,7 +29457,7 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsCreateOrConnectWithoutTicket_typeInput = {
@@ -27586,7 +29537,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -27604,7 +29555,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -27621,7 +29572,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableCreateNestedManyWithoutOrganizerInput
@@ -27633,7 +29584,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileUncheckedCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableUncheckedCreateNestedManyWithoutOrganizerInput
@@ -27649,7 +29600,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27658,10 +29609,10 @@ export namespace Prisma {
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     transactions?: transactions_tableCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutEvent_attendeesInput = {
@@ -27669,7 +29620,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27678,10 +29629,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     transactions?: transactions_tableUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutEvent_attendeesInput = {
@@ -27748,7 +29699,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUpdateManyWithoutOrganizerNestedInput
@@ -27760,7 +29711,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUncheckedUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -27782,7 +29733,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27791,10 +29742,10 @@ export namespace Prisma {
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutEvent_attendeesInput = {
@@ -27802,7 +29753,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27811,17 +29762,17 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     transactions?: transactions_tableUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountCreateWithoutTransactionsInput = {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27830,10 +29781,10 @@ export namespace Prisma {
     user_profile?: user_profileCreateNestedOneWithoutUserInput
     user_points?: user_pointsCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponCreateNestedManyWithoutUserInput
   }
 
   export type user_accountUncheckedCreateWithoutTransactionsInput = {
@@ -27841,7 +29792,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    role: $Enums.ACCOUNT_ROLE
+    role: $Enums.account_role
     referral_code: string
     referred_by_code?: string | null
     imgProfile?: string | null
@@ -27850,10 +29801,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedCreateNestedOneWithoutUserInput
     user_points?: user_pointsUncheckedCreateNestedManyWithoutUserInput
     points_redemption?: points_redemptionUncheckedCreateNestedManyWithoutUserInput
-    coupon_table?: coupon_tableUncheckedCreateNestedManyWithoutUserInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutUserInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutUserInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutUserInput
+    user_coupon?: user_couponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type user_accountCreateOrConnectWithoutTransactionsInput = {
@@ -27868,7 +29819,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -27886,7 +29837,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -27903,7 +29854,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
     event: event_tableCreateNestedOneWithoutTicket_holdsInput
     user: user_accountCreateNestedOneWithoutTicket_holdsInput
     ticket_type: ticket_typeCreateNestedOneWithoutTicket_holdsInput
@@ -27917,7 +29868,7 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsCreateOrConnectWithoutTransactionsInput = {
@@ -27934,6 +29885,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
     organizer: organizer_accountCreateNestedOneWithoutVoucherInput
     event: event_tableCreateNestedOneWithoutVoucherInput
   }
@@ -27945,6 +29898,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
   }
 
   export type voucher_tableCreateOrConnectWithoutTransactions_tableInput = {
@@ -27967,7 +29922,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27976,10 +29931,10 @@ export namespace Prisma {
     user_profile?: user_profileUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUpdateManyWithoutUserNestedInput
   }
 
   export type user_accountUncheckedUpdateWithoutTransactionsInput = {
@@ -27987,7 +29942,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    role?: EnumACCOUNT_ROLEFieldUpdateOperationsInput | $Enums.ACCOUNT_ROLE
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     referral_code?: StringFieldUpdateOperationsInput | string
     referred_by_code?: NullableStringFieldUpdateOperationsInput | string | null
     imgProfile?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27996,10 +29951,10 @@ export namespace Prisma {
     user_profile?: user_profileUncheckedUpdateOneWithoutUserNestedInput
     user_points?: user_pointsUncheckedUpdateManyWithoutUserNestedInput
     points_redemption?: points_redemptionUncheckedUpdateManyWithoutUserNestedInput
-    coupon_table?: coupon_tableUncheckedUpdateManyWithoutUserNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutUserNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutUserNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutUserNestedInput
+    user_coupon?: user_couponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type event_tableUpsertWithoutTransactionsInput = {
@@ -28077,6 +30032,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     organizer?: organizer_accountUpdateOneRequiredWithoutVoucherNestedInput
     event?: event_tableUpdateOneRequiredWithoutVoucherNestedInput
   }
@@ -28088,13 +30045,15 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
   }
 
   export type organizer_accountCreateWithoutVoucherInput = {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableCreateNestedManyWithoutOrganizerInput
@@ -28106,7 +30065,7 @@ export namespace Prisma {
     username: string
     email: string
     password: string
-    is_admin: boolean
+    role: $Enums.account_role
     organizer_profile?: organizer_profileUncheckedCreateNestedOneWithoutOrganizerInput
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutOrganizerInput
     event_table?: event_tableUncheckedCreateNestedManyWithoutOrganizerInput
@@ -28125,7 +30084,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -28143,7 +30102,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -28157,8 +30116,8 @@ export namespace Prisma {
   }
 
   export type transactions_tableCreateWithoutVoucherInput = {
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     user: user_accountCreateNestedOneWithoutTransactionsInput
     event: event_tableCreateNestedOneWithoutTransactionsInput
@@ -28169,8 +30128,8 @@ export namespace Prisma {
     id?: number
     user_id: number
     event_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
     ticket?: ticket_holdsUncheckedCreateNestedManyWithoutTransactionsInput
   }
@@ -28200,7 +30159,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUpdateManyWithoutOrganizerNestedInput
@@ -28212,7 +30171,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    role?: Enumaccount_roleFieldUpdateOperationsInput | $Enums.account_role
     organizer_profile?: organizer_profileUncheckedUpdateOneWithoutOrganizerNestedInput
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutOrganizerNestedInput
     event_table?: event_tableUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -28295,22 +30254,13 @@ export namespace Prisma {
     redeemed_at: Date | string
   }
 
-  export type coupon_tableCreateManyUserInput = {
-    id?: number
-    created_at: Date | string
-    expires_at: Date | string
-    used_at?: Date | string | null
-    status: $Enums.STATUS
-    coupon_amount: number
-  }
-
   export type organizer_reviewsCreateManyUserInput = {
     id?: number
     organizer_id: number
     event_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type ticket_holdsCreateManyUserInput = {
@@ -28321,7 +30271,7 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type event_attendeesCreateManyUserInput = {
@@ -28330,16 +30280,22 @@ export namespace Prisma {
     organizer_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type transactions_tableCreateManyUserInput = {
     id?: number
     event_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
+  }
+
+  export type user_couponCreateManyUserInput = {
+    id?: number
+    coupon_id: number
+    used_at?: Date | string | null
   }
 
   export type user_pointsUpdateWithoutUserInput = {
@@ -28392,32 +30348,6 @@ export namespace Prisma {
     redeemed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type coupon_tableUpdateWithoutUserInput = {
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type coupon_tableUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type coupon_tableUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
-    coupon_amount?: IntFieldUpdateOperationsInput | number
-  }
-
   export type organizer_reviewsUpdateWithoutUserInput = {
     rating?: IntFieldUpdateOperationsInput | number
     review?: StringFieldUpdateOperationsInput | string
@@ -28448,7 +30378,7 @@ export namespace Prisma {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
     event?: event_tableUpdateOneRequiredWithoutTicket_holdsNestedInput
     ticket_type?: ticket_typeUpdateOneRequiredWithoutTicket_holdsNestedInput
     transactions?: transactions_tableUpdateOneRequiredWithoutTicketNestedInput
@@ -28462,7 +30392,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsUncheckedUpdateManyWithoutUserInput = {
@@ -28473,13 +30403,13 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type event_attendeesUpdateWithoutUserInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
     event?: event_tableUpdateOneRequiredWithoutEvent_attendeesNestedInput
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
   }
@@ -28490,7 +30420,7 @@ export namespace Prisma {
     organizer_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type event_attendeesUncheckedUpdateManyWithoutUserInput = {
@@ -28499,24 +30429,24 @@ export namespace Prisma {
     organizer_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type transactions_tableUpdateWithoutUserInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     event?: event_tableUpdateOneRequiredWithoutTransactionsNestedInput
     ticket?: ticket_holdsUpdateManyWithoutTransactionsNestedInput
-    voucher?: voucher_tableUpdateOneRequiredWithoutTransactions_tableNestedInput
+    voucher?: voucher_tableUpdateOneWithoutTransactions_tableNestedInput
   }
 
   export type transactions_tableUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     ticket?: ticket_holdsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -28524,10 +30454,27 @@ export namespace Prisma {
   export type transactions_tableUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type user_couponUpdateWithoutUserInput = {
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    coupon?: coupon_tableUpdateOneRequiredWithoutUser_couponNestedInput
+  }
+
+  export type user_couponUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type user_couponUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    coupon_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type points_redemption_itemsCreateManyUser_pointsInput = {
@@ -28568,13 +30515,36 @@ export namespace Prisma {
     user_point_id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type user_couponCreateManyCouponInput = {
+    id?: number
+    user_id: number
+    used_at?: Date | string | null
+  }
+
+  export type user_couponUpdateWithoutCouponInput = {
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: user_accountUpdateOneRequiredWithoutUser_couponNestedInput
+  }
+
+  export type user_couponUncheckedUpdateWithoutCouponInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type user_couponUncheckedUpdateManyWithoutCouponInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type organizer_reviewsCreateManyOrganizerInput = {
     id?: number
     event_id: number
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type event_tableCreateManyOrganizerInput = {
@@ -28585,7 +30555,7 @@ export namespace Prisma {
     end_date: Date | string
     seat_capacity: number
     event_type: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type event_attendeesCreateManyOrganizerInput = {
@@ -28594,7 +30564,7 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type voucher_tableCreateManyOrganizerInput = {
@@ -28603,6 +30573,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
   }
 
   export type organizer_reviewsUpdateWithoutOrganizerInput = {
@@ -28678,7 +30650,7 @@ export namespace Prisma {
   export type event_attendeesUpdateWithoutOrganizerInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
     event?: event_tableUpdateOneRequiredWithoutEvent_attendeesNestedInput
     user?: user_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
   }
@@ -28689,7 +30661,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type event_attendeesUncheckedUpdateManyWithoutOrganizerInput = {
@@ -28698,13 +30670,15 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type voucher_tableUpdateWithoutOrganizerInput = {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     event?: event_tableUpdateOneRequiredWithoutVoucherNestedInput
     transactions_table?: transactions_tableUpdateManyWithoutVoucherNestedInput
   }
@@ -28715,6 +30689,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     transactions_table?: transactions_tableUncheckedUpdateManyWithoutVoucherNestedInput
   }
 
@@ -28724,6 +30700,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
   }
 
   export type organizer_reviewsCreateManyEventInput = {
@@ -28732,7 +30710,7 @@ export namespace Prisma {
     user_id: number
     rating: number
     review: string
-    created_at: Date | string
+    created_at?: Date | string
   }
 
   export type ticket_holdsCreateManyEventInput = {
@@ -28743,7 +30721,7 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_typeCreateManyEventInput = {
@@ -28759,15 +30737,15 @@ export namespace Prisma {
     user_id: number
     ticket_quantity: number
     total_price_paid: number
-    status: $Enums.EVENT_STATUS
+    status: $Enums.event_status
   }
 
   export type transactions_tableCreateManyEventInput = {
     id?: number
     user_id: number
-    voucher_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    voucher_id?: number | null
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
   }
 
@@ -28777,6 +30755,8 @@ export namespace Prisma {
     start_at: Date | string
     expires_at?: Date | string | null
     usage_limit: number
+    discount_type: $Enums.discount_type
+    discount_value: number
   }
 
   export type organizer_reviewsUpdateWithoutEventInput = {
@@ -28809,7 +30789,7 @@ export namespace Prisma {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
     user?: user_accountUpdateOneRequiredWithoutTicket_holdsNestedInput
     ticket_type?: ticket_typeUpdateOneRequiredWithoutTicket_holdsNestedInput
     transactions?: transactions_tableUpdateOneRequiredWithoutTicketNestedInput
@@ -28823,7 +30803,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsUncheckedUpdateManyWithoutEventInput = {
@@ -28834,7 +30814,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_typeUpdateWithoutEventInput = {
@@ -28862,7 +30842,7 @@ export namespace Prisma {
   export type event_attendeesUpdateWithoutEventInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
     user?: user_accountUpdateOneRequiredWithoutEvent_attendeesNestedInput
   }
@@ -28873,7 +30853,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type event_attendeesUncheckedUpdateManyWithoutEventInput = {
@@ -28882,24 +30862,24 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     total_price_paid?: IntFieldUpdateOperationsInput | number
-    status?: EnumEVENT_STATUSFieldUpdateOperationsInput | $Enums.EVENT_STATUS
+    status?: Enumevent_statusFieldUpdateOperationsInput | $Enums.event_status
   }
 
   export type transactions_tableUpdateWithoutEventInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     user?: user_accountUpdateOneRequiredWithoutTransactionsNestedInput
     ticket?: ticket_holdsUpdateManyWithoutTransactionsNestedInput
-    voucher?: voucher_tableUpdateOneRequiredWithoutTransactions_tableNestedInput
+    voucher?: voucher_tableUpdateOneWithoutTransactions_tableNestedInput
   }
 
   export type transactions_tableUncheckedUpdateWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     ticket?: ticket_holdsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -28907,9 +30887,9 @@ export namespace Prisma {
   export type transactions_tableUncheckedUpdateManyWithoutEventInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    voucher_id?: IntFieldUpdateOperationsInput | number
+    voucher_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
   }
 
@@ -28917,6 +30897,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     organizer?: organizer_accountUpdateOneRequiredWithoutVoucherNestedInput
     transactions_table?: transactions_tableUpdateManyWithoutVoucherNestedInput
   }
@@ -28927,6 +30909,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
     transactions_table?: transactions_tableUncheckedUpdateManyWithoutVoucherNestedInput
   }
 
@@ -28936,6 +30920,8 @@ export namespace Prisma {
     start_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     usage_limit?: IntFieldUpdateOperationsInput | number
+    discount_type?: Enumdiscount_typeFieldUpdateOperationsInput | $Enums.discount_type
+    discount_value?: IntFieldUpdateOperationsInput | number
   }
 
   export type ticket_holdsCreateManyTicket_typeInput = {
@@ -28946,14 +30932,14 @@ export namespace Prisma {
     held_at: Date | string
     expires_at: Date | string
     transactions_id: number
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsUpdateWithoutTicket_typeInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
     event?: event_tableUpdateOneRequiredWithoutTicket_holdsNestedInput
     user?: user_accountUpdateOneRequiredWithoutTicket_holdsNestedInput
     transactions?: transactions_tableUpdateOneRequiredWithoutTicketNestedInput
@@ -28967,7 +30953,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsUncheckedUpdateManyWithoutTicket_typeInput = {
@@ -28978,7 +30964,7 @@ export namespace Prisma {
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions_id?: IntFieldUpdateOperationsInput | number
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsCreateManyTransactionsInput = {
@@ -28989,14 +30975,14 @@ export namespace Prisma {
     ticket_quantity: number
     held_at: Date | string
     expires_at: Date | string
-    status: $Enums.STATUS
+    status: $Enums.coupon_status
   }
 
   export type ticket_holdsUpdateWithoutTransactionsInput = {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
     event?: event_tableUpdateOneRequiredWithoutTicket_holdsNestedInput
     user?: user_accountUpdateOneRequiredWithoutTicket_holdsNestedInput
     ticket_type?: ticket_typeUpdateOneRequiredWithoutTicket_holdsNestedInput
@@ -29010,7 +30996,7 @@ export namespace Prisma {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type ticket_holdsUncheckedUpdateManyWithoutTransactionsInput = {
@@ -29021,21 +31007,21 @@ export namespace Prisma {
     ticket_quantity?: IntFieldUpdateOperationsInput | number
     held_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    status?: Enumcoupon_statusFieldUpdateOperationsInput | $Enums.coupon_status
   }
 
   export type transactions_tableCreateManyVoucherInput = {
     id?: number
     user_id: number
     event_id: number
-    created_at: Date | string
-    status: $Enums.transactions_STATUS
+    created_at?: Date | string
+    status: $Enums.transactions_status
     payment_proof_url: string
   }
 
   export type transactions_tableUpdateWithoutVoucherInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     user?: user_accountUpdateOneRequiredWithoutTransactionsNestedInput
     event?: event_tableUpdateOneRequiredWithoutTransactionsNestedInput
@@ -29047,7 +31033,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
     ticket?: ticket_holdsUncheckedUpdateManyWithoutTransactionsNestedInput
   }
@@ -29057,7 +31043,7 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     event_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: Enumtransactions_STATUSFieldUpdateOperationsInput | $Enums.transactions_STATUS
+    status?: Enumtransactions_statusFieldUpdateOperationsInput | $Enums.transactions_status
     payment_proof_url?: StringFieldUpdateOperationsInput | string
   }
 
