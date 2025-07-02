@@ -17,7 +17,11 @@ model user_account {
     username          String               @unique
     email             String               @unique
     password          String
+<<<<<<< HEAD
     role              account_role
+=======
+    role              ACCOUNT_ROLE
+>>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     referral_code     String               @unique
     referred_by_code  String?
     imgProfile        String?
@@ -26,14 +30,24 @@ model user_account {
     user_profile      user_profile?
     user_points       user_points[]
     points_redemption points_redemption[]
+<<<<<<< HEAD
+=======
+    coupon_table      coupon_table[]
+>>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     organizer_reviews organizer_reviews[]
     ticket_holds      ticket_holds[]
     event_attendees   event_attendees[]
     transactions      transactions_table[]
+<<<<<<< HEAD
     user_coupon       user_coupon[]
 }
 
 enum account_role {
+=======
+}
+
+enum ACCOUNT_ROLE {
+>>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     user
     organizer
     admin
