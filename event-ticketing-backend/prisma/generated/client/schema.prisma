@@ -17,7 +17,7 @@ model user_account {
   username          String               @unique
   email             String               @unique
   password          String
-  role              ACCOUNT_ROLE
+  role              account_role
   referral_code     String               @unique
   referred_by_code  String?
   imgProfile        String?
@@ -26,14 +26,14 @@ model user_account {
   user_profile      user_profile?
   user_points       user_points[]
   points_redemption points_redemption[]
-  coupon_table      coupon_table[]
   organizer_reviews organizer_reviews[]
   ticket_holds      ticket_holds[]
   event_attendees   event_attendees[]
   transactions      transactions_table[]
+  user_coupon       user_coupon[]
 }
 
-enum ACCOUNT_ROLE {
+enum account_role {
   user
   organizer
   admin
@@ -83,20 +83,42 @@ model points_redemption_items {
 }
 
 model coupon_table {
-  id            Int          @id @default(autoincrement())
-  user_id       Int
-  created_at    DateTime
-  expires_at    DateTime
-  used_at       DateTime?
-  status        STATUS
-  coupon_amount Int
-  user          user_account @relation(fields: [user_id], references: [id])
+  id             Int           @id @default(autoincrement())
+  event_id       Int?
+  code           String        @unique
+  discount_type  discount_type
+  discount_value Int
+  created_at     DateTime      @default(now())
+  expires_at     DateTime
+  used_at        DateTime?
+  usage_limit    Int
+  used_count     Int           @default(0)
+  status         coupon_status
+  issued_by      issuer
+  user_coupon    user_coupon[]
 }
 
-enum STATUS {
+model user_coupon {
+  id        Int          @id @default(autoincrement())
+  user_id   Int
+  coupon_id Int
+  used_at   DateTime?
+  user      user_account @relation(fields: [user_id], references: [id])
+  coupon    coupon_table @relation(fields: [coupon_id], references: [id])
+
+  @@unique([user_id, coupon_id])
+}
+
+enum coupon_status {
   active
   used
   expired
+}
+
+enum issuer {
+  system
+  organizer
+  admin
 }
 
 // Organizer Flow
@@ -106,7 +128,7 @@ model organizer_account {
   username          String
   email             String              @unique
   password          String
-  is_admin          Boolean // Perlu dipikirkan cara implementasinya
+  role              account_role
   organizer_profile organizer_profile?
   organizer_reviews organizer_reviews[]
   event_table       event_table[]
@@ -131,7 +153,7 @@ model organizer_reviews {
   user_id      Int
   rating       Int
   review       String
-  created_at   DateTime
+  created_at   DateTime          @default(now())
   organizer    organizer_account @relation(fields: [organizer_id], references: [id])
   event        event_table       @relation(fields: [event_id], references: [id])
   user         user_account      @relation(fields: [user_id], references: [id])
@@ -148,7 +170,7 @@ model event_table {
   end_date          DateTime
   seat_capacity     Int // query from attendees_list
   event_type        String
-  created_at        DateTime
+  created_at        DateTime             @default(now())
   organizer         organizer_account    @relation(fields: [organizer_id], references: [id])
   organizer_reviews organizer_reviews[]
   ticket_holds      ticket_holds[]
@@ -167,7 +189,7 @@ model ticket_holds {
   held_at         DateTime
   expires_at      DateTime
   transactions_id Int
-  status          STATUS
+  status          coupon_status
   event           event_table        @relation(fields: [event_id], references: [id])
   user            user_account       @relation(fields: [user_id], references: [id])
   ticket_type     ticket_type        @relation(fields: [ticket_type_id], references: [id])
@@ -191,7 +213,7 @@ model event_attendees {
   user_id          Int
   ticket_quantity  Int
   total_price_paid Int
-  status           EVENT_STATUS
+  status           event_status
   event            event_table       @relation(fields: [event_id], references: [id])
   organizer        organizer_account @relation(fields: [organizer_id], references: [id])
   user             user_account      @relation(fields: [user_id], references: [id])
@@ -199,7 +221,7 @@ model event_attendees {
   @@unique([event_id, user_id])
 }
 
-enum EVENT_STATUS {
+enum event_status {
   attended
   expired
   cancelled
@@ -211,17 +233,17 @@ model transactions_table {
   id                Int                 @id @default(autoincrement())
   user_id           Int
   event_id          Int
-  voucher_id        Int
-  created_at        DateTime
-  status            transactions_STATUS
+  voucher_id        Int?
+  created_at        DateTime            @default(now())
+  status            transactions_status
   payment_proof_url String
   user              user_account        @relation(fields: [user_id], references: [id])
   event             event_table         @relation(fields: [event_id], references: [id])
   ticket            ticket_holds[]
-  voucher           voucher_table       @relation(fields: [voucher_id], references: [id])
+  voucher           voucher_table?      @relation(fields: [voucher_id], references: [id])
 }
 
-enum transactions_STATUS {
+enum transactions_status {
   waiting_for_payment
   waiting_for_admin_confirmation
   rejected
@@ -238,7 +260,14 @@ model voucher_table {
   start_at           DateTime
   expires_at         DateTime?
   usage_limit        Int
+  discount_type      discount_type
+  discount_value     Int
   organizer          organizer_account    @relation(fields: [organizer_id], references: [id])
   event              event_table          @relation(fields: [event_id], references: [id])
   transactions_table transactions_table[]
+}
+
+enum discount_type {
+  fixed
+  percentage
 }
