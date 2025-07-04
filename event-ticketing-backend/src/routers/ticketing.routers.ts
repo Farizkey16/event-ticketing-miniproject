@@ -4,6 +4,7 @@ import GenerateCoupon from "../controllers/coupon.controller";
 import OrganizerEventManagement from "../controllers/event/organizerEventController";
 import { VerifyToken } from "../middlewares/VerifyToken";
 import { Router } from "express";
+import OrganizerProfile from "../controllers/profiles/organizerProfileController";
 
 class TicketingRouter {
   private route: Router;
@@ -11,6 +12,7 @@ class TicketingRouter {
   private organizerAuthController: OrganizerAuthController;
   private generateCoupon: GenerateCoupon;
   private organizerEventManagement: OrganizerEventManagement;
+  private organizerProfile: OrganizerProfile;
 
   constructor() {
     this.route = Router();
@@ -18,20 +20,22 @@ class TicketingRouter {
     this.organizerAuthController = new OrganizerAuthController();
     this.generateCoupon = new GenerateCoupon();
     this.organizerEventManagement = new OrganizerEventManagement();
+    this.organizerProfile = new OrganizerProfile();
     this.initializeRouters();
   }
 
   private initializeRouters(): void {
     // User Routes
-    this.route.post("/register/user", this.userAuthController.register);
-    this.route.post("/login/user", this.userAuthController.login);
+    this.route.post("/user/register", this.userAuthController.register);
+    this.route.post("/user/login", this.userAuthController.login);
 
     // Organizer Routes
     this.route.post(
-      "/register/organizer",
+      "/organizer/register",
       this.organizerAuthController.register
     );
-    this.route.post("/login/organizer", this.organizerAuthController.login);
+    this.route.post("/organizer/login", this.organizerAuthController.login);
+    this.route.post("/organizer/profile", VerifyToken, this.organizerProfile.newProfile)
 
     // Coupon Generator
     this.route.post("/coupon/create", VerifyToken, this.generateCoupon.couponGenerator); 
