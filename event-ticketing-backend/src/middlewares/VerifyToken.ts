@@ -17,15 +17,17 @@ export const VerifyToken = (
     const payload = jwt.verify(token, process.env.JWT_TOKEN as string) as JwtPayload & {
         id: number;
         email: string;
-        role?: string;
+        role: string;
     }
 
-    req.user = payload
+    res.locals.user = payload
+    console.log(payload)
 
     next();
 
   } catch (err) {
-    return res.status(403).json({ message: "Invalid or expired token" });
+    res.status(403).json({ message: "Invalid or expired token" });
+    return;
   }
 };
 

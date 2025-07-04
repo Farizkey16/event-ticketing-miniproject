@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.11.0
- * Query Engine version: 9c30299f5a0ea26a96790e13f796dc6094db3173
+ * Prisma Client JS version: 6.11.1
+ * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
  */
 Prisma.prismaVersion = {
-  client: "6.11.0",
-  engine: "9c30299f5a0ea26a96790e13f796dc6094db3173"
+  client: "6.11.1",
+  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -168,7 +168,6 @@ exports.Prisma.Points_redemption_itemsScalarFieldEnum = {
 
 exports.Prisma.Coupon_tableScalarFieldEnum = {
   id: 'id',
-<<<<<<< HEAD
   event_id: 'event_id',
   code: 'code',
   discount_type: 'discount_type',
@@ -187,14 +186,6 @@ exports.Prisma.User_couponScalarFieldEnum = {
   user_id: 'user_id',
   coupon_id: 'coupon_id',
   used_at: 'used_at'
-=======
-  user_id: 'user_id',
-  created_at: 'created_at',
-  expires_at: 'expires_at',
-  used_at: 'used_at',
-  status: 'status',
-  coupon_amount: 'coupon_amount'
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
 };
 
 exports.Prisma.Organizer_accountScalarFieldEnum = {
@@ -202,11 +193,7 @@ exports.Prisma.Organizer_accountScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
-<<<<<<< HEAD
   role: 'role'
-=======
-  is_admin: 'is_admin'
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
 };
 
 exports.Prisma.Organizer_profileScalarFieldEnum = {
@@ -237,7 +224,9 @@ exports.Prisma.Event_tableScalarFieldEnum = {
   end_date: 'end_date',
   seat_capacity: 'seat_capacity',
   event_type: 'event_type',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  thumbnail_img: 'thumbnail_img'
 };
 
 exports.Prisma.Ticket_holdsScalarFieldEnum = {
@@ -286,13 +275,9 @@ exports.Prisma.Voucher_tableScalarFieldEnum = {
   event_id: 'event_id',
   start_at: 'start_at',
   expires_at: 'expires_at',
-<<<<<<< HEAD
   usage_limit: 'usage_limit',
   discount_type: 'discount_type',
   discount_value: 'discount_value'
-=======
-  usage_limit: 'usage_limit'
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
 };
 
 exports.Prisma.SortOrder = {
@@ -309,32 +294,23 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-<<<<<<< HEAD
 exports.account_role = exports.$Enums.account_role = {
-=======
-exports.ACCOUNT_ROLE = exports.$Enums.ACCOUNT_ROLE = {
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   user: 'user',
   organizer: 'organizer',
   admin: 'admin'
 };
 
-<<<<<<< HEAD
 exports.discount_type = exports.$Enums.discount_type = {
   fixed: 'fixed',
   percentage: 'percentage'
 };
 
 exports.coupon_status = exports.$Enums.coupon_status = {
-=======
-exports.STATUS = exports.$Enums.STATUS = {
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   active: 'active',
   used: 'used',
   expired: 'expired'
 };
 
-<<<<<<< HEAD
 exports.issuer = exports.$Enums.issuer = {
   system: 'system',
   organizer: 'organizer',
@@ -342,19 +318,12 @@ exports.issuer = exports.$Enums.issuer = {
 };
 
 exports.event_status = exports.$Enums.event_status = {
-=======
-exports.EVENT_STATUS = exports.$Enums.EVENT_STATUS = {
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
 };
 
-<<<<<<< HEAD
 exports.transactions_status = exports.$Enums.transactions_status = {
-=======
-exports.transactions_STATUS = exports.$Enums.transactions_STATUS = {
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
@@ -370,10 +339,7 @@ exports.Prisma.ModelName = {
   points_redemption: 'points_redemption',
   points_redemption_items: 'points_redemption_items',
   coupon_table: 'coupon_table',
-<<<<<<< HEAD
   user_coupon: 'user_coupon',
-=======
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   organizer_account: 'organizer_account',
   organizer_profile: 'organizer_profile',
   organizer_reviews: 'organizer_reviews',

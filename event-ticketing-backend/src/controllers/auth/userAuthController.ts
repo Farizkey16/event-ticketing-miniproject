@@ -156,7 +156,7 @@ class UserAuthController {
     }
 
     // Token
-    const token = sign({id: checkUser.id, email: checkUser.email}, process.env.JWT_TOKEN as string, { expiresIn: '2h'})
+    const token = sign({id: checkUser.id, email: checkUser.email, role: checkUser.role}, process.env.JWT_TOKEN as string, { expiresIn: '2h'})
 
     res.status(200).send({
       success: true,
