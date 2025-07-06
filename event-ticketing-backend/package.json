@@ -20,12 +20,8 @@
     "dayjs": "^1.11.13",
     "dotenv": "^17.0.0",
     "express": "^5.1.0",
-<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
     "nanoid": "^5.1.5"
-=======
-    "jsonwebtoken": "^9.0.2"
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
