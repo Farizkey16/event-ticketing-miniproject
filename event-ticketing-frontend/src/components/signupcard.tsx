@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-export default function SignUpCard() {
+type SignUpCardProps = {
+  onClose: () => void;
+};
+
+export default function SignUpCard({ onClose }: SignUpCardProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,27 +17,33 @@ export default function SignUpCard() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validasi dasar
     if (password !== confirmPassword) {
       alert("Password dan konfirmasi tidak cocok");
       return;
     }
 
-    console.log("Sign up data:", {
-      username,
-      email,
-      password,
-    });
+    console.log("Sign up data:", { username, email, password });
 
-    // Reset form
+    // Reset
     setUsername("");
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+
+    onClose(); // Tutup setelah submit
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-80 relative z-50">
+      {/* Tombol Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
       <h2 className="text-lg font-semibold mb-2">Create a new account</h2>
       <p className="text-sm text-gray-600 mb-4">Fill your details below.</p>
 
