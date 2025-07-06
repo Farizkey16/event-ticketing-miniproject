@@ -27,19 +27,22 @@ const events = [
 ]
 
 export default function Calendar31() {
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(2025, 5, 12)
-  )
+  const [date, setDate] = React.useState<Date | undefined>(undefined)
+
+  // Set default tanggal hanya di sisi client
+  React.useEffect(() => {
+    setDate(new Date(2025, 5, 12)) // bulan dimulai dari 0, jadi 5 = Juni
+  }, [])
 
   return (
     <div className="flex flex-col lg:flex-row gap-4">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="bg-transparent p-0"
-          required
-        />
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="bg-transparent p-0"
+        required
+      />
 
       <div className="flex flex-col flex-1 gap-3">
         <div className="flex w-full items-center justify-between px-1">
@@ -60,6 +63,7 @@ export default function Calendar31() {
             <span className="sr-only">Add Event</span>
           </Button>
         </div>
+
         <div className="flex w-full flex-col gap-2">
           {events.map((event) => (
             <div
