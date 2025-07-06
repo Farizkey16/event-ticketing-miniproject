@@ -45,7 +45,6 @@ export default function Navbar({ user, onSignInClick, onSignUpClick }: NavbarPro
       <div className="hidden md:flex items-center gap-4">
         <Link href="/features">Features</Link>
         <Link href="/industry">Industry</Link>
-        <Link href="/explore">Explore Events</Link>
         <Link href="/pricing">Pricing</Link>
 
         {/* Help Dropdown */}

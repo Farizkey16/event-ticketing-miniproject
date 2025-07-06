@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-export default function SignInCard() {
+type SignInCardProps = {
+  onClose: () => void;
+};
+
+export default function SignInCard({ onClose }: SignInCardProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -12,29 +16,39 @@ export default function SignInCard() {
 
     console.log("Sign in data:", { email, password });
 
-    // reset form (opsional)
+    // Reset form
     setEmail("");
     setPassword("");
+
+    // Tutup card
+    onClose();
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-80">
-      <h2 className="text-lg font-semibold mb-2">Login to your account</h2>
-      <p className="text-sm text-gray-600 mb-4">
-        Enter your email below to login to your account
-      </p>
+    <div className="bg-white rounded-lg shadow-lg p-6 w-80 relative z-50">
+      {/* Tombol Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+      <h2 className="text-lg font-semibold mb-2">Welcome Back</h2>
+      <p className="text-sm text-gray-600 mb-4">Sign in to your account</p>
 
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Email or Username"
+          placeholder="Email"
           className="w-full mb-3 px-3 py-2 border rounded text-sm"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <div className="relative mb-3">
+        <div className="relative mb-4">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -56,12 +70,12 @@ export default function SignInCard() {
           type="submit"
           className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 mb-2"
         >
-          Login
+          Sign In
         </button>
       </form>
 
       <button className="w-full border py-2 rounded text-sm hover:bg-gray-100">
-        Login with Google
+        Sign in with Google
       </button>
     </div>
   );
