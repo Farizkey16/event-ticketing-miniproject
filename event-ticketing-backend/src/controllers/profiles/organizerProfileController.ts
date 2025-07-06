@@ -62,6 +62,7 @@ class OrganizerProfile {
       console.error(err);
     }
   };
+
 }
 
 export default OrganizerProfile;
