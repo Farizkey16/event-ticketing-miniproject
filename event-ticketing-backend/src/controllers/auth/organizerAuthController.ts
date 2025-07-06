@@ -35,7 +35,7 @@ class OrganizerAuthController {
       // Sending response
       res.status(201).send({
         success: true,
-        message: `New user for ${req.body.email} has been registered.`,
+        message: `New organizer for ${req.body.email} has been registered.`,
       });
 
     } catch (err) {
@@ -63,7 +63,7 @@ class OrganizerAuthController {
       }
   
       // Token
-      const token = sign({id: checkOrganizer.id, email: checkOrganizer.email}, process.env.JWT_TOKEN as string, { expiresIn: '2h'})
+      const token = sign({id: checkOrganizer.id, email: checkOrganizer.email, role: checkOrganizer.role}, process.env.JWT_TOKEN as string, { expiresIn: '2h'})
   
       res.status(200).send({
         success: true,

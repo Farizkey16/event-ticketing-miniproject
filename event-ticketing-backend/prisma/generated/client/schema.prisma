@@ -168,9 +168,11 @@ model event_table {
   price             Int
   start_date        DateTime
   end_date          DateTime
-  seat_capacity     Int // query from attendees_list
+  seat_capacity     Int? // query from attendees_list
   event_type        String
   created_at        DateTime             @default(now())
+  expires_at        DateTime?
+  thumbnail_img     String?
   organizer         organizer_account    @relation(fields: [organizer_id], references: [id])
   organizer_reviews organizer_reviews[]
   ticket_holds      ticket_holds[]

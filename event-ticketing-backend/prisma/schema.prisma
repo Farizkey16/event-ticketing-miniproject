@@ -17,11 +17,7 @@ model user_account {
     username          String               @unique
     email             String               @unique
     password          String
-<<<<<<< HEAD
     role              account_role
-=======
-    role              ACCOUNT_ROLE
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     referral_code     String               @unique
     referred_by_code  String?
     imgProfile        String?
@@ -30,24 +26,14 @@ model user_account {
     user_profile      user_profile?
     user_points       user_points[]
     points_redemption points_redemption[]
-<<<<<<< HEAD
-=======
-    coupon_table      coupon_table[]
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     organizer_reviews organizer_reviews[]
     ticket_holds      ticket_holds[]
     event_attendees   event_attendees[]
     transactions      transactions_table[]
-<<<<<<< HEAD
     user_coupon       user_coupon[]
 }
 
 enum account_role {
-=======
-}
-
-enum ACCOUNT_ROLE {
->>>>>>> 9a59f75a485c1a24980ffc3127dc75599254f5c3
     user
     organizer
     admin
@@ -182,9 +168,11 @@ model event_table {
     price             Int
     start_date        DateTime
     end_date          DateTime
-    seat_capacity     Int // query from attendees_list
+    seat_capacity     Int? // query from attendees_list
     event_type        String
     created_at        DateTime             @default(now())
+    expires_at        DateTime?
+    thumbnail_img     String?
     organizer         organizer_account    @relation(fields: [organizer_id], references: [id])
     organizer_reviews organizer_reviews[]
     ticket_holds      ticket_holds[]
@@ -195,7 +183,7 @@ model event_table {
 }
 
 model ticket_holds {
-    id              Int      @id @default(autoincrement())
+    id              Int                @id @default(autoincrement())
     event_id        Int
     user_id         Int
     ticket_type_id  Int
@@ -203,11 +191,11 @@ model ticket_holds {
     held_at         DateTime
     expires_at      DateTime
     transactions_id Int
-    status       coupon_status
-    event        event_table        @relation(fields: [event_id], references: [id])
-    user         user_account       @relation(fields: [user_id], references: [id])
-    ticket_type  ticket_type        @relation(fields: [ticket_type_id], references: [id])
-    transactions transactions_table @relation(fields: [transactions_id], references: [id])
+    status          coupon_status
+    event           event_table        @relation(fields: [event_id], references: [id])
+    user            user_account       @relation(fields: [user_id], references: [id])
+    ticket_type     ticket_type        @relation(fields: [ticket_type_id], references: [id])
+    transactions    transactions_table @relation(fields: [transactions_id], references: [id])
 }
 
 model ticket_type {
