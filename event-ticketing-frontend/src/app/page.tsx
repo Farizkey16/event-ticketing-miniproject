@@ -49,7 +49,8 @@ export default function HomePage() {
   );
 
   return (
-    <div>
+    <div className="relative">
+      {/* === Navbar === */}
       <Navbar
         onSignInClick={() => {
           setShowSignIn(true);
@@ -61,14 +62,14 @@ export default function HomePage() {
         }}
       />
 
-      {/* === Dropdown Cards === */}
+      {/* === Modal Sign In & Sign Up === */}
       {showSignIn && (
-        <div className="fixed top-20 left-0 right-0 z-50 flex justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
           <SignInCard onClose={() => setShowSignIn(false)} />
         </div>
       )}
       {showSignUp && (
-        <div className="fixed top-20 left-0 right-0 z-50 flex justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
           <SignUpCard onClose={() => setShowSignUp(false)} />
         </div>
       )}
@@ -87,7 +88,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* === Filter Buttons + Event Cards === */}
+      {/* === Filter Buttons + Events === */}
       <main className="p-8">
         <div className="flex flex-wrap gap-2 mb-6 justify-center">
           {filters.map((label) => (
