@@ -168,6 +168,13 @@ class OrganizerEventManagement {
       console.log(err);
     }
   };
+
+
+  public getEvent = async (req: Request,
+    res: Response,
+    next: NextFunction) => {
+      
+    }
 }
 
 export default OrganizerEventManagement;
