@@ -35,7 +35,11 @@ class TicketingRouter {
       this.organizerAuthController.register
     );
     this.route.post("/organizer/login", this.organizerAuthController.login);
-    this.route.post("/organizer/profile", VerifyToken, this.organizerProfile.newProfile)
+    this.route.get("/organizer/profile", VerifyToken, this.organizerProfile.getProfile);
+    this.route.patch("/organizer/profile", VerifyToken, this.organizerProfile.editProfile)
+    this.route.patch("/organizer/password/change", VerifyToken, this.organizerProfile.changePassword)
+    this.route.post("/organizer/reset-password", this.organizerProfile.resetPassword)
+    this.route.patch("/organizer/reset-password/confirm", this.organizerProfile.confirmResetPassword)
 
     // Coupon Generator
     this.route.post("/coupon/create", VerifyToken, this.generateCoupon.couponGenerator); 
