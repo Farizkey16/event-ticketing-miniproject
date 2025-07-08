@@ -1,118 +1,72 @@
 "use client";
 
 import { useState } from "react";
+import { X, Eye, EyeOff } from "lucide-react";
 
-type SignUpCardProps = {
-  onClose: () => void;
-};
-
-export default function SignUpCard({ onClose }: SignUpCardProps) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export default function SignUpCard({ onClose }: { onClose: () => void }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert("Password dan konfirmasi tidak cocok");
-      return;
-    }
-
-    console.log("Sign up data:", { username, email, password });
-
-    // Reset
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-
-    onClose(); // Tutup setelah submit
-  };
-
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-80 relative z-50">
-      {/* Tombol Close */}
+    <div className="bg-white w-full max-w-sm p-6 rounded-lg shadow-lg relative">
       <button
         onClick={onClose}
-        className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
-        aria-label="Close"
+        className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
       >
-        ×
+        <X />
       </button>
+      <h2 className="text-xl font-bold mb-2 text-center">Create a new account</h2>
+      <p className="text-sm text-gray-500 text-center mb-4">Fill your details below.</p>
 
-      <h2 className="text-lg font-semibold mb-2">Create a new account</h2>
-      <p className="text-sm text-gray-600 mb-4">Fill your details below.</p>
-
-      <form onSubmit={handleSubmit}>
+      <form className="space-y-4">
         <input
           type="text"
           placeholder="Username"
-          className="w-full mb-3 px-3 py-2 border rounded text-sm"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+          className="w-full px-4 py-2 border rounded"
         />
-
         <input
           type="email"
           placeholder="Email"
-          className="w-full mb-3 px-3 py-2 border rounded text-sm"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+          className="w-full px-4 py-2 border rounded"
         />
 
-        <div className="relative mb-3">
+        <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full px-3 py-2 border rounded text-sm"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            className="w-full px-4 py-2 border rounded pr-10"
           />
           <button
             type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-blue-600"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-2 top-2 text-gray-500"
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
 
-        <div className="relative mb-4">
+        <div className="relative">
           <input
             type={showConfirm ? "text" : "password"}
             placeholder="Confirm Password"
-            className="w-full px-3 py-2 border rounded text-sm"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            className="w-full px-4 py-2 border rounded pr-10"
           />
           <button
             type="button"
-            onClick={() => setShowConfirm((prev) => !prev)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-blue-600"
+            onClick={() => setShowConfirm(!showConfirm)}
+            className="absolute right-2 top-2 text-gray-500"
           >
-            {showConfirm ? "Hide" : "Show"}
+            {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 mb-2"
-        >
+        <button className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
           Sign Up
         </button>
+        <button className="w-full border py-2 rounded">
+          Sign up with Google
+        </button>
       </form>
-
-      <button className="w-full border py-2 rounded text-sm hover:bg-gray-100">
-        Sign up with Google
-      </button>
     </div>
   );
 }

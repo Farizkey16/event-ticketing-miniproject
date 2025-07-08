@@ -14,8 +14,9 @@ export default function SignUpCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (!agreeTerms) {
       alert('Anda harus menyetujui syarat dan ketentuan.');
       return;
@@ -26,13 +27,35 @@ export default function SignUpCard() {
       return;
     }
 
-    console.log({ username, email, password });
+    try {
+      setLoading(true);
+
+      // Ganti bagian ini dengan fetch/axios ke API kamu
+      console.log({
+        username,
+        email,
+        password,
+      });
+
+      // Simulasi pendaftaran sukses
+      alert("Pendaftaran berhasil! Silakan login.");
+      // Optional: redirect ke /organizer/signin
+      // router.push("/organizer/signin");
+
+    } catch (error) {
+      console.error("Pendaftaran gagal:", error);
+      alert("Terjadi kesalahan saat mendaftar.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md space-y-4">
-        <h2 className="text-xl font-semibold text-center">Organizer Sign Up</h2>
+        <h2 className="text-xl font-semibold text-center text-gray-800">
+          Organizer Sign Up
+        </h2>
 
         <Input
           placeholder="Nama Pengguna"
@@ -47,6 +70,7 @@ export default function SignUpCard() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        {/* Password */}
         <div className="relative">
           <Input
             placeholder="Password"
@@ -59,11 +83,10 @@ export default function SignUpCard() {
             onClick={() => setShowPassword((prev) => !prev)}
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </div>
-            
-          
+          </div>
         </div>
 
+        {/* Confirm Password */}
         <div className="relative">
           <Input
             placeholder="Konfirmasi Password"
@@ -79,6 +102,7 @@ export default function SignUpCard() {
           </div>
         </div>
 
+        {/* Terms */}
         <div className="flex items-start gap-2 text-sm">
           <input
             type="checkbox"
@@ -88,25 +112,35 @@ export default function SignUpCard() {
           />
           <span>
             Saya telah membaca dan menyetujui{' '}
-            <Link href="/terms" className="text-blue-600 underline hover:text-blue-800">
+            <Link
+              href="/terms"
+              className="text-blue-600 underline hover:text-blue-800"
+            >
               Syarat dan Ketentuan LOCAL EVENT.COM
             </Link>
           </span>
         </div>
 
+        {/* Submit */}
         <Button
-  onClick={handleSignUp}
-  className="w-full bg-green-600 hover:bg-green-800 text-white"
->
-  Daftar
-</Button>
+          onClick={handleSignUp}
+          className="w-full bg-green-600 hover:bg-green-800 text-white"
+          disabled={loading}
+        >
+          {loading ? 'Mendaftar...' : 'Daftar'}
+        </Button>
 
-<div className="text-sm text-center">
-  Sudah punya akun?{' '}
-  <Link href="/organizer/signin" className="text-blue-600 underline hover:text-blue-800">
-    Sign In
-  </Link>
-</div>
- </div>
+        {/* Link to Sign In */}
+        <div className="text-sm text-center">
+          Sudah punya akun?{' '}
+          <Link
+            href="/organizer/signin"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            Sign In
+          </Link>
+        </div>
+      </div>
     </div>
-  )}
+  );
+}

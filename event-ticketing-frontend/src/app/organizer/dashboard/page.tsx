@@ -40,9 +40,17 @@ export default function OrganizerDashboard() {
           <h2 className="text-lg font-semibold mb-2">Create New Event</h2>
           <p className="text-3xl font-bold text-purple-600">+</p>
         </Link>
+
+        {/* Promotion */}
+        <Link
+          href="/organizer/promotion"
+          className="bg-white shadow rounded p-6 border cursor-pointer hover:bg-gray-50 transition block"
+        >
+          <h2 className="text-lg font-semibold mb-2">Promotion</h2>
+          <p className="text-3xl font-bold text-red-400">0</p>
+        </Link>
       </div>
 
-      {/* Recent Activity */}
       <div className="mt-10">
         <h2 className="text-2xl font-semibold mb-4">Recent Activity</h2>
         <div className="bg-gray-50 border rounded p-4 text-gray-600">
