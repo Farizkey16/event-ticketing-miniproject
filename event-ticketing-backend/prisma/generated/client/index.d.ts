@@ -126,6 +126,7 @@ export type issuer = (typeof issuer)[keyof typeof issuer]
 
 
 export const event_status: {
+  attending: 'attending',
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
@@ -138,7 +139,7 @@ export const transactions_status: {
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
-  done: 'done',
+  accepted: 'accepted',
   expired: 'expired',
   canceled: 'canceled'
 };

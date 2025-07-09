@@ -63,6 +63,7 @@ class OrganizerProfile {
       });
     } catch (err) {
       console.error(err);
+      next(err)
     }
   };
 
