@@ -224,6 +224,7 @@ model event_attendees {
 }
 
 enum event_status {
+    attending
     attended
     expired
     cancelled
@@ -249,7 +250,7 @@ enum transactions_status {
     waiting_for_payment
     waiting_for_admin_confirmation
     rejected
-    done
+    accepted
     expired
     canceled
 }
