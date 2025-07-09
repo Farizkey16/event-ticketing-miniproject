@@ -7,6 +7,7 @@ export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  
 
 
   const inputCurrentPassword = useRef<HTMLInputElement | null>(null);
