@@ -3,48 +3,30 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { dummyOrders as orders } from "@/data/dummy-orders";
 
-// Dummy user login
 const user = {
   name: "Harry Kurniawan",
   tier: "Silver",
   point: 0,
 };
 
-// Dummy orders
-const orders = [
-  {
-    id: "ORD123456",
-    eventName: "Jakarta Kreatif Fest 2025",
-    date: "1 Oktober 2025",
-    location: "Istora Senayan, Jakarta",
-    status: "E-Ticket",
-  },
-  {
-    id: "ORD123457",
-    eventName: "Bandung Music Carnival",
-    date: "15 September 2025",
-    location: "Trans Convention Center, Bandung",
-    status: "E-Ticket",
-  },
-];
-
 export default function UserOrdersPage() {
   const [activeTab, setActiveTab] = useState<"orders" | "refunds">("orders");
+  const [showPaymentPanel, setShowPaymentPanel] = useState(false);
   const pathname = usePathname();
 
   const menuItems = [
-    { label: "Akun", path: "/user/account" },
-    { label: "Metode Pembayaran", path: "/user/payment-methods" },
-    { label: "Kumpulan Review Kamu", path: "/user/reviews" },
-    { label: "Wishlist", path: "/user/wishlist" },
+    { label: "Account", path: "/user/account" },
+    { label: "Payment", path: "#", action: () => setShowPaymentPanel(true) },
+    { label: "Review ", path: "/user/reviews" },
     { label: "Your Orders", path: "/user/orders" },
-    { label: "Pusat Bantuan", path: "/user/help-center" },
-    
+    { label: "New Order", path: "/user/new-orders" },
+    { label: "Help-center", path: "/user/help-center" },
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-gray-50 relative">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r p-6 space-y-4">
         <div>
@@ -54,23 +36,33 @@ export default function UserOrdersPage() {
         </div>
 
         <nav className="space-y-2 text-sm">
-          {menuItems.map((item) => (
-            <Link key={item.path} href={item.path}>
-              <span
-                className={`block w-full text-left px-2 py-1 rounded ${
-                  pathname === item.path
-                    ? "bg-blue-100 text-blue-600 font-semibold"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
+          {menuItems.map((item) =>
+            item.action ? (
+              <button
+                key={item.label}
+                onClick={item.action}
+                className="block w-full text-left px-2 py-1 rounded text-gray-700 hover:text-blue-600"
               >
                 {item.label}
-              </span>
-            </Link>
-          ))}
+              </button>
+            ) : (
+              <Link key={item.path} href={item.path}>
+                <span
+                  className={`block w-full text-left px-2 py-1 rounded cursor-pointer ${
+                    pathname === item.path
+                      ? "bg-blue-100 text-blue-600 font-semibold"
+                      : "text-gray-700 hover:text-blue-600"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            )
+          )}
         </nav>
       </aside>
 
-      {/* Content */}
+      {/* Main Content */}
       <main className="flex-1 p-8">
         <h1 className="text-xl font-bold mb-4">Riwayat</h1>
 
@@ -103,7 +95,9 @@ export default function UserOrdersPage() {
           <div className="space-y-4">
             {orders.length === 0 ? (
               <div className="bg-white border rounded-lg p-6 text-center shadow">
-                <p className="text-lg font-semibold mb-2">Tidak ada pesanan dalam 90 hari</p>
+                <p className="text-lg font-semibold mb-2">
+                  Tidak ada pesanan dalam 90 hari
+                </p>
                 <p className="text-sm text-gray-500 mb-4">
                   Pakai filter buat lihat daftar pesanan sebelumnya
                 </p>
@@ -118,7 +112,9 @@ export default function UserOrdersPage() {
                   className="bg-white p-4 rounded-lg shadow border hover:shadow-md transition"
                 >
                   <div className="flex justify-between items-center mb-2">
-                    <div className="text-sm text-gray-500">Order ID: {order.id}</div>
+                    <div className="text-sm text-gray-500">
+                      Order ID: {order.id}
+                    </div>
                     <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
                       {order.status}
                     </span>
@@ -138,6 +134,52 @@ export default function UserOrdersPage() {
           </div>
         )}
       </main>
+
+      {/* Payment Side Panel */}
+      {showPaymentPanel && (
+        <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-lg p-6 z-50 border-l">
+          <h2 className="text-xl font-semibold mb-4">Add Bank Account</h2>
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium">Bank Name</label>
+              <select className="w-full border rounded p-2">
+                <option value="">-- Bank Option --</option>
+                <option value="Mandiri">Mandiri</option>
+                <option value="BCA">BCA</option>
+                <option value="BRI">BRI</option>
+                <option value="BTN">BTN</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium">
+                Account Number
+              </label>
+              <input type="text" className="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">
+                Account Holder Name
+              </label>
+              <input type="text" className="w-full border rounded p-2" />
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setShowPaymentPanel(false)}
+                className="text-gray-600 hover:underline"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

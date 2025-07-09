@@ -47,9 +47,30 @@ export default function OrganizerDashboard() {
           className="bg-white shadow rounded p-6 border cursor-pointer hover:bg-gray-50 transition block"
         >
           <h2 className="text-lg font-semibold mb-2">Promotion</h2>
-          <p className="text-3xl font-bold text-red-400">0</p>
+          <p className="text-3xl font-bold text-cyan-600">0</p>
         </Link>
-      </div>
+      
+
+       {/* Profile */}
+        <Link
+          href="/organizer/profile"
+          className="bg-white shadow rounded p-6 border cursor-pointer hover:bg-gray-50 transition block"
+        >
+          <h2 className="text-lg font-semibold mb-2">Profile</h2>
+          <p className="text-3xl font-bold text-teal-600">0</p>
+        </Link>
+     
+      {/* Reviews */}
+        <Link
+          href="/organizer/reviews"
+          className="bg-white shadow rounded p-6 border cursor-pointer hover:bg-gray-50 transition block"
+        >
+          <h2 className="text-lg font-semibold mb-2">Reviews</h2>
+          <p className="text-3xl font-bold text-sky-500">0</p>
+        </Link>
+        </div>
+        
+      
 
       <div className="mt-10">
         <h2 className="text-2xl font-semibold mb-4">Recent Activity</h2>
