@@ -321,7 +321,6 @@ exports.issuer = exports.$Enums.issuer = {
 };
 
 exports.event_status = exports.$Enums.event_status = {
-  attending: 'attending',
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
@@ -331,7 +330,7 @@ exports.transactions_status = exports.$Enums.transactions_status = {
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
-  accepted: 'accepted',
+  done: 'done',
   expired: 'expired',
   canceled: 'canceled'
 };

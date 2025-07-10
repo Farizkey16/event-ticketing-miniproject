@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { customAlphabet } from "nanoid";
-import { prisma } from "../config/prisma";
-
+import { prisma } from "../../config/prisma";
 class GenerateCoupon {
   public couponGenerator = async (req: Request, res: Response) => {
     try {
