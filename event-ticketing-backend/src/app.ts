@@ -21,8 +21,12 @@ class App {
   }
 
   private route(): void {
-    const ticketingRouter = new TicketingRouter;
-    this.app.use("/ticket", ticketingRouter.getRouter())
+    const ticketingRouter = new TicketingRouter();
+    this.app.get("/", (req: Request, res: Response) => {
+      res.status(200).json("<h1>Welcome to Mini Project</h1>");
+    });
+
+    this.app.use("/ticket", ticketingRouter.getRouter());
   }
 
   public start(): void {
