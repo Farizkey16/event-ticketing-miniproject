@@ -83,19 +83,19 @@ model points_redemption_items {
 }
 
 model coupon_table {
-    id             Int           @id @default(autoincrement())
+    id             Int                  @id @default(autoincrement())
     event_id       Int?
-    code           String        @unique
+    code           String               @unique
     discount_type  discount_type
     discount_value Int
-    created_at     DateTime      @default(now())
+    created_at     DateTime             @default(now())
     expires_at     DateTime
-    used_at        DateTime?
     usage_limit    Int
-    used_count     Int           @default(0)
+    used_count     Int                  @default(0)
     status         coupon_status
     issued_by      issuer
     user_coupon    user_coupon[]
+    transactions   transactions_table[]
 }
 
 model user_coupon {
@@ -237,13 +237,17 @@ model transactions_table {
     user_id           Int
     event_id          Int
     voucher_id        Int?
+    coupon_id         Int?
     created_at        DateTime            @default(now())
     status            transactions_status
     payment_proof_url String
+    total_price       Int
+    discount_applied  Int?
     user              user_account        @relation(fields: [user_id], references: [id])
     event             event_table         @relation(fields: [event_id], references: [id])
     ticket            ticket_holds[]
     voucher           voucher_table?      @relation(fields: [voucher_id], references: [id])
+    coupon            coupon_table?       @relation(fields: [coupon_id], references: [id])
 }
 
 enum transactions_status {
@@ -260,6 +264,7 @@ model voucher_table {
     id                 Int                  @id @default(autoincrement())
     organizer_id       Int
     event_id           Int
+    code               String
     start_at           DateTime
     expires_at         DateTime?
     usage_limit        Int
