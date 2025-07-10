@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prisma";
-import { sendEmail } from "../../utils/mail.utils";
+import {
+  transactionUpdate,
+  notifyUserPaymentStatus,
+  usePoint,
+  upsertEventAttendees,
+  voucherCouponCheck,
+  updateSeatTicket,
+  rollbackPoint,
+} from "../../service/transaction/transaction.service";
 
 class OrganizerTransaction {
   public acceptPayment = async (
@@ -26,92 +34,26 @@ class OrganizerTransaction {
       // Prisma Batch Queries
       const transaction = await prisma.$transaction(async (tx) => {
         // Updating transaction status after acceptance
-        const transaction = await tx.transactions_table.update({
-          where: {
-            id: transactionId,
-          },
-          data: {
-            status: "accepted",
-          },
-          include: {
-            ticket: {
-              include: {
-                ticket_type: true,
-              },
-            },
-            user: true,
-            event: true,
-          },
-        });
-
-        if (!transaction) throw new Error("TRANSACTION_NOT_FOUND");
-
-        // Checking Points per User, FE must pass user_point_id and used_points
-        const pointsUsed = req.body.pointsUsed as {
-          user_point_id: number;
-          used_points: number;
-        }[];
-
-        if (!Array.isArray(pointsUsed) || pointsUsed.length === 0)
-          throw new Error("POINTSUSED_ARRAY_REQUIRED");
-
-        const userPointIds = pointsUsed.map((p) => p.user_point_id);
-
-        const userPoints = await tx.user_points.findMany({
-          where: {
-            id: {
-              in: userPointIds,
-            },
-            user_id: transaction.user_id,
-          },
-          select: {
-            user_id: true,
-          },
-        });
-
-        if (userPoints.length !== userPointIds.length)
-          throw new Error("INVALID_USER_POINTS");
-
-        // Create redemption point log
-        const totalPoints = pointsUsed.reduce(
-          (sum, p) => sum + p.used_points,
-          0
-        );
-        const redemption = await tx.points_redemption.create({
-          data: {
-            user_id: transaction.user_id,
-            total_points: totalPoints,
-            redeemed_at: new Date(),
-          },
-        });
-
-        // Create redemption id + user_point, to log which points used for what
-        await Promise.all(
-          pointsUsed.map((p) =>
-            tx.points_redemption_items.create({
-              data: {
-                user_point_id: p.user_point_id,
-                redemption_id: redemption.id,
-              },
-            })
-          )
+        const transaction = await transactionUpdate(
+          tx,
+          transactionId,
+          "accepted"
         );
 
-        // Update and decrease the points_remaining of a user by used_points
-        await Promise.all(
-          pointsUsed.map((p) =>
-            tx.user_points.update({
-              where: {
-                id: p.user_point_id,
-              },
-              data: {
-                points_remaining: {
-                  decrement: p.used_points,
-                },
-              },
-            })
-          )
+        // Check Voucher & Coupon Usage
+        const { coupon_code, voucher_code } = req.body.vouchercoupon;
+        await voucherCouponCheck(
+          tx,
+          { coupon_code, voucher_code },
+          transaction,
+          organizer
         );
+
+        // Check Points, Create Redemption Point log, Redemption log, and Update Points
+        await usePoint(tx, req.body.pointsUsed, transaction);
+
+        // Update seat_capacity and delete ticket holds
+        await updateSeatTicket(tx, transaction, "increment", transactionId);
 
         return transaction;
       });
@@ -121,35 +63,8 @@ class OrganizerTransaction {
         return;
       }
 
-      const tixQty = transaction.ticket.reduce(
-        (sum, t) => sum + t.ticket_quantity,
-        0
-      );
-      const totalPaid = transaction.ticket.reduce((sum, t) => {
-        return sum + t.ticket_quantity * t.ticket_type.price;
-      }, 0);
-
-      await prisma.event_attendees.upsert({
-        where: {
-          event_id_user_id: {
-            event_id: transaction.event_id,
-            user_id: transaction.user_id,
-          },
-        },
-        create: {
-          event_id: transaction.event_id,
-          user_id: transaction.user_id,
-          organizer_id: organizer.id,
-          ticket_quantity: tixQty,
-          total_price_paid: totalPaid,
-          status: "attending",
-        },
-        update: {
-          ticket_quantity: tixQty,
-          total_price_paid: totalPaid,
-          status: "attending",
-        },
-      });
+      // Upsert to Event Attendees
+      await upsertEventAttendees(transaction, organizer);
 
       // Notify User
       const user = await prisma.user_account.findUnique({
@@ -166,10 +81,10 @@ class OrganizerTransaction {
         return;
       }
 
-      await sendEmail(
+      await notifyUserPaymentStatus(
         user.email,
-        "Your payment was accepted.",
-        `<p> Congratulations! Your payment for the event ${transaction.event.name} was accepted. We will be waiting for your attendance at the event.</p>`
+        transaction.event.name,
+        "accepted"
       );
 
       // Sending Response
@@ -238,96 +153,22 @@ class OrganizerTransaction {
         if (!existingTransaction) throw new Error("TRANSACTION_NOT_FOUND");
 
         // Update Transaction Status
-        const transaction = await tx.transactions_table.update({
-          where: {
-            id: transactionId,
-          },
-          data: {
-            status: "rejected",
-          },
-          include: {
-            event: true,
-            user: true,
-          },
-        });
-
-        // Delete Points per User
-        const pointsUsed = req.body.pointsUsed as {
-          user_point_id: number;
-          used_points: number;
-        }[];
-
-        if (!Array.isArray(pointsUsed) || pointsUsed.length === 0)
-          throw new Error("POINTSUSED_ARRAY_REQUIRED");
-
-        const userPointIds = pointsUsed.map((p) => p.user_point_id);
-
-        await Promise.all(
-          pointsUsed.map((p) =>
-            tx.user_points.update({
-              where: {
-                id: p.user_point_id,
-              },
-              data: {
-                points_remaining: {
-                  increment: p.used_points,
-                },
-              },
-            })
-          )
+        const transaction = await transactionUpdate(
+          tx,
+          transactionId,
+          "rejected"
         );
 
-        // Delete redemption point log
+        // Rolling back points, deletion of redemption point log, and redemption points items
+        const { user_point_id, used_points } = req.body.pointsUsed;
+        await rollbackPoint(tx, { user_point_id, used_points });
 
-        const totalPoints = pointsUsed.reduce(
-          (sum, p) => sum + p.used_points,
-          0
-        );
-
-        const redemptionIds = await tx.points_redemption_items.findMany({
-          where: {
-            user_point_id: {
-              in: userPointIds,
-            },
-          },
-          select: {
-            redemption_id: true,
-          },
-          distinct: ["redemption_id"],
-        });
-
-        const ids = redemptionIds.map((r) => r.redemption_id);
-
-        await tx.points_redemption_items.deleteMany({
-          where: {
-            redemption_id: {
-              in: ids,
-            },
-          },
-        });
-
-        await tx.points_redemption.deleteMany({
-          where: {
-            id: {
-              in: ids,
-            },
-          },
-        });
-
-        // Delete Ticket Holds
-        await tx.ticket_holds.deleteMany({
-          where: {
-            transactions_id: transactionId,
-          },
-        });
+        // Decrease Seat Capacity
+        await updateSeatTicket(tx, transaction, "decrement", transactionId);
 
         return transaction;
       });
 
-      if (!rejection) {
-        res.status(404).json({ message: "Transaction not found." });
-        return;
-      }
       // Notify User
 
       const user = rejection.user;
@@ -337,10 +178,10 @@ class OrganizerTransaction {
         return;
       }
 
-      await sendEmail(
+      await notifyUserPaymentStatus(
         user.email,
-        "Your payment was rejected.",
-        `<p> Unfortunately, your payment for the event ${rejection.event.name} was rejected. There might be insufficient proof, please try again.</p>`
+        rejection.event.name,
+        "rejected"
       );
 
       // Sending Response
