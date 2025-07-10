@@ -161,7 +161,7 @@ class OrganizerTransaction {
 
         // Rolling back points, deletion of redemption point log, and redemption points items
         const { user_point_id, used_points } = req.body.pointsUsed;
-        await rollbackPoint(tx, { user_point_id, used_points });
+        await rollbackPoint(tx, [{ user_point_id, used_points }]);
 
         // Decrease Seat Capacity
         await updateSeatTicket(tx, transaction, "decrement", transactionId);
@@ -205,6 +205,46 @@ class OrganizerTransaction {
       next(err);
     }
   };
+
+  public viewProof = async (req: Request,
+    res: Response,
+    next: NextFunction) => {
+
+    try{
+      const organizer = res.locals.user
+
+      if (!organizer) {
+        res.status(403).send("Unauthorized access.");
+        return;
+      }
+
+      // Find Transaction ID
+      const { transactionId } = req.body
+      const paymentProof = await prisma.transactions_table.findUnique({
+        where: {
+          id: transactionId
+        }, select: {
+          payment_proof_url: true
+        }
+      })
+
+      if (!paymentProof){
+        res.status(404).json({
+          message: "Payment proof not found"
+        })
+        return;
+      } 
+
+      res.status(200).json({
+        payment_proof_url: paymentProof.payment_proof_url
+      })
+
+    } catch(err) {
+      console.error(err);
+      next(err)
+    }
+
+  }
 }
 
 export default OrganizerTransaction;
