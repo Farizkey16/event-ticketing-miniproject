@@ -166,7 +166,7 @@ const voucherCouponCheck = (tx, vouchercoupon, transaction, organizer) => __awai
             data: {
                 coupon_id: coupon.id,
                 discount_applied: discountAmount,
-                total_price: finalPrice,
+                total_price: finalPrice
             },
         });
         yield tx.coupon_table.update({

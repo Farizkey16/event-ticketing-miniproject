@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Mini-project Purwadhika JCWDOL-020",
   "main": "src/index.ts",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
