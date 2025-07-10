@@ -206,8 +206,12 @@ export const voucherCouponCheck = async (
      * 3. If percentage, then the total price would be price * discountAmountCoupon
      */
 
-    let discountAmount: number = calculateDiscount(totalPrice, coupon.discount_type, coupon.discount_value)
-    let finalPrice: number = Math.max(0,totalPrice - discountAmount);
+    let discountAmount: number = calculateDiscount(
+      totalPrice,
+      coupon.discount_type,
+      coupon.discount_value
+    );
+    let finalPrice: number = Math.max(0, totalPrice - discountAmount);
 
     await tx.transactions_table.update({
       where: {
@@ -216,19 +220,20 @@ export const voucherCouponCheck = async (
       data: {
         coupon_id: coupon.id,
         discount_applied: discountAmount,
-        total_price: finalPrice
+        total_price: finalPrice,
       },
     });
 
     await tx.coupon_table.update({
-        where: {
-            code: coupon_code
-        }, data: {
-            used_count: {
-                increment: 1
-            }
-        }
-    })
+      where: {
+        code: coupon_code,
+      },
+      data: {
+        used_count: {
+          increment: 1,
+        },
+      },
+    });
   }
 
   // Voucher Lookup
@@ -245,8 +250,12 @@ export const voucherCouponCheck = async (
     if (voucher.organizer_id !== organizer.id)
       throw new Error("UNAUTHORIZED_VOUCHER");
 
-    let discountAmount: number = calculateDiscount(totalPrice, voucher.discount_type, voucher.discount_value)
-    let finalPrice: number = Math.max(0, totalPrice - discountAmount)
+    let discountAmount: number = calculateDiscount(
+      totalPrice,
+      voucher.discount_type,
+      voucher.discount_value
+    );
+    let finalPrice: number = Math.max(0, totalPrice - discountAmount);
 
     await tx.transactions_table.update({
       where: {
@@ -255,21 +264,56 @@ export const voucherCouponCheck = async (
       data: {
         voucher_id: voucher.id,
         discount_applied: discountAmount,
-        total_price: finalPrice
-
+        total_price: finalPrice,
       },
     });
 
     await tx.voucher_table.update({
+      where: {
+        code: voucher_code,
+      },
+      data: {
+        usage_limit: {
+          decrement: 1,
+        },
+      },
+    });
+  }
+};
+
+export const rollbackVoucherCoupon = async (
+  tx: Prisma.TransactionClient,
+  vouchercoupon: { coupon_code: string; voucher_code: string },
+  transaction: TransactionWithRelations,
+  organizer: organizer_account
+) => {
+  const { coupon_code, voucher_code } = vouchercoupon;
+
+  if (coupon_code) {
+    const coupon = await tx.coupon_table.findUnique({
         where: {
-            code: voucher_code
-        }, data: {
-            usage_limit: {
-                decrement: 1
-            }
+            code: vouchercoupon.coupon_code
+        }
+    });
+
+    if (!coupon) throw new Error("INVALID_COUPON");
+
+    if(coupon.used_count >= coupon.usage_limit)
+        throw new Error("COUPON_EXPIRED");
+
+    const userCoupon = await tx.user_coupon.findFirst({
+        where: {
+            user_id: transaction.user_id,
+            coupon_id: coupon.id
         }
     })
+
+    if (userCoupon?.used_at) throw new Error("COUPON_ALREADY_USED")
+
+        
+
   }
+
 };
 
 export const upsertEventAttendees = async (
