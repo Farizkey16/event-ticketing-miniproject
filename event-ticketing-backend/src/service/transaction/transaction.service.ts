@@ -206,12 +206,10 @@ export const voucherCouponCheck = async (
      * 3. If percentage, then the total price would be price * discountAmountCoupon
      */
 
-    let discountAmount: number = calculateDiscount(
-      totalPrice,
-      coupon.discount_type,
-      coupon.discount_value
-    );
-    let finalPrice: number = Math.max(0, totalPrice - discountAmount);
+    
+    let discountAmount: number = calculateDiscount(totalPrice, coupon.discount_type, coupon.discount_value)
+    let finalPrice: number = Math.max(0,totalPrice - discountAmount);
+
 
     await tx.transactions_table.update({
       where: {
@@ -220,7 +218,7 @@ export const voucherCouponCheck = async (
       data: {
         coupon_id: coupon.id,
         discount_applied: discountAmount,
-        total_price: finalPrice,
+        total_price: finalPrice
       },
     });
 
@@ -250,12 +248,11 @@ export const voucherCouponCheck = async (
     if (voucher.organizer_id !== organizer.id)
       throw new Error("UNAUTHORIZED_VOUCHER");
 
-    let discountAmount: number = calculateDiscount(
-      totalPrice,
-      voucher.discount_type,
-      voucher.discount_value
-    );
-    let finalPrice: number = Math.max(0, totalPrice - discountAmount);
+    
+
+    let discountAmount: number = calculateDiscount(totalPrice, voucher.discount_type, voucher.discount_value)
+    let finalPrice: number = Math.max(0, totalPrice - discountAmount)
+
 
     await tx.transactions_table.update({
       where: {
@@ -264,6 +261,7 @@ export const voucherCouponCheck = async (
       data: {
         voucher_id: voucher.id,
         discount_applied: discountAmount,
+
         total_price: finalPrice,
       },
     });
@@ -313,8 +311,6 @@ export const rollbackVoucherCoupon = async (
         
 
   }
-
-};
 
 export const upsertEventAttendees = async (
   transaction: TransactionWithRelations,
