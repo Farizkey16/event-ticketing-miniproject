@@ -174,7 +174,6 @@ exports.Prisma.Coupon_tableScalarFieldEnum = {
   discount_value: 'discount_value',
   created_at: 'created_at',
   expires_at: 'expires_at',
-  used_at: 'used_at',
   usage_limit: 'usage_limit',
   used_count: 'used_count',
   status: 'status',
@@ -264,15 +263,19 @@ exports.Prisma.Transactions_tableScalarFieldEnum = {
   user_id: 'user_id',
   event_id: 'event_id',
   voucher_id: 'voucher_id',
+  coupon_id: 'coupon_id',
   created_at: 'created_at',
   status: 'status',
-  payment_proof_url: 'payment_proof_url'
+  payment_proof_url: 'payment_proof_url',
+  total_price: 'total_price',
+  discount_applied: 'discount_applied'
 };
 
 exports.Prisma.Voucher_tableScalarFieldEnum = {
   id: 'id',
   organizer_id: 'organizer_id',
   event_id: 'event_id',
+  code: 'code',
   start_at: 'start_at',
   expires_at: 'expires_at',
   usage_limit: 'usage_limit',
@@ -318,6 +321,7 @@ exports.issuer = exports.$Enums.issuer = {
 };
 
 exports.event_status = exports.$Enums.event_status = {
+  attending: 'attending',
   attended: 'attended',
   expired: 'expired',
   cancelled: 'cancelled'
@@ -327,7 +331,7 @@ exports.transactions_status = exports.$Enums.transactions_status = {
   waiting_for_payment: 'waiting_for_payment',
   waiting_for_admin_confirmation: 'waiting_for_admin_confirmation',
   rejected: 'rejected',
-  done: 'done',
+  accepted: 'accepted',
   expired: 'expired',
   canceled: 'canceled'
 };
