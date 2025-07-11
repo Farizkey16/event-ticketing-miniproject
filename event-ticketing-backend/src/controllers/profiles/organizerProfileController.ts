@@ -3,7 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { compare } from "bcrypt";
 import nodemailer from "nodemailer";
 import { prisma } from "../../config/prisma";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
+import { cloudinaryUpload } from "../../config/cloudinary";
 
 class OrganizerProfile {
   public newProfile = async (
@@ -63,7 +64,7 @@ class OrganizerProfile {
       });
     } catch (err) {
       console.error(err);
-      next(err)
+      next(err);
     }
   };
 
@@ -196,18 +197,18 @@ class OrganizerProfile {
     next: NextFunction
   ) => {
     try {
-      const { email } = req.body
+      const { email } = req.body;
 
       if (!email) {
-      res.status(400).send({ success: false, message: "Email required" });
-      return;
-    }
-
-    const findOrganizer = await prisma.organizer_account.findUnique({
-      where: {
-        email
+        res.status(400).send({ success: false, message: "Email required" });
+        return;
       }
-    })
+
+      const findOrganizer = await prisma.organizer_account.findUnique({
+        where: {
+          email,
+        },
+      });
 
       const token = jwt.sign(
         { id: findOrganizer?.id, role: "organizer" },
@@ -249,35 +250,39 @@ class OrganizerProfile {
   ) => {
     try {
       const { token, newPassword } = req.body;
-     
-      const payload = jwt.verify(token, process.env.JWT_TOKEN as string) as JwtPayload & {
-        id: number,
-      }
+
+      const payload = jwt.verify(
+        token,
+        process.env.JWT_TOKEN as string
+      ) as JwtPayload & {
+        id: number;
+      };
 
       const organizerCheck = await prisma.organizer_account.findUnique({
         where: {
-          id: payload.id
-        }
-      })
+          id: payload.id,
+        },
+      });
 
       if (!organizerCheck) {
-        res.status(404).send("Organizer not found.")
+        res.status(404).send("Organizer not found.");
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
       await prisma.organizer_account.update({
         where: {
-          id: payload.id
-        }, data: {
-          password: hashedPassword
-        }
-      })
+          id: payload.id,
+        },
+        data: {
+          password: hashedPassword,
+        },
+      });
 
       res.status(200).send({
-        success:true,
-        message: "New password successfully created."
-      })
+        success: true,
+        message: "New password successfully created.",
+      });
 
       const transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -293,13 +298,12 @@ class OrganizerProfile {
         subject: "Password Reset Successful",
         html: `Your password has been reset successfully.`,
       });
-
     } catch (err: any) {
       console.error(err);
-      if (err.name === "TokenExpiredError"){
-        res.status(401).send("Reset token expired.")
-      } 
-      res.status(500).send("Internal server error.")
+      if (err.name === "TokenExpiredError") {
+        res.status(401).send("Reset token expired.");
+      }
+      res.status(500).send("Internal server error.");
     }
   };
 
@@ -324,6 +328,43 @@ class OrganizerProfile {
       res.status(200).send({
         success: true,
         data: profile,
+      });
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  };
+
+  public uploadProfileImage = async (
+    req: Request,
+    res: Response,
+    next: NextFunction) => {
+    try {
+      const organizer = res.locals.user;
+
+      
+
+      if (organizer.role !== "organizer") {
+        res.status(403).send("You are not allowed to access this page.");
+        return;
+      }
+
+      if (!req.file) throw new Error("NO_FILE_EXIST");
+
+      const upload = await cloudinaryUpload(req.file);
+
+      await prisma.organizer_profile.update({
+        where: {
+          organizer_id: organizer.id,
+        },
+        data: {
+          organizer_profile_image: upload.secure_url,
+        },
+      });
+
+      res.status(200).send({
+        success: true,
+        message: "Update profile image successful.",
       });
     } catch (err) {
       console.error(err);
