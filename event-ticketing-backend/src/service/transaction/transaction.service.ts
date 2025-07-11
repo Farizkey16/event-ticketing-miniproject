@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { organizer_account } from "../../../prisma/generated/client";
 import { sendEmail } from "../../utils/mail.utils";
 import { calculateDiscount } from "../../utils/calculateprice.utils";
+import { throwMappedError } from "../../utils/errorMapper";
 
 type TransactionWithRelations = Awaited<ReturnType<typeof transactionUpdate>>;
 type SeatCapacityUpdate = "increment" | "decrement";
@@ -42,7 +43,7 @@ export const usePoint = async (
   // Checking Points per User, FE must pass user_point_id and used_points
 
   if (!Array.isArray(pointsUsed) || pointsUsed.length === 0)
-    throw new Error("POINTSUSED_ARRAY_REQUIRED");
+    throwMappedError("POINTSUSED_ARRAY_REQUIRED");
 
   const userPointIds = pointsUsed.map((p) => p.user_point_id);
 
@@ -59,7 +60,7 @@ export const usePoint = async (
   });
 
   if (userPoints.length !== userPointIds.length)
-    throw new Error("INVALID_USER_POINTS");
+    throwMappedError("INVALID_USER_POINTS");
 
   // Create redemption point log
   const totalPoints = pointsUsed.reduce((sum, p) => sum + p.used_points, 0);
@@ -105,7 +106,7 @@ export const rollbackPoint = async (
   pointsUsed: { user_point_id: number; used_points: number }[]
 ) => {
   if (!Array.isArray(pointsUsed) || pointsUsed.length === 0)
-    throw new Error("POINTSUSED_ARRAY_REQUIRED");
+    throwMappedError("POINTSUSED_ARRAY_REQUIRED");
 
   const userPointIds = pointsUsed.map((p) => p.user_point_id);
 
@@ -175,7 +176,7 @@ export const voucherCouponCheck = async (
 
   // Check Voucher or Coupon usage
   if (vouchercoupon.coupon_code && vouchercoupon.voucher_code) {
-    throw new Error("USE_VOUCHER_OR_COUPON");
+    throwMappedError("USE_VOUCHER_OR_COUPON");
   }
 
   // Coupon Lookup
@@ -187,9 +188,9 @@ export const voucherCouponCheck = async (
       },
     });
 
-    if (!coupon) throw new Error("INVALID_COUPON");
+    if (!coupon) throwMappedError("INVALID_COUPON");
 
-    if (coupon.usage_limit <= 0) throw new Error("COUPON_EXPIRED");
+    if (coupon.usage_limit <= 0) throwMappedError("COUPON_EXPIRED");
 
     const userCoupon = await tx.user_coupon.findFirst({
       where: {
@@ -198,13 +199,7 @@ export const voucherCouponCheck = async (
       },
     });
 
-    if (userCoupon?.used_at) throw new Error("COUPON_ALREADY_USED");
-
-    /**
-     * 1. Check discount type
-     * 2. If fixed, then the total price would be price - discountAmountCoupon
-     * 3. If percentage, then the total price would be price * discountAmountCoupon
-     */
+    if (userCoupon?.used_at) throwMappedError("COUPON_ALREADY_USED");
 
     let discountAmount: number = calculateDiscount(
       totalPrice,
@@ -254,10 +249,10 @@ export const voucherCouponCheck = async (
       },
     });
 
-    if (!voucher) throw new Error("INVALID_VOUCHER");
+    if (!voucher) throwMappedError("INVALID_VOUCHER");
 
     if (voucher.organizer_id !== organizer.id)
-      throw new Error("UNAUTHORIZED_VOUCHER");
+      throwMappedError("UNAUTHORIZED_VOUCHER");
 
     let discountAmount: number = calculateDiscount(
       totalPrice,
@@ -306,7 +301,7 @@ export const rollbackVoucherCoupon = async (
       },
     });
 
-    if (!coupon) throw new Error("INVALID_COUPON");
+    if (!coupon) throwMappedError("INVALID_COUPON");
 
     const userCoupon = await tx.user_coupon.findFirst({
       where: {
@@ -314,10 +309,8 @@ export const rollbackVoucherCoupon = async (
         coupon_id: coupon.id,
       },
     });
-    
-    if (!userCoupon || !userCoupon.used_at) throw new Error("COUPON_NOT_USED");
 
-    if (userCoupon?.used_at) throw new Error("COUPON_ALREADY_USED");
+    if (!userCoupon || !userCoupon.used_at) throwMappedError("COUPON_NOT_USED");
 
     await tx.user_coupon.update({
       where: {
@@ -347,10 +340,10 @@ export const rollbackVoucherCoupon = async (
       },
     });
 
-    if (!voucher) throw new Error("INVALID_VOUCHER");
+    if (!voucher) throwMappedError("INVALID_VOUCHER");
 
     if (voucher.organizer_id !== organizer.id)
-      throw new Error("UNAUTHORIZED_VOUCHER");
+      throwMappedError("UNAUTHORIZED_VOUCHER");
 
     await tx.voucher_table.update({
       where: {
@@ -373,7 +366,7 @@ export const upsertEventAttendees = async (
     (sum: number, t: { ticket_quantity: number }) => sum + t.ticket_quantity,
     0
   );
-  const totalPaid = transaction.total_price
+  const totalPaid = transaction.total_price;
 
   await prisma.event_attendees.upsert({
     where: {

@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { compare } from "bcrypt";
-import { Jwt, sign } from "jsonwebtoken";
+import AppError from "../../errors/AppError";
 import { prisma } from "../../config/prisma";
 import dayjs from "dayjs";
+
 
 class OrganizerEventManagement {
   // Create New Event
@@ -17,15 +18,11 @@ class OrganizerEventManagement {
       : dayjs().add(3, "months").toDate();
 
     if (organizer?.role !== "organizer") {
-      res
-        .status(403)
-        .json({ message: "You need to be the organizer to access this page." });
-      return;
+      throw new AppError("Unauthorized access.", 401);
     }
 
     if (!organizer.id) {
-      res.status(400).json({ message: "Organizer ID is required." });
-      return;
+      throw new AppError("Organizer ID is required.", 400);
     }
 
     try {
@@ -35,9 +32,15 @@ class OrganizerEventManagement {
       const parsed_startDate = new Date(start_date);
       const parsed_endDate = new Date(end_date);
 
-      if (!name || !price || !start_date || !end_date || !seat_capacity || !event_type) {
-      res.status(400).send({ message: "Missing required fields" });
-      return;
+      if (
+        !name ||
+        !price ||
+        !start_date ||
+        !end_date ||
+        !seat_capacity ||
+        !event_type
+      ) {
+        throw new AppError("Missing fields required.", 400);
       }
 
       await prisma.event_table.create({
@@ -86,18 +89,15 @@ class OrganizerEventManagement {
       });
 
       if (organizer.role !== "organizer") {
-        res.status(403).send("You are not allowed to access this page.");
-        return;
+        throw new AppError("Unauthorized access.", 401);
       }
 
       if (!event) {
-        res.status(404).send("Event not found.");
-        return;
+        throw new AppError("Event not found.", 404);
       }
 
       if (event.organizer_id !== organizer.id) {
-        res.status(403).send("you can only edit your own events.");
-        return;
+        throw new AppError("Edit only your own event.", 403);
       }
 
       const updatedEvent = await prisma.event_table.update({
@@ -140,18 +140,15 @@ class OrganizerEventManagement {
       });
 
       if (organizer.role !== "organizer") {
-        res.status(403).send("You are not allowed to access this page.");
-        return;
+        throw new AppError("Unauthorized access.", 401);
       }
 
       if (!event) {
-        res.status(404).send("Event not found.");
-        return;
+        throw new AppError("Event not found.", 404);
       }
 
       if (event.organizer_id !== organizer.id) {
-        res.status(403).send("you can only delete your own events.");
-        return;
+        throw new AppError("Delete only your own event", 403)
       }
 
       await prisma.event_table.delete({
@@ -169,12 +166,11 @@ class OrganizerEventManagement {
     }
   };
 
-
-  public getEvent = async (req: Request,
+  public getEvent = async (
+    req: Request,
     res: Response,
-    next: NextFunction) => {
-      
-    }
+    next: NextFunction
+  ) => {};
 }
 
 export default OrganizerEventManagement;

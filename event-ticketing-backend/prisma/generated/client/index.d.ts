@@ -125,6 +125,30 @@ export const issuer: {
 export type issuer = (typeof issuer)[keyof typeof issuer]
 
 
+export const EventType: {
+  CONFERENCE: 'CONFERENCE',
+  SEMINAR: 'SEMINAR',
+  WORKSHOP: 'WORKSHOP',
+  WEBINAR: 'WEBINAR',
+  MEETUP: 'MEETUP',
+  PANEL: 'PANEL',
+  TALK: 'TALK',
+  TRAINING: 'TRAINING',
+  COMPETITION: 'COMPETITION',
+  FESTIVAL: 'FESTIVAL',
+  CONCERT: 'CONCERT',
+  PERFORMANCE: 'PERFORMANCE',
+  EXHIBITION: 'EXHIBITION',
+  SPORTS: 'SPORTS',
+  FUNDRAISER: 'FUNDRAISER',
+  NETWORKING: 'NETWORKING',
+  CEREMONY: 'CEREMONY',
+  PARTY: 'PARTY'
+};
+
+export type EventType = (typeof EventType)[keyof typeof EventType]
+
+
 export const event_status: {
   attending: 'attending',
   attended: 'attended',
@@ -167,6 +191,10 @@ export const coupon_status: typeof $Enums.coupon_status
 export type issuer = $Enums.issuer
 
 export const issuer: typeof $Enums.issuer
+
+export type EventType = $Enums.EventType
+
+export const EventType: typeof $Enums.EventType
 
 export type event_status = $Enums.event_status
 
@@ -14421,11 +14449,12 @@ export namespace Prisma {
     id: number | null
     organizer_id: number | null
     name: string | null
+    description: string | null
     price: number | null
     start_date: Date | null
     end_date: Date | null
     seat_capacity: number | null
-    event_type: string | null
+    event_type: $Enums.EventType | null
     created_at: Date | null
     expires_at: Date | null
     thumbnail_img: string | null
@@ -14435,11 +14464,12 @@ export namespace Prisma {
     id: number | null
     organizer_id: number | null
     name: string | null
+    description: string | null
     price: number | null
     start_date: Date | null
     end_date: Date | null
     seat_capacity: number | null
-    event_type: string | null
+    event_type: $Enums.EventType | null
     created_at: Date | null
     expires_at: Date | null
     thumbnail_img: string | null
@@ -14449,6 +14479,7 @@ export namespace Prisma {
     id: number
     organizer_id: number
     name: number
+    description: number
     price: number
     start_date: number
     end_date: number
@@ -14479,6 +14510,7 @@ export namespace Prisma {
     id?: true
     organizer_id?: true
     name?: true
+    description?: true
     price?: true
     start_date?: true
     end_date?: true
@@ -14493,6 +14525,7 @@ export namespace Prisma {
     id?: true
     organizer_id?: true
     name?: true
+    description?: true
     price?: true
     start_date?: true
     end_date?: true
@@ -14507,6 +14540,7 @@ export namespace Prisma {
     id?: true
     organizer_id?: true
     name?: true
+    description?: true
     price?: true
     start_date?: true
     end_date?: true
@@ -14608,11 +14642,12 @@ export namespace Prisma {
     id: number
     organizer_id: number
     name: string
+    description: string | null
     price: number
     start_date: Date
     end_date: Date
     seat_capacity: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at: Date
     expires_at: Date | null
     thumbnail_img: string | null
@@ -14641,6 +14676,7 @@ export namespace Prisma {
     id?: boolean
     organizer_id?: boolean
     name?: boolean
+    description?: boolean
     price?: boolean
     start_date?: boolean
     end_date?: boolean
@@ -14663,6 +14699,7 @@ export namespace Prisma {
     id?: boolean
     organizer_id?: boolean
     name?: boolean
+    description?: boolean
     price?: boolean
     start_date?: boolean
     end_date?: boolean
@@ -14678,6 +14715,7 @@ export namespace Prisma {
     id?: boolean
     organizer_id?: boolean
     name?: boolean
+    description?: boolean
     price?: boolean
     start_date?: boolean
     end_date?: boolean
@@ -14693,6 +14731,7 @@ export namespace Prisma {
     id?: boolean
     organizer_id?: boolean
     name?: boolean
+    description?: boolean
     price?: boolean
     start_date?: boolean
     end_date?: boolean
@@ -14703,7 +14742,7 @@ export namespace Prisma {
     thumbnail_img?: boolean
   }
 
-  export type event_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "name" | "price" | "start_date" | "end_date" | "seat_capacity" | "event_type" | "created_at" | "expires_at" | "thumbnail_img", ExtArgs["result"]["event_table"]>
+  export type event_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "name" | "description" | "price" | "start_date" | "end_date" | "seat_capacity" | "event_type" | "created_at" | "expires_at" | "thumbnail_img", ExtArgs["result"]["event_table"]>
   export type event_tableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     organizer_reviews?: boolean | event_table$organizer_reviewsArgs<ExtArgs>
@@ -14736,11 +14775,12 @@ export namespace Prisma {
       id: number
       organizer_id: number
       name: string
+      description: string | null
       price: number
       start_date: Date
       end_date: Date
       seat_capacity: number | null
-      event_type: string
+      event_type: $Enums.EventType
       created_at: Date
       expires_at: Date | null
       thumbnail_img: string | null
@@ -15177,11 +15217,12 @@ export namespace Prisma {
     readonly id: FieldRef<"event_table", 'Int'>
     readonly organizer_id: FieldRef<"event_table", 'Int'>
     readonly name: FieldRef<"event_table", 'String'>
+    readonly description: FieldRef<"event_table", 'String'>
     readonly price: FieldRef<"event_table", 'Int'>
     readonly start_date: FieldRef<"event_table", 'DateTime'>
     readonly end_date: FieldRef<"event_table", 'DateTime'>
     readonly seat_capacity: FieldRef<"event_table", 'Int'>
-    readonly event_type: FieldRef<"event_table", 'String'>
+    readonly event_type: FieldRef<"event_table", 'EventType'>
     readonly created_at: FieldRef<"event_table", 'DateTime'>
     readonly expires_at: FieldRef<"event_table", 'DateTime'>
     readonly thumbnail_img: FieldRef<"event_table", 'String'>
@@ -21832,6 +21873,7 @@ export namespace Prisma {
     id: 'id',
     organizer_id: 'organizer_id',
     name: 'name',
+    description: 'description',
     price: 'price',
     start_date: 'start_date',
     end_date: 'end_date',
@@ -22039,6 +22081,20 @@ export namespace Prisma {
    * Reference to a field of type 'issuer[]'
    */
   export type ListEnumissuerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'issuer[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'EventType'
+   */
+  export type EnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType'>
+    
+
+
+  /**
+   * Reference to a field of type 'EventType[]'
+   */
+  export type ListEnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType[]'>
     
 
 
@@ -22790,11 +22846,12 @@ export namespace Prisma {
     id?: IntFilter<"event_table"> | number
     organizer_id?: IntFilter<"event_table"> | number
     name?: StringFilter<"event_table"> | string
+    description?: StringNullableFilter<"event_table"> | string | null
     price?: IntFilter<"event_table"> | number
     start_date?: DateTimeFilter<"event_table"> | Date | string
     end_date?: DateTimeFilter<"event_table"> | Date | string
     seat_capacity?: IntNullableFilter<"event_table"> | number | null
-    event_type?: StringFilter<"event_table"> | string
+    event_type?: EnumEventTypeFilter<"event_table"> | $Enums.EventType
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
@@ -22811,6 +22868,7 @@ export namespace Prisma {
     id?: SortOrder
     organizer_id?: SortOrder
     name?: SortOrder
+    description?: SortOrderInput | SortOrder
     price?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
@@ -22835,11 +22893,12 @@ export namespace Prisma {
     NOT?: event_tableWhereInput | event_tableWhereInput[]
     organizer_id?: IntFilter<"event_table"> | number
     name?: StringFilter<"event_table"> | string
+    description?: StringNullableFilter<"event_table"> | string | null
     price?: IntFilter<"event_table"> | number
     start_date?: DateTimeFilter<"event_table"> | Date | string
     end_date?: DateTimeFilter<"event_table"> | Date | string
     seat_capacity?: IntNullableFilter<"event_table"> | number | null
-    event_type?: StringFilter<"event_table"> | string
+    event_type?: EnumEventTypeFilter<"event_table"> | $Enums.EventType
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
@@ -22856,6 +22915,7 @@ export namespace Prisma {
     id?: SortOrder
     organizer_id?: SortOrder
     name?: SortOrder
+    description?: SortOrderInput | SortOrder
     price?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
@@ -22878,11 +22938,12 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"event_table"> | number
     organizer_id?: IntWithAggregatesFilter<"event_table"> | number
     name?: StringWithAggregatesFilter<"event_table"> | string
+    description?: StringNullableWithAggregatesFilter<"event_table"> | string | null
     price?: IntWithAggregatesFilter<"event_table"> | number
     start_date?: DateTimeWithAggregatesFilter<"event_table"> | Date | string
     end_date?: DateTimeWithAggregatesFilter<"event_table"> | Date | string
     seat_capacity?: IntNullableWithAggregatesFilter<"event_table"> | number | null
-    event_type?: StringWithAggregatesFilter<"event_table"> | string
+    event_type?: EnumEventTypeWithAggregatesFilter<"event_table"> | $Enums.EventType
     created_at?: DateTimeWithAggregatesFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableWithAggregatesFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableWithAggregatesFilter<"event_table"> | string | null
@@ -23973,11 +24034,12 @@ export namespace Prisma {
 
   export type event_tableCreateInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -23994,11 +24056,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -24012,11 +24075,12 @@ export namespace Prisma {
 
   export type event_tableUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24033,11 +24097,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24053,11 +24118,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -24065,11 +24131,12 @@ export namespace Prisma {
 
   export type event_tableUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24079,11 +24146,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25256,6 +25324,13 @@ export namespace Prisma {
     rating?: SortOrder
   }
 
+  export type EnumEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeFilter<$PrismaModel> | $Enums.EventType
+  }
+
   export type Ticket_typeListRelationFilter = {
     every?: ticket_typeWhereInput
     some?: ticket_typeWhereInput
@@ -25270,6 +25345,7 @@ export namespace Prisma {
     id?: SortOrder
     organizer_id?: SortOrder
     name?: SortOrder
+    description?: SortOrder
     price?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
@@ -25291,6 +25367,7 @@ export namespace Prisma {
     id?: SortOrder
     organizer_id?: SortOrder
     name?: SortOrder
+    description?: SortOrder
     price?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
@@ -25305,6 +25382,7 @@ export namespace Prisma {
     id?: SortOrder
     organizer_id?: SortOrder
     name?: SortOrder
+    description?: SortOrder
     price?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
@@ -25320,6 +25398,16 @@ export namespace Prisma {
     organizer_id?: SortOrder
     price?: SortOrder
     seat_capacity?: SortOrder
+  }
+
+  export type EnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.EventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumEventTypeFilter<$PrismaModel>
   }
 
   export type Ticket_typeScalarRelationFilter = {
@@ -26618,6 +26706,10 @@ export namespace Prisma {
     connect?: voucher_tableWhereUniqueInput | voucher_tableWhereUniqueInput[]
   }
 
+  export type EnumEventTypeFieldUpdateOperationsInput = {
+    set?: $Enums.EventType
+  }
+
   export type organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput = {
     create?: XOR<organizer_accountCreateWithoutEvent_tableInput, organizer_accountUncheckedCreateWithoutEvent_tableInput>
     connectOrCreate?: organizer_accountCreateOrConnectWithoutEvent_tableInput
@@ -27382,6 +27474,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumissuerFilter<$PrismaModel>
     _max?: NestedEnumissuerFilter<$PrismaModel>
+  }
+
+  export type NestedEnumEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeFilter<$PrismaModel> | $Enums.EventType
+  }
+
+  export type NestedEnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.EventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumEventTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumevent_statusFilter<$PrismaModel = never> = {
@@ -28628,11 +28737,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutOrganizerInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -28647,11 +28757,12 @@ export namespace Prisma {
   export type event_tableUncheckedCreateWithoutOrganizerInput = {
     id?: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -28798,11 +28909,12 @@ export namespace Prisma {
     id?: IntFilter<"event_table"> | number
     organizer_id?: IntFilter<"event_table"> | number
     name?: StringFilter<"event_table"> | string
+    description?: StringNullableFilter<"event_table"> | string | null
     price?: IntFilter<"event_table"> | number
     start_date?: DateTimeFilter<"event_table"> | Date | string
     end_date?: DateTimeFilter<"event_table"> | Date | string
     seat_capacity?: IntNullableFilter<"event_table"> | number | null
-    event_type?: StringFilter<"event_table"> | string
+    event_type?: EnumEventTypeFilter<"event_table"> | $Enums.EventType
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
@@ -28947,11 +29059,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutOrganizer_reviewsInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -28967,11 +29080,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29078,11 +29192,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutOrganizer_reviewsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29098,11 +29213,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29512,11 +29628,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutTicket_holdsInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29532,11 +29649,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29659,11 +29777,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutTicket_holdsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29679,11 +29798,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29808,11 +29928,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutTicket_typeInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29828,11 +29949,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29892,11 +30014,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutTicket_typeInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29912,11 +30035,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29945,11 +30069,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutEvent_attendeesInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -29965,11 +30090,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -30070,11 +30196,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutEvent_attendeesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30090,11 +30217,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30235,11 +30363,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutTransactionsInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -30255,11 +30384,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -30431,11 +30561,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutTransactionsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30451,11 +30582,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30586,11 +30718,12 @@ export namespace Prisma {
 
   export type event_tableCreateWithoutVoucherInput = {
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -30606,11 +30739,12 @@ export namespace Prisma {
     id?: number
     organizer_id: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -30708,11 +30842,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutVoucherInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30728,11 +30863,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31132,11 +31268,12 @@ export namespace Prisma {
   export type event_tableCreateManyOrganizerInput = {
     id?: number
     name: string
+    description?: string | null
     price: number
     start_date: Date | string
     end_date: Date | string
     seat_capacity?: number | null
-    event_type: string
+    event_type: $Enums.EventType
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
@@ -31190,11 +31327,12 @@ export namespace Prisma {
 
   export type event_tableUpdateWithoutOrganizerInput = {
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31209,11 +31347,12 @@ export namespace Prisma {
   export type event_tableUncheckedUpdateWithoutOrganizerInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31228,11 +31367,12 @@ export namespace Prisma {
   export type event_tableUncheckedUpdateManyWithoutOrganizerInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     seat_capacity?: NullableIntFieldUpdateOperationsInput | number | null
-    event_type?: StringFieldUpdateOperationsInput | string
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null

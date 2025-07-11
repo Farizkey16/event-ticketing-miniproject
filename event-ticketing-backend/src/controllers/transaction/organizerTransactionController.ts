@@ -9,6 +9,7 @@ import {
   updateSeatTicket,
   rollbackPoint,
 } from "../../service/transaction/transaction.service";
+import AppError from "../../errors/AppError";
 
 class OrganizerTransaction {
   public acceptPayment = async (
@@ -20,17 +21,14 @@ class OrganizerTransaction {
       const organizer = res.locals.user;
 
       if (!organizer) {
-        res.status(403).send("Unauthorized access.");
-        return;
+        throw new AppError("Unauthorized access.", 403);
       }
 
       const transactionId = parseInt(req.params.id);
 
       if (isNaN(transactionId)) {
-        res.status(400).json({ message: "Invalid transaction ID." });
-        return;
+        throw new AppError("Invalid transaction ID.", 400);
       }
-
       // Prisma Batch Queries
       const transaction = await prisma.$transaction(async (tx) => {
         // Updating transaction status after acceptance
@@ -59,8 +57,7 @@ class OrganizerTransaction {
       });
 
       if (!transaction) {
-        res.status(404).json({ message: "Transaction not found." });
-        return;
+        throw new AppError("Transaction not found.", 404);
       }
 
       // Upsert to Event Attendees
@@ -77,8 +74,7 @@ class OrganizerTransaction {
       });
 
       if (!user) {
-        res.status(404).send("User not found.");
-        return;
+        throw new AppError("User not found.", 404);
       }
 
       await notifyUserPaymentStatus(
@@ -94,24 +90,20 @@ class OrganizerTransaction {
     } catch (err) {
       if (err instanceof Error) {
         if (err.message === "TRANSACTION_NOT_FOUND") {
-          res.status(404).json({ message: "Transaction not found." });
-          return;
+          return next(new AppError("Transaction not found.", 404));
         }
 
         if (err.message === "INVALID_USER_POINTS") {
-          res
-            .status(400)
-            .json({ message: "Some points do not belong to the user" });
-          return;
+          return next(
+            new AppError("Some points do not belong to the user.", 400)
+          );
         }
 
         if (err.message === "POINTSUSED_ARRAY_REQUIRED") {
-          res.status(400).json({ message: "pointsUsed array is required." });
-          return;
+          return next(new AppError("pointsUsed array is required.", 400));
         }
       }
-      res.status(500).json({ message: "Internal server error." });
-      next(err);
+      return next(new AppError("Internal server error.", 500));
     }
   };
 
@@ -124,20 +116,17 @@ class OrganizerTransaction {
       const organizer = res.locals.user;
 
       if (!organizer) {
-        res.status(403).send("Unauthorized Access.");
-        return;
+        throw new AppError("Unauthorized Access.", 403);
       }
 
       const transactionId = parseInt(req.params.id);
 
       if (!transactionId) {
-        res.status(404).send("Transaction not found");
-        return;
+        throw new AppError("Transaction not found", 404);
       }
 
       if (isNaN(transactionId)) {
-        res.status(400).json({ message: "Invalid transaction ID." });
-        return;
+        throw new AppError("Invalid transaction ID.", 400);
       }
 
       const rejection = await prisma.$transaction(async (tx) => {
@@ -192,59 +181,54 @@ class OrganizerTransaction {
     } catch (err) {
       if (err instanceof Error) {
         if (err.message === "TRANSACTION_NOT_FOUND") {
-          res.status(404).json({ message: "Transaction not found." });
-          return;
+          return next(new AppError("Transaction not found.", 404));
         }
 
         if (err.message === "POINTSUSED_ARRAY_REQUIRED") {
-          res.status(400).json({ message: "pointsUsed array is required." });
-          return;
+          return next(new AppError("pointsUsed array is required.", 400));
         }
       }
-      res.status(500).json({ message: "Internal server error." });
+      return next(new AppError("Internal server error.", 500));
+    }
+  };
+
+  public viewProof = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const organizer = res.locals.user;
+
+      if (!organizer) {
+        throw new AppError("Unauthorized access.", 403);
+      }
+
+      // Find Transaction ID
+      const { transactionId } = req.body;
+      const paymentProof = await prisma.transactions_table.findUnique({
+        where: {
+          id: transactionId,
+        },
+        select: {
+          payment_proof_url: true,
+        },
+      });
+
+      if (!paymentProof) {
+        throw new AppError("Payment proof not found", 404);
+      }
+
+      res.status(200).json({
+        payment_proof_url: paymentProof.payment_proof_url,
+      });
+    } catch (err) {
+      console.error(err);
       next(err);
     }
   };
 
-  public viewProof = async (req: Request,
-    res: Response,
-    next: NextFunction) => {
-
-    try{
-      const organizer = res.locals.user
-
-      if (!organizer) {
-        res.status(403).send("Unauthorized access.");
-        return;
-      }
-
-      // Find Transaction ID
-      const { transactionId } = req.body
-      const paymentProof = await prisma.transactions_table.findUnique({
-        where: {
-          id: transactionId
-        }, select: {
-          payment_proof_url: true
-        }
-      })
-
-      if (!paymentProof){
-        res.status(404).json({
-          message: "Payment proof not found"
-        })
-        return;
-      } 
-
-      res.status(200).json({
-        payment_proof_url: paymentProof.payment_proof_url
-      })
-
-    } catch(err) {
-      console.error(err);
-      next(err)
-    }
-
-  }
+  
 }
 
 export default OrganizerTransaction;

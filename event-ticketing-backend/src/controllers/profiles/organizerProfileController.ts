@@ -5,6 +5,11 @@ import nodemailer from "nodemailer";
 import { prisma } from "../../config/prisma";
 import bcrypt from "bcrypt";
 import { cloudinaryUpload } from "../../config/cloudinary";
+<<<<<<< HEAD
+=======
+import { hashPassword } from "../../utils/hash";
+import AppError from "../../errors/AppError";
+>>>>>>> feature/organizer-transaction-management-3
 
 class OrganizerProfile {
   public newProfile = async (
@@ -23,8 +28,7 @@ class OrganizerProfile {
       const organizer = res.locals.user;
 
       if (organizer.role !== "organizer") {
-        res.status(403).send("You are not allowed to access this page.");
-        return;
+        throw new AppError("You are not allowed to access this page.", 403);
       }
 
       const checkOrganizer = await prisma.organizer_account.findUnique({
@@ -34,15 +38,11 @@ class OrganizerProfile {
       });
 
       if (!checkOrganizer) {
-        res.status(404).send("This account does not exist.");
-        return;
+        throw new AppError("This account does not exist.", 404);
       }
 
       if (!organizer_name || !organizer_address || !organizer_phone) {
-        res.status(400).send({
-          message: "Missing required profile fields.",
-        });
-        return;
+        throw new AppError("Missing required profile fields.", 400);
       }
 
       const newProfile = await prisma.organizer_profile.create({
@@ -83,8 +83,7 @@ class OrganizerProfile {
       } = req.body;
 
       if (organizer.role !== "organizer") {
-        res.status(403).send("You are not allowed to access this page.");
-        return;
+        throw new AppError("You are not allowed to access this page.", 403);
       }
 
       const checkOrganizer = await prisma.organizer_account.findUnique({
@@ -94,15 +93,11 @@ class OrganizerProfile {
       });
 
       if (!checkOrganizer) {
-        res.status(404).send("This account does not exist.");
-        return;
+        throw new AppError("This account does not exist.", 404);
       }
 
       if (!organizer_name || !organizer_address || !organizer_phone) {
-        res.status(400).send({
-          message: "Missing required profile fields.",
-        });
-        return;
+        throw new AppError("Missing required profile fields.", 400);
       }
 
       const profile = await prisma.organizer_profile.findUnique({
@@ -112,7 +107,7 @@ class OrganizerProfile {
       });
 
       if (!profile) {
-        res.status(404).send("Organizer profile not found.");
+        throw new AppError("Organizer profile not found.", 404);
       }
 
       const updatedProfile = await prisma.organizer_profile.update({
@@ -150,9 +145,7 @@ class OrganizerProfile {
       const organizer = res.locals.user;
       const { old_password, new_password } = req.body;
 
-      if (!old_password || !new_password) {
-        res.status(400).send("Old and new passwords are required.");
-      }
+      const hashedPassword = await hashPassword(new_password, 10);
 
       const organizerReset = await prisma.organizer_account.findUnique({
         where: {
@@ -161,15 +154,13 @@ class OrganizerProfile {
       });
 
       if (!organizerReset) {
-        res.status(404).send("No organizer account is found from the id.");
-        return;
+        throw new AppError("No organizer account is found from the id.", 404);
       }
 
       const isMatch = await compare(old_password, organizerReset.password);
 
       if (!isMatch) {
-        res.status(401).send("Wrong password.");
-        return;
+        throw new AppError("Wrong password.", 401);
       }
 
       await prisma.organizer_account.update({
@@ -177,7 +168,7 @@ class OrganizerProfile {
           id: organizer.id,
         },
         data: {
-          password: new_password,
+          password: hashedPassword,
         },
       });
 
@@ -200,6 +191,7 @@ class OrganizerProfile {
       const { email } = req.body;
 
       if (!email) {
+<<<<<<< HEAD
         res.status(400).send({ success: false, message: "Email required" });
         return;
       }
@@ -209,6 +201,20 @@ class OrganizerProfile {
           email,
         },
       });
+=======
+        throw new AppError("Email required", 400);
+      }
+
+      const findOrganizer = await prisma.organizer_account.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (!findOrganizer) {
+        throw new AppError("No account found with that email.", 404);
+      }
+>>>>>>> feature/organizer-transaction-management-3
 
       const token = jwt.sign(
         { id: findOrganizer?.id, role: "organizer" },
@@ -265,10 +271,14 @@ class OrganizerProfile {
       });
 
       if (!organizerCheck) {
+<<<<<<< HEAD
         res.status(404).send("Organizer not found.");
+=======
+        throw new AppError("Organizer not found.", 404);
+>>>>>>> feature/organizer-transaction-management-3
       }
 
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const hashedPassword = await hashPassword(newPassword, 10);
 
       await prisma.organizer_account.update({
         where: {
@@ -301,9 +311,15 @@ class OrganizerProfile {
     } catch (err: any) {
       console.error(err);
       if (err.name === "TokenExpiredError") {
+<<<<<<< HEAD
         res.status(401).send("Reset token expired.");
       }
       res.status(500).send("Internal server error.");
+=======
+        return next(new AppError("Reset token expired.", 401));
+      }
+      return next(new AppError("Internal server error.", 500));
+>>>>>>> feature/organizer-transaction-management-3
     }
   };
 
@@ -322,7 +338,7 @@ class OrganizerProfile {
       });
 
       if (!profile) {
-        res.status(404).send("Profile not found.");
+        throw new AppError("Profile not found.", 404);
       }
 
       res.status(200).send({
@@ -338,6 +354,7 @@ class OrganizerProfile {
   public uploadProfileImage = async (
     req: Request,
     res: Response,
+<<<<<<< HEAD
     next: NextFunction) => {
     try {
       const organizer = res.locals.user;
@@ -351,6 +368,20 @@ class OrganizerProfile {
 
       if (!req.file) throw new Error("NO_FILE_EXIST");
 
+=======
+    next: NextFunction
+  ) => {
+    try {
+      const organizer = res.locals.user;
+
+      if (organizer.role !== "organizer") {
+        throw new AppError("You are not allowed to access this page.", 403);
+      }
+
+      if (!req.file) {
+        throw new AppError("No profile image uploaded.", 400);
+      }
+>>>>>>> feature/organizer-transaction-management-3
       const upload = await cloudinaryUpload(req.file);
 
       await prisma.organizer_profile.update({
