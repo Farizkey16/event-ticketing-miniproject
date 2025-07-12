@@ -32,7 +32,7 @@ class OrganizerAuthController {
         throw new AppError("There is already an organizer with this email/username", 409)
       }
 
-      // Registering User
+      // Registering organizer
       const hashedPassword = await bcrypt.hash(password, 10);
       const organizer = await prisma.organizer_account.create({
         data: {

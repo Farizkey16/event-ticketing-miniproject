@@ -70,7 +70,18 @@ class UserAuthController {
           role: "user",
           referral_code: referralCode,
           referred_by_code: referred_by_code || "",
+          user_profile: {
+            create: {
+              user_fullname: "",
+              user_date_of_birth: "",
+              user_phone: 0,
+              user_profile_image: ""
+            }
+          }
         },
+        include: {
+          user_profile: true
+        }
       });
 
       // Rewarding Used Referral Code
