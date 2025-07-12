@@ -64,7 +64,7 @@ export default function UserOrdersPage() {
 
       {/* Main Content */}
       <main className="flex-1 p-8">
-        <h1 className="text-xl font-bold mb-4">Riwayat</h1>
+        <h1 className="text-xl font-bold mb-4">History</h1>
 
         {/* Tabs */}
         <div className="flex gap-4 mb-4">

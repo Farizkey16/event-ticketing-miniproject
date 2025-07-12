@@ -40,7 +40,7 @@ export default function OrganizerProfile() {
               className="w-28 h-28 rounded-full object-cover border"
             />
             <div>
-              <Label className="text-sm text-gray-600">Foto Organizer</Label>
+              <Label className="text-sm text-gray-600">Organizer Picrures</Label>
               <Input
                 type="text"
                 name="image"
@@ -53,7 +53,7 @@ export default function OrganizerProfile() {
 
           <div className="space-y-4">
             <div>
-              <Label>Name Organizer</Label>
+              <Label>Organizer Name</Label>
               <Input
                 name="name"
                 value={profile.name}
