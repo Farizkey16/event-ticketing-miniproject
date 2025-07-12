@@ -5,11 +5,8 @@ import nodemailer from "nodemailer";
 import { prisma } from "../../config/prisma";
 import bcrypt from "bcrypt";
 import { cloudinaryUpload } from "../../config/cloudinary";
-<<<<<<< HEAD
-=======
 import { hashPassword } from "../../utils/hash";
 import AppError from "../../errors/AppError";
->>>>>>> feature/organizer-transaction-management-3
 
 class OrganizerProfile {
   public newProfile = async (
@@ -191,17 +188,6 @@ class OrganizerProfile {
       const { email } = req.body;
 
       if (!email) {
-<<<<<<< HEAD
-        res.status(400).send({ success: false, message: "Email required" });
-        return;
-      }
-
-      const findOrganizer = await prisma.organizer_account.findUnique({
-        where: {
-          email,
-        },
-      });
-=======
         throw new AppError("Email required", 400);
       }
 
@@ -214,7 +200,6 @@ class OrganizerProfile {
       if (!findOrganizer) {
         throw new AppError("No account found with that email.", 404);
       }
->>>>>>> feature/organizer-transaction-management-3
 
       const token = jwt.sign(
         { id: findOrganizer?.id, role: "organizer" },
@@ -271,11 +256,7 @@ class OrganizerProfile {
       });
 
       if (!organizerCheck) {
-<<<<<<< HEAD
-        res.status(404).send("Organizer not found.");
-=======
         throw new AppError("Organizer not found.", 404);
->>>>>>> feature/organizer-transaction-management-3
       }
 
       const hashedPassword = await hashPassword(newPassword, 10);
@@ -311,15 +292,9 @@ class OrganizerProfile {
     } catch (err: any) {
       console.error(err);
       if (err.name === "TokenExpiredError") {
-<<<<<<< HEAD
-        res.status(401).send("Reset token expired.");
-      }
-      res.status(500).send("Internal server error.");
-=======
         return next(new AppError("Reset token expired.", 401));
       }
       return next(new AppError("Internal server error.", 500));
->>>>>>> feature/organizer-transaction-management-3
     }
   };
 
@@ -354,21 +329,6 @@ class OrganizerProfile {
   public uploadProfileImage = async (
     req: Request,
     res: Response,
-<<<<<<< HEAD
-    next: NextFunction) => {
-    try {
-      const organizer = res.locals.user;
-
-      
-
-      if (organizer.role !== "organizer") {
-        res.status(403).send("You are not allowed to access this page.");
-        return;
-      }
-
-      if (!req.file) throw new Error("NO_FILE_EXIST");
-
-=======
     next: NextFunction
   ) => {
     try {
@@ -381,7 +341,6 @@ class OrganizerProfile {
       if (!req.file) {
         throw new AppError("No profile image uploaded.", 400);
       }
->>>>>>> feature/organizer-transaction-management-3
       const upload = await cloudinaryUpload(req.file);
 
       await prisma.organizer_profile.update({
