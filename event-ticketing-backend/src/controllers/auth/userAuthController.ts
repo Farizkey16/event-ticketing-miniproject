@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { Jwt } from "jsonwebtoken";
 import { sign } from "jsonwebtoken";
 import { prisma } from "../../config/prisma";
@@ -61,12 +61,16 @@ class UserAuthController {
       const referralCode = await referralCodeGeneration(req.body.username);
 
       // Registering User
-      const { email, username, password, referred_by_code } = req.body;
+
+      const { email, username, password, referred_by_code } = req.body
+      const hashedPassword = await hash(password, 10)//tambahkan hash
+
       const newUser = await prisma.user_account.create({
         data: {
           email,
           username,
-          password: password,
+          password: hashedPassword,//hashPassword
+          
           role: "user",
           referral_code: referralCode,
           referred_by_code: referred_by_code || "",
@@ -158,7 +162,9 @@ class UserAuthController {
     }
 
     // Comparing Password
-    const passwordCompare = compare(req.body.password, checkUser.password);
+
+    const passwordCompare = await compare(req.body.password, checkUser.password)// tambahkan await
+
 
     if (!passwordCompare) {
       throw new AppError("Your entered password is incorrect.", 400);
