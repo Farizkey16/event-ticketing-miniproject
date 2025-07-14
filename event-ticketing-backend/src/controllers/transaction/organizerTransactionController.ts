@@ -228,7 +228,55 @@ class OrganizerTransaction {
     }
   };
 
-  
+  public getTransactions = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const organizer = res.locals.user;
+      if (!organizer) {
+        throw new AppError("Unauthorized access.", 403);
+      }
+
+      // Find Transactions
+      const transactions = await prisma.transactions_table.findMany({
+        where: {
+          event: {
+            organizer_id: organizer.id,
+          },
+        },
+        include: {
+          event: true,
+          user: true,
+        },
+      });
+
+      if (transactions.length === 0) {
+        return next(new AppError("No transactions found.", 404));
+      }
+
+      const formatted = transactions.map((trx) => ({
+        id: trx.id,
+        eventName: trx.event.name,
+        buyerName: trx.user.username,
+        created_at: trx.created_at,
+        total_price: trx.total_price,
+        discount_applied: trx.discount_applied,
+        payment_proof_url: trx.payment_proof_url,
+        status: trx.status
+
+      }))
+
+      res.status(200).json({
+        success: true,
+        message: `All transactions for ${organizer.name} are successfully fetched.`,
+        data: formatted,
+      });
+    } catch (err) {
+      console.error(err), next(err);
+    }
+  };
 }
 
 export default OrganizerTransaction;

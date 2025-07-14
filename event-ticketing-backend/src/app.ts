@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import MainRouter from "./routers/main.router";
 import logger from "./utils/logger";
 dotenv.config();
+import cookieParser from "cookie-parser"
 
 const PORT: string = process.env.PORT || "4000";
 
@@ -18,8 +19,13 @@ class App {
   }
 
   private configure(): void {
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: "http://localhost:3000",
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true
+    }));
     this.app.use(express.json());
+    this.app.use(cookieParser())
   }
 
   private route(): void {
@@ -33,7 +39,15 @@ class App {
   private errorHandler(): void {
     this.app.use((error:any, req:Request, res:Response, next:NextFunction) => {
       logger.error(`${req.method} ${req.path}: ${error.message} ${JSON.stringify(error)}`)
-      res.status(error.message || 500).send(error)
+
+      if (res.headersSent) {
+        return next(error)
+      }
+
+      res.status(error.status || 500).json({
+        success: false,
+        message: error.message || "Internal Server Error"
+      })
     })
   }
 

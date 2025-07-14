@@ -1,0 +1,202 @@
+2025-07-13 21:46:18 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 21:47:06 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 21:48:11 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 21:50:58 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:00:35 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:00:35 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:02:33 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:02:33 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:05:22 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:42:39 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:45:51 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:46:25 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:48:30 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:51:21 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:54:11 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 22:54:32 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 23:48:23 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-13 23:48:23 [ERROR]: GET /api/organizer/me: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-14 12:23:01 [ERROR]: POST /api/event/create: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-14 12:23:30 [ERROR]: POST /api/event/create: Invalid or expired token {"message":"Invalid or expired token","statusCode":401,"success":false}
+2025-07-14 12:26:10 [ERROR]: POST /api/event/create: Missing fields required. {"message":"Missing fields required.","statusCode":400,"success":false}
+2025-07-14 12:26:17 [ERROR]: POST /api/event/create: Missing fields required. {"message":"Missing fields required.","statusCode":400,"success":false}
+2025-07-14 13:58:38 [ERROR]: POST /api/user/register: 
+Invalid `prisma.user_account.create()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/auth/userAuthController.ts:65:49
+
+  62 
+  63 // Registering User
+  64 const { email, username, password, referred_by_code } = req.body;
+→ 65 const newUser = await prisma.user_account.create({
+       data: {
+         email: "adi.wijaya@mail.com",
+         username: "adiwijaya",
+         password: "Adi2024x",
+         role: "user",
+         referral_code: "ADIW7JCW",
+         referred_by_code: "FARI5SBN",
+         user_profile: {
+           create: {
+             user_fullname: "",
+             user_date_of_birth: "",
+                                 ~~
+             user_profile_image: "",
+             user_phone: ""
+           }
+         }
+       },
+       include: {
+         user_profile: true
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: premature end of input. Expected ISO-8601 DateTime. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-14 14:03:55 [ERROR]: POST /api/user/register: 
+Invalid `prisma.user_account.create()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/auth/userAuthController.ts:65:49
+
+  62 
+  63 // Registering User
+  64 const { email, username, password, referred_by_code } = req.body;
+→ 65 const newUser = await prisma.user_account.create({
+       data: {
+         email: "adi.wijaya@mail.com",
+         username: "adiwijaya",
+         password: "Adi2024x",
+         role: "user",
+         referral_code: "ADIWJWTO",
+         referred_by_code: "FARI5SBN",
+         user_profile: {
+           create: {
+             user_fullname: "",
+             user_date_of_birth: "null",
+                                 ~~~~~~
+             user_profile_image: "",
+             user_phone: ""
+           }
+         }
+       },
+       include: {
+         user_profile: true
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: input contains invalid characters. Expected ISO-8601 DateTime. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-14 14:08:29 [ERROR]: POST /api/user/register: 
+Invalid `prisma.user_account.create()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/auth/userAuthController.ts:65:49
+
+  62 
+  63 // Registering User
+  64 const { email, username, password, referred_by_code } = req.body;
+→ 65 const newUser = await prisma.user_account.create({
+       data: {
+         email: "adi.wijaya@mail.com",
+         username: "adiwijaya",
+         password: "Adi2024x",
+         role: "user",
+         referral_code: "ADIWB87Q",
+         referred_by_code: "FARI5SBN",
+         user_profile: {
+           create: {
+             user_fullname: "",
+             user_date_of_birth: new Date("Invalid Date"),
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+             user_profile_image: "",
+             user_phone: ""
+           }
+         }
+       },
+       include: {
+         user_profile: true
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-14 14:09:06 [ERROR]: POST /api/user/register: 
+Invalid `prisma.user_account.create()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/auth/userAuthController.ts:65:49
+
+  62 
+  63 // Registering User
+  64 const { email, username, password, referred_by_code } = req.body;
+→ 65 const newUser = await prisma.user_account.create({
+       data: {
+         email: "adi.wijaya@mail.com",
+         username: "adiwijaya",
+         password: "Adi2024x",
+         role: "user",
+         referral_code: "ADIWH05K",
+         referred_by_code: "FARI5SBN",
+         user_profile: {
+           create: {
+             user_fullname: "",
+             user_date_of_birth: new Date("Invalid Date"),
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+             user_profile_image: "",
+             user_phone: ""
+           }
+         }
+       },
+       include: {
+         user_profile: true
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-14 14:09:26 [ERROR]: POST /api/user/register: 
+Invalid `prisma.user_account.create()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/auth/userAuthController.ts:65:49
+
+  62 
+  63 // Registering User
+  64 const { email, username, password, referred_by_code } = req.body;
+→ 65 const newUser = await prisma.user_account.create({
+       data: {
+         email: "adi.wijaya@mail.com",
+         username: "adiwijaya",
+         password: "Adi2024x",
+         role: "user",
+         referral_code: "ADIWNLGX",
+         referred_by_code: "FARI5SBN",
+         user_profile: {
+           create: {
+             user_fullname: "",
+             user_date_of_birth: new Date("Invalid Date"),
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~
+             user_profile_image: "",
+             user_phone: ""
+           }
+         }
+       },
+       include: {
+         user_profile: true
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-14 14:50:18 [ERROR]: GET /api/event/get-attendees: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 17:20:19 [ERROR]: GET /api/event/fetch: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 17:20:31 [ERROR]: GET /api/event/fetch: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 17:59:27 [ERROR]: GET /api/transactions/get-transactions: 
+Invalid `prisma.transactions_table.findMany()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/transaction/organizerTransactionController.ts:243:60
+
+  240 }
+  241 
+  242 // Find Transactions
+→ 243 const transactions = await prisma.transactions_table.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.11.1","name":"PrismaClientInitializationError"}
+2025-07-14 18:23:00 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 18:23:28 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 18:24:28 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 18:25:09 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 18:26:48 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 18:26:48 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 19:30:30 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 19:38:45 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 19:53:46 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 19:54:07 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 19:54:23 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}

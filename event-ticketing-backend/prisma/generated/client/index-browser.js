@@ -226,7 +226,8 @@ exports.Prisma.Event_tableScalarFieldEnum = {
   event_type: 'event_type',
   created_at: 'created_at',
   expires_at: 'expires_at',
-  thumbnail_img: 'thumbnail_img'
+  thumbnail_img: 'thumbnail_img',
+  slug: 'slug'
 };
 
 exports.Prisma.Ticket_holdsScalarFieldEnum = {

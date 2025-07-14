@@ -4150,13 +4150,11 @@ export namespace Prisma {
   export type User_profileAvgAggregateOutputType = {
     id: number | null
     user_id: number | null
-    user_phone: number | null
   }
 
   export type User_profileSumAggregateOutputType = {
     id: number | null
     user_id: number | null
-    user_phone: number | null
   }
 
   export type User_profileMinAggregateOutputType = {
@@ -4164,7 +4162,7 @@ export namespace Prisma {
     user_id: number | null
     user_fullname: string | null
     user_date_of_birth: Date | null
-    user_phone: number | null
+    user_phone: string | null
     user_profile_image: string | null
   }
 
@@ -4173,7 +4171,7 @@ export namespace Prisma {
     user_id: number | null
     user_fullname: string | null
     user_date_of_birth: Date | null
-    user_phone: number | null
+    user_phone: string | null
     user_profile_image: string | null
   }
 
@@ -4191,13 +4189,11 @@ export namespace Prisma {
   export type User_profileAvgAggregateInputType = {
     id?: true
     user_id?: true
-    user_phone?: true
   }
 
   export type User_profileSumAggregateInputType = {
     id?: true
     user_id?: true
-    user_phone?: true
   }
 
   export type User_profileMinAggregateInputType = {
@@ -4318,8 +4314,8 @@ export namespace Prisma {
     id: number
     user_id: number
     user_fullname: string
-    user_date_of_birth: Date
-    user_phone: number
+    user_date_of_birth: Date | null
+    user_phone: string
     user_profile_image: string
     _count: User_profileCountAggregateOutputType | null
     _avg: User_profileAvgAggregateOutputType | null
@@ -4401,8 +4397,8 @@ export namespace Prisma {
       id: number
       user_id: number
       user_fullname: string
-      user_date_of_birth: Date
-      user_phone: number
+      user_date_of_birth: Date | null
+      user_phone: string
       user_profile_image: string
     }, ExtArgs["result"]["user_profile"]>
     composites: {}
@@ -4832,7 +4828,7 @@ export namespace Prisma {
     readonly user_id: FieldRef<"user_profile", 'Int'>
     readonly user_fullname: FieldRef<"user_profile", 'String'>
     readonly user_date_of_birth: FieldRef<"user_profile", 'DateTime'>
-    readonly user_phone: FieldRef<"user_profile", 'Int'>
+    readonly user_phone: FieldRef<"user_profile", 'String'>
     readonly user_profile_image: FieldRef<"user_profile", 'String'>
   }
     
@@ -12171,13 +12167,11 @@ export namespace Prisma {
   export type Organizer_profileAvgAggregateOutputType = {
     id: number | null
     organizer_id: number | null
-    organizer_phone: number | null
   }
 
   export type Organizer_profileSumAggregateOutputType = {
     id: number | null
     organizer_id: number | null
-    organizer_phone: number | null
   }
 
   export type Organizer_profileMinAggregateOutputType = {
@@ -12185,7 +12179,7 @@ export namespace Prisma {
     organizer_id: number | null
     organizer_name: string | null
     organizer_address: string | null
-    organizer_phone: number | null
+    organizer_phone: string | null
     organizer_profile_image: string | null
   }
 
@@ -12194,7 +12188,7 @@ export namespace Prisma {
     organizer_id: number | null
     organizer_name: string | null
     organizer_address: string | null
-    organizer_phone: number | null
+    organizer_phone: string | null
     organizer_profile_image: string | null
   }
 
@@ -12212,13 +12206,11 @@ export namespace Prisma {
   export type Organizer_profileAvgAggregateInputType = {
     id?: true
     organizer_id?: true
-    organizer_phone?: true
   }
 
   export type Organizer_profileSumAggregateInputType = {
     id?: true
     organizer_id?: true
-    organizer_phone?: true
   }
 
   export type Organizer_profileMinAggregateInputType = {
@@ -12340,7 +12332,7 @@ export namespace Prisma {
     organizer_id: number
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
     _count: Organizer_profileCountAggregateOutputType | null
     _avg: Organizer_profileAvgAggregateOutputType | null
@@ -12423,7 +12415,7 @@ export namespace Prisma {
       organizer_id: number
       organizer_name: string
       organizer_address: string
-      organizer_phone: number
+      organizer_phone: string
       organizer_profile_image: string
     }, ExtArgs["result"]["organizer_profile"]>
     composites: {}
@@ -12853,7 +12845,7 @@ export namespace Prisma {
     readonly organizer_id: FieldRef<"organizer_profile", 'Int'>
     readonly organizer_name: FieldRef<"organizer_profile", 'String'>
     readonly organizer_address: FieldRef<"organizer_profile", 'String'>
-    readonly organizer_phone: FieldRef<"organizer_profile", 'Int'>
+    readonly organizer_phone: FieldRef<"organizer_profile", 'String'>
     readonly organizer_profile_image: FieldRef<"organizer_profile", 'String'>
   }
     
@@ -14458,6 +14450,7 @@ export namespace Prisma {
     created_at: Date | null
     expires_at: Date | null
     thumbnail_img: string | null
+    slug: string | null
   }
 
   export type Event_tableMaxAggregateOutputType = {
@@ -14473,6 +14466,7 @@ export namespace Prisma {
     created_at: Date | null
     expires_at: Date | null
     thumbnail_img: string | null
+    slug: string | null
   }
 
   export type Event_tableCountAggregateOutputType = {
@@ -14488,6 +14482,7 @@ export namespace Prisma {
     created_at: number
     expires_at: number
     thumbnail_img: number
+    slug: number
     _all: number
   }
 
@@ -14519,6 +14514,7 @@ export namespace Prisma {
     created_at?: true
     expires_at?: true
     thumbnail_img?: true
+    slug?: true
   }
 
   export type Event_tableMaxAggregateInputType = {
@@ -14534,6 +14530,7 @@ export namespace Prisma {
     created_at?: true
     expires_at?: true
     thumbnail_img?: true
+    slug?: true
   }
 
   export type Event_tableCountAggregateInputType = {
@@ -14549,6 +14546,7 @@ export namespace Prisma {
     created_at?: true
     expires_at?: true
     thumbnail_img?: true
+    slug?: true
     _all?: true
   }
 
@@ -14651,6 +14649,7 @@ export namespace Prisma {
     created_at: Date
     expires_at: Date | null
     thumbnail_img: string | null
+    slug: string
     _count: Event_tableCountAggregateOutputType | null
     _avg: Event_tableAvgAggregateOutputType | null
     _sum: Event_tableSumAggregateOutputType | null
@@ -14685,6 +14684,7 @@ export namespace Prisma {
     created_at?: boolean
     expires_at?: boolean
     thumbnail_img?: boolean
+    slug?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     organizer_reviews?: boolean | event_table$organizer_reviewsArgs<ExtArgs>
     ticket_holds?: boolean | event_table$ticket_holdsArgs<ExtArgs>
@@ -14708,6 +14708,7 @@ export namespace Prisma {
     created_at?: boolean
     expires_at?: boolean
     thumbnail_img?: boolean
+    slug?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event_table"]>
 
@@ -14724,6 +14725,7 @@ export namespace Prisma {
     created_at?: boolean
     expires_at?: boolean
     thumbnail_img?: boolean
+    slug?: boolean
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event_table"]>
 
@@ -14740,9 +14742,10 @@ export namespace Prisma {
     created_at?: boolean
     expires_at?: boolean
     thumbnail_img?: boolean
+    slug?: boolean
   }
 
-  export type event_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "name" | "description" | "price" | "start_date" | "end_date" | "seat_capacity" | "event_type" | "created_at" | "expires_at" | "thumbnail_img", ExtArgs["result"]["event_table"]>
+  export type event_tableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizer_id" | "name" | "description" | "price" | "start_date" | "end_date" | "seat_capacity" | "event_type" | "created_at" | "expires_at" | "thumbnail_img" | "slug", ExtArgs["result"]["event_table"]>
   export type event_tableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organizer?: boolean | organizer_accountDefaultArgs<ExtArgs>
     organizer_reviews?: boolean | event_table$organizer_reviewsArgs<ExtArgs>
@@ -14784,6 +14787,7 @@ export namespace Prisma {
       created_at: Date
       expires_at: Date | null
       thumbnail_img: string | null
+      slug: string
     }, ExtArgs["result"]["event_table"]>
     composites: {}
   }
@@ -15226,6 +15230,7 @@ export namespace Prisma {
     readonly created_at: FieldRef<"event_table", 'DateTime'>
     readonly expires_at: FieldRef<"event_table", 'DateTime'>
     readonly thumbnail_img: FieldRef<"event_table", 'String'>
+    readonly slug: FieldRef<"event_table", 'String'>
   }
     
 
@@ -21881,7 +21886,8 @@ export namespace Prisma {
     event_type: 'event_type',
     created_at: 'created_at',
     expires_at: 'expires_at',
-    thumbnail_img: 'thumbnail_img'
+    thumbnail_img: 'thumbnail_img',
+    slug: 'slug'
   };
 
   export type Event_tableScalarFieldEnum = (typeof Event_tableScalarFieldEnum)[keyof typeof Event_tableScalarFieldEnum]
@@ -22253,8 +22259,8 @@ export namespace Prisma {
     id?: IntFilter<"user_profile"> | number
     user_id?: IntFilter<"user_profile"> | number
     user_fullname?: StringFilter<"user_profile"> | string
-    user_date_of_birth?: DateTimeFilter<"user_profile"> | Date | string
-    user_phone?: IntFilter<"user_profile"> | number
+    user_date_of_birth?: DateTimeNullableFilter<"user_profile"> | Date | string | null
+    user_phone?: StringFilter<"user_profile"> | string
     user_profile_image?: StringFilter<"user_profile"> | string
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
   }
@@ -22263,7 +22269,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     user_fullname?: SortOrder
-    user_date_of_birth?: SortOrder
+    user_date_of_birth?: SortOrderInput | SortOrder
     user_phone?: SortOrder
     user_profile_image?: SortOrder
     user?: user_accountOrderByWithRelationInput
@@ -22276,8 +22282,8 @@ export namespace Prisma {
     OR?: user_profileWhereInput[]
     NOT?: user_profileWhereInput | user_profileWhereInput[]
     user_fullname?: StringFilter<"user_profile"> | string
-    user_date_of_birth?: DateTimeFilter<"user_profile"> | Date | string
-    user_phone?: IntFilter<"user_profile"> | number
+    user_date_of_birth?: DateTimeNullableFilter<"user_profile"> | Date | string | null
+    user_phone?: StringFilter<"user_profile"> | string
     user_profile_image?: StringFilter<"user_profile"> | string
     user?: XOR<User_accountScalarRelationFilter, user_accountWhereInput>
   }, "id" | "user_id">
@@ -22286,7 +22292,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     user_fullname?: SortOrder
-    user_date_of_birth?: SortOrder
+    user_date_of_birth?: SortOrderInput | SortOrder
     user_phone?: SortOrder
     user_profile_image?: SortOrder
     _count?: user_profileCountOrderByAggregateInput
@@ -22303,8 +22309,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"user_profile"> | number
     user_id?: IntWithAggregatesFilter<"user_profile"> | number
     user_fullname?: StringWithAggregatesFilter<"user_profile"> | string
-    user_date_of_birth?: DateTimeWithAggregatesFilter<"user_profile"> | Date | string
-    user_phone?: IntWithAggregatesFilter<"user_profile"> | number
+    user_date_of_birth?: DateTimeNullableWithAggregatesFilter<"user_profile"> | Date | string | null
+    user_phone?: StringWithAggregatesFilter<"user_profile"> | string
     user_profile_image?: StringWithAggregatesFilter<"user_profile"> | string
   }
 
@@ -22712,7 +22718,7 @@ export namespace Prisma {
     organizer_id?: IntFilter<"organizer_profile"> | number
     organizer_name?: StringFilter<"organizer_profile"> | string
     organizer_address?: StringFilter<"organizer_profile"> | string
-    organizer_phone?: IntFilter<"organizer_profile"> | number
+    organizer_phone?: StringFilter<"organizer_profile"> | string
     organizer_profile_image?: StringFilter<"organizer_profile"> | string
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
   }
@@ -22735,7 +22741,7 @@ export namespace Prisma {
     NOT?: organizer_profileWhereInput | organizer_profileWhereInput[]
     organizer_name?: StringFilter<"organizer_profile"> | string
     organizer_address?: StringFilter<"organizer_profile"> | string
-    organizer_phone?: IntFilter<"organizer_profile"> | number
+    organizer_phone?: StringFilter<"organizer_profile"> | string
     organizer_profile_image?: StringFilter<"organizer_profile"> | string
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
   }, "id" | "organizer_id">
@@ -22762,7 +22768,7 @@ export namespace Prisma {
     organizer_id?: IntWithAggregatesFilter<"organizer_profile"> | number
     organizer_name?: StringWithAggregatesFilter<"organizer_profile"> | string
     organizer_address?: StringWithAggregatesFilter<"organizer_profile"> | string
-    organizer_phone?: IntWithAggregatesFilter<"organizer_profile"> | number
+    organizer_phone?: StringWithAggregatesFilter<"organizer_profile"> | string
     organizer_profile_image?: StringWithAggregatesFilter<"organizer_profile"> | string
   }
 
@@ -22855,6 +22861,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
+    slug?: StringFilter<"event_table"> | string
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     organizer_reviews?: Organizer_reviewsListRelationFilter
     ticket_holds?: Ticket_holdsListRelationFilter
@@ -22877,6 +22884,7 @@ export namespace Prisma {
     created_at?: SortOrder
     expires_at?: SortOrderInput | SortOrder
     thumbnail_img?: SortOrderInput | SortOrder
+    slug?: SortOrder
     organizer?: organizer_accountOrderByWithRelationInput
     organizer_reviews?: organizer_reviewsOrderByRelationAggregateInput
     ticket_holds?: ticket_holdsOrderByRelationAggregateInput
@@ -22902,6 +22910,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
+    slug?: StringFilter<"event_table"> | string
     organizer?: XOR<Organizer_accountScalarRelationFilter, organizer_accountWhereInput>
     organizer_reviews?: Organizer_reviewsListRelationFilter
     ticket_holds?: Ticket_holdsListRelationFilter
@@ -22924,6 +22933,7 @@ export namespace Prisma {
     created_at?: SortOrder
     expires_at?: SortOrderInput | SortOrder
     thumbnail_img?: SortOrderInput | SortOrder
+    slug?: SortOrder
     _count?: event_tableCountOrderByAggregateInput
     _avg?: event_tableAvgOrderByAggregateInput
     _max?: event_tableMaxOrderByAggregateInput
@@ -22947,6 +22957,7 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableWithAggregatesFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableWithAggregatesFilter<"event_table"> | string | null
+    slug?: StringWithAggregatesFilter<"event_table"> | string
   }
 
   export type ticket_holdsWhereInput = {
@@ -23468,8 +23479,8 @@ export namespace Prisma {
 
   export type user_profileCreateInput = {
     user_fullname: string
-    user_date_of_birth: Date | string
-    user_phone: number
+    user_date_of_birth?: Date | string | null
+    user_phone: string
     user_profile_image: string
     user: user_accountCreateNestedOneWithoutUser_profileInput
   }
@@ -23478,15 +23489,15 @@ export namespace Prisma {
     id?: number
     user_id: number
     user_fullname: string
-    user_date_of_birth: Date | string
-    user_phone: number
+    user_date_of_birth?: Date | string | null
+    user_phone: string
     user_profile_image: string
   }
 
   export type user_profileUpdateInput = {
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
     user?: user_accountUpdateOneRequiredWithoutUser_profileNestedInput
   }
@@ -23495,8 +23506,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -23504,15 +23515,15 @@ export namespace Prisma {
     id?: number
     user_id: number
     user_fullname: string
-    user_date_of_birth: Date | string
-    user_phone: number
+    user_date_of_birth?: Date | string | null
+    user_phone: string
     user_profile_image: string
   }
 
   export type user_profileUpdateManyMutationInput = {
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -23520,8 +23531,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -23912,7 +23923,7 @@ export namespace Prisma {
   export type organizer_profileCreateInput = {
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
     organizer: organizer_accountCreateNestedOneWithoutOrganizer_profileInput
   }
@@ -23922,14 +23933,14 @@ export namespace Prisma {
     organizer_id: number
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
   }
 
   export type organizer_profileUpdateInput = {
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutOrganizer_profileNestedInput
   }
@@ -23939,7 +23950,7 @@ export namespace Prisma {
     organizer_id?: IntFieldUpdateOperationsInput | number
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -23948,14 +23959,14 @@ export namespace Prisma {
     organizer_id: number
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
   }
 
   export type organizer_profileUpdateManyMutationInput = {
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -23964,7 +23975,7 @@ export namespace Prisma {
     organizer_id?: IntFieldUpdateOperationsInput | number
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -24043,6 +24054,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -24065,6 +24077,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -24084,6 +24097,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
@@ -24106,6 +24120,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
@@ -24127,6 +24142,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
   }
 
   export type event_tableUpdateManyMutationInput = {
@@ -24140,6 +24156,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type event_tableUncheckedUpdateManyInput = {
@@ -24155,6 +24172,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type ticket_holdsCreateInput = {
@@ -24829,7 +24847,6 @@ export namespace Prisma {
   export type user_profileAvgOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    user_phone?: SortOrder
   }
 
   export type user_profileMaxOrderByAggregateInput = {
@@ -24853,7 +24870,6 @@ export namespace Prisma {
   export type user_profileSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    user_phone?: SortOrder
   }
 
   export type Points_redemption_itemsListRelationFilter = {
@@ -25246,7 +25262,6 @@ export namespace Prisma {
   export type organizer_profileAvgOrderByAggregateInput = {
     id?: SortOrder
     organizer_id?: SortOrder
-    organizer_phone?: SortOrder
   }
 
   export type organizer_profileMaxOrderByAggregateInput = {
@@ -25270,7 +25285,6 @@ export namespace Prisma {
   export type organizer_profileSumOrderByAggregateInput = {
     id?: SortOrder
     organizer_id?: SortOrder
-    organizer_phone?: SortOrder
   }
 
   export type Event_tableScalarRelationFilter = {
@@ -25354,6 +25368,7 @@ export namespace Prisma {
     created_at?: SortOrder
     expires_at?: SortOrder
     thumbnail_img?: SortOrder
+    slug?: SortOrder
   }
 
   export type event_tableAvgOrderByAggregateInput = {
@@ -25376,6 +25391,7 @@ export namespace Prisma {
     created_at?: SortOrder
     expires_at?: SortOrder
     thumbnail_img?: SortOrder
+    slug?: SortOrder
   }
 
   export type event_tableMinOrderByAggregateInput = {
@@ -25391,6 +25407,7 @@ export namespace Prisma {
     created_at?: SortOrder
     expires_at?: SortOrder
     thumbnail_img?: SortOrder
+    slug?: SortOrder
   }
 
   export type event_tableSumOrderByAggregateInput = {
@@ -27529,16 +27546,16 @@ export namespace Prisma {
 
   export type user_profileCreateWithoutUserInput = {
     user_fullname: string
-    user_date_of_birth: Date | string
-    user_phone: number
+    user_date_of_birth?: Date | string | null
+    user_phone: string
     user_profile_image: string
   }
 
   export type user_profileUncheckedCreateWithoutUserInput = {
     id?: number
     user_fullname: string
-    user_date_of_birth: Date | string
-    user_phone: number
+    user_date_of_birth?: Date | string | null
+    user_phone: string
     user_profile_image: string
   }
 
@@ -27755,16 +27772,16 @@ export namespace Prisma {
 
   export type user_profileUpdateWithoutUserInput = {
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
   export type user_profileUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_fullname?: StringFieldUpdateOperationsInput | string
-    user_date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_phone?: IntFieldUpdateOperationsInput | number
+    user_date_of_birth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_phone?: StringFieldUpdateOperationsInput | string
     user_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -28691,7 +28708,7 @@ export namespace Prisma {
   export type organizer_profileCreateWithoutOrganizerInput = {
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
   }
 
@@ -28699,7 +28716,7 @@ export namespace Prisma {
     id?: number
     organizer_name: string
     organizer_address: string
-    organizer_phone: number
+    organizer_phone: string
     organizer_profile_image: string
   }
 
@@ -28746,6 +28763,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -28766,6 +28784,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -28858,7 +28877,7 @@ export namespace Prisma {
   export type organizer_profileUpdateWithoutOrganizerInput = {
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -28866,7 +28885,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     organizer_name?: StringFieldUpdateOperationsInput | string
     organizer_address?: StringFieldUpdateOperationsInput | string
-    organizer_phone?: IntFieldUpdateOperationsInput | number
+    organizer_phone?: StringFieldUpdateOperationsInput | string
     organizer_profile_image?: StringFieldUpdateOperationsInput | string
   }
 
@@ -28918,6 +28937,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"event_table"> | Date | string
     expires_at?: DateTimeNullableFilter<"event_table"> | Date | string | null
     thumbnail_img?: StringNullableFilter<"event_table"> | string | null
+    slug?: StringFilter<"event_table"> | string
   }
 
   export type event_attendeesUpsertWithWhereUniqueWithoutOrganizerInput = {
@@ -29068,6 +29088,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -29089,6 +29110,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -29201,6 +29223,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUpdateManyWithoutEventNestedInput
@@ -29222,6 +29245,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutEventNestedInput
@@ -29637,6 +29661,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeCreateNestedManyWithoutEventInput
@@ -29658,6 +29683,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -29786,6 +29812,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUpdateManyWithoutEventNestedInput
@@ -29807,6 +29834,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutEventNestedInput
@@ -29937,6 +29965,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -29958,6 +29987,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     event_attendees?: event_attendeesUncheckedCreateNestedManyWithoutEventInput
@@ -30023,6 +30053,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
@@ -30044,6 +30075,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     event_attendees?: event_attendeesUncheckedUpdateManyWithoutEventNestedInput
@@ -30078,6 +30110,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -30099,6 +30132,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -30205,6 +30239,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
@@ -30226,6 +30261,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
@@ -30372,6 +30408,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -30393,6 +30430,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -30570,6 +30608,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
@@ -30591,6 +30630,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
@@ -30727,6 +30767,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer: organizer_accountCreateNestedOneWithoutEvent_tableInput
     organizer_reviews?: organizer_reviewsCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsCreateNestedManyWithoutEventInput
@@ -30748,6 +30789,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
     organizer_reviews?: organizer_reviewsUncheckedCreateNestedManyWithoutEventInput
     ticket_holds?: ticket_holdsUncheckedCreateNestedManyWithoutEventInput
     ticket_type?: ticket_typeUncheckedCreateNestedManyWithoutEventInput
@@ -30851,6 +30893,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer?: organizer_accountUpdateOneRequiredWithoutEvent_tableNestedInput
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
@@ -30872,6 +30915,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
@@ -31277,6 +31321,7 @@ export namespace Prisma {
     created_at?: Date | string
     expires_at?: Date | string | null
     thumbnail_img?: string | null
+    slug: string
   }
 
   export type event_attendeesCreateManyOrganizerInput = {
@@ -31336,6 +31381,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUpdateManyWithoutEventNestedInput
@@ -31356,6 +31402,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
     organizer_reviews?: organizer_reviewsUncheckedUpdateManyWithoutEventNestedInput
     ticket_holds?: ticket_holdsUncheckedUpdateManyWithoutEventNestedInput
     ticket_type?: ticket_typeUncheckedUpdateManyWithoutEventNestedInput
@@ -31376,6 +31423,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     thumbnail_img?: NullableStringFieldUpdateOperationsInput | string | null
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type event_attendeesUpdateWithoutOrganizerInput = {

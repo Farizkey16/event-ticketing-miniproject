@@ -79,10 +79,13 @@ class OrganizerProfile {
         organizer_profile_image,
       } = req.body;
 
+
+      // Check authorization role organizer
       if (organizer.role !== "organizer") {
         throw new AppError("You are not allowed to access this page.", 403);
       }
 
+      // Check existing organizer account
       const checkOrganizer = await prisma.organizer_account.findUnique({
         where: {
           id: organizer.id,
@@ -97,6 +100,7 @@ class OrganizerProfile {
         throw new AppError("Missing required profile fields.", 400);
       }
 
+      // Check exisitng organizer profile
       const profile = await prisma.organizer_profile.findUnique({
         where: {
           organizer_id: organizer.id,
@@ -109,7 +113,7 @@ class OrganizerProfile {
 
       const updatedProfile = await prisma.organizer_profile.update({
         where: {
-          id: organizer.id,
+          id: profile.id,
         },
         data: {
           organizer_name,
@@ -124,7 +128,7 @@ class OrganizerProfile {
 
       res.status(200).send({
         success: true,
-        message: "Your profile has been created",
+        message: "Your profile has been changed.",
         data: updatedProfile,
       });
     } catch (err) {
@@ -171,7 +175,7 @@ class OrganizerProfile {
 
       res.status(200).send({
         success: true,
-        message: "password has been reset successfully.",
+        message: "Password has been changed successfully.",
       });
     } catch (err) {
       console.error(err);
@@ -215,7 +219,7 @@ class OrganizerProfile {
         },
       });
 
-      const resetLink = `http://localhost:3000/organizer/reset-password?token=${token}`;
+      const resetLink = process.env.FRONTEND_URL
 
       await transporter.sendMail({
         from: process.env.MAIL_SENDER,
@@ -270,11 +274,6 @@ class OrganizerProfile {
         },
       });
 
-      res.status(200).send({
-        success: true,
-        message: "New password successfully created.",
-      });
-
       const transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
@@ -289,6 +288,14 @@ class OrganizerProfile {
         subject: "Password Reset Successful",
         html: `Your password has been reset successfully.`,
       });
+      
+      
+      res.status(200).send({
+        success: true,
+        message: "New password successfully created.",
+      });
+
+      
     } catch (err: any) {
       console.error(err);
       if (err.name === "TokenExpiredError") {
@@ -306,7 +313,7 @@ class OrganizerProfile {
     try {
       const organizer = res.locals.user;
 
-      const profile = await prisma.organizer_account.findUnique({
+      const profile = await prisma.organizer_profile.findUnique({
         where: {
           id: organizer.id,
         },

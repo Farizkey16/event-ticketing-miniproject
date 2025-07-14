@@ -4,6 +4,7 @@ import { sign } from "jsonwebtoken";
 import { prisma } from "../../config/prisma";
 import bcrypt from "bcrypt";
 import AppError from "../../errors/AppError";
+import { serialize } from "cookie";
 
 class OrganizerAuthController {
   public register = async (req: Request, res: Response, next: NextFunction) => {
@@ -29,10 +30,13 @@ class OrganizerAuthController {
       });
 
       if (existingOrganizer) {
-        throw new AppError("There is already an organizer with this email/username", 409)
+        throw new AppError(
+          "There is already an organizer with this email/username",
+          409
+        );
       }
 
-      // Registering User
+      // Registering organizer
       const hashedPassword = await bcrypt.hash(password, 10);
       const organizer = await prisma.organizer_account.create({
         data: {
@@ -44,7 +48,7 @@ class OrganizerAuthController {
             create: {
               organizer_name: "",
               organizer_address: "",
-              organizer_phone: 0,
+              organizer_phone: "0",
               organizer_profile_image: "",
             },
           },
@@ -75,6 +79,8 @@ class OrganizerAuthController {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
+
+    try{
     // Check Organizer
     const existingOrganizer = await prisma.organizer_account.findUnique({
       where: {
@@ -87,7 +93,10 @@ class OrganizerAuthController {
     }
 
     // Comparing Password
-    const passwordCompare = compare(req.body.password, existingOrganizer.password);
+    const passwordCompare = await compare(
+      req.body.password,
+      existingOrganizer.password
+    );
 
     if (!passwordCompare) {
       throw new AppError("Your entered password is incorrect.", 400);
@@ -104,12 +113,54 @@ class OrganizerAuthController {
       { expiresIn: "2h" }
     );
 
+    // Set HTTP-only Cookie --> safer unlike localstorage, and immune to middle-man attacks
+    // Stored in cookie in front-end
+    // res.setHeader(
+    //   "Set-Cookie",
+    //   serialize("token", token, {
+    //     httpOnly: true,
+    //     secure: true,
+    //     sameSite: "none",
+    //     path: "/",
+    //     maxAge: 60 * 60 * 2,
+    //   })
+    // );
+    
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 2 * 1000
+    })
+
     res.status(200).send({
       success: true,
       message: "Log in successful",
       data: existingOrganizer,
       token: token,
     });
+    return;
+
+  } catch(err) {
+    console.error(err);
+    if (!res.headersSent) {
+      return next(err)
+    }
+    return next(err)
+  }
+  };
+
+  public logout = async (req: Request, res: Response) => {
+    const cookie = serialize("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 0,
+    });
+    res.setHeader("Set-Cookie", cookie);
+    res.status(200).json({ success: true, message: "Logged out." });
   };
 }
 

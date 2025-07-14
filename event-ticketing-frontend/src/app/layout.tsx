@@ -3,7 +3,7 @@ import "./globals.css";
 // Update the import path below to match the actual file location and casing, for example:
 import NavbarWrapper from "../components/navbarwrapper";
 import { AuthProvider } from "../context/authcontext";
-import SessionProviderWrapper from "../components/sessionproviderwrapper";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <SessionProviderWrapper>{children}</SessionProviderWrapper>
+        {children}
       </body>
     </html>
   );

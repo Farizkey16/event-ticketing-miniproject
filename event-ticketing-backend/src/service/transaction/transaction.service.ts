@@ -1,5 +1,5 @@
 import { prisma } from "../../config/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client/extension";
 import { organizer_account } from "../../../prisma/generated/client";
 import { sendEmail } from "../../utils/mail.utils";
 import { calculateDiscount } from "../../utils/calculateprice.utils";
