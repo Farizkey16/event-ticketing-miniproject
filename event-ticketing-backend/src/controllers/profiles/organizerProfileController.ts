@@ -219,7 +219,7 @@ class OrganizerProfile {
         },
       });
 
-      const resetLink = process.env.FRONTEND_URL
+      const resetLink = `http://localhost:3000/organizer/reset-password?token=${token}`
 
       await transporter.sendMail({
         from: process.env.MAIL_SENDER,

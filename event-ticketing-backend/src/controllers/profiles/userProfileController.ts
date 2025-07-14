@@ -145,7 +145,11 @@ class UserProfile {
       const findUser = await prisma.user_account.findUnique({
         where: {
           email,
-        },
+        },select:{
+          id: true,
+          role: true,
+          email:true
+        }
       });
 
       if (!findUser) {
@@ -153,10 +157,14 @@ class UserProfile {
       }
 
       const token = jwt.sign(
-        { id: findUser.id, role: "user" },
+        { id: findUser.id, role: findUser.role },
         process.env.JWT_TOKEN as string,
         { expiresIn: "20m" }
       );
+
+      if (findUser.role !== "user") {
+        throw new AppError("You are not allowed to access this page.", 403)
+      }
 
       const transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -166,7 +174,7 @@ class UserProfile {
         },
       });
 
-      const resetLink = process.env.FRONTEND_URL;
+      const resetLink = `http://localhost:3000/user/reset-password?token=${token}`
 
       await transporter.sendMail({
         from: process.env.MAIL_SENDER,
@@ -278,8 +286,8 @@ class UserProfile {
   };
 
   public uploadProfileImage = async (
-    res: Response,
-    req: Request,
+    req:Request,
+    res:Response,
     next: NextFunction
   ) => {
     try {

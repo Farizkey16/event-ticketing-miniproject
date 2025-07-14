@@ -73,6 +73,7 @@ export const loginValidation = [
       minLowercase: 1,
       minNumbers: 1,
       minUppercase: 1,
+      minSymbols:0
     })
     .withMessage("Password must have at least 8 characters, including 1 lowercase, 1 uppercase, and 1 number."),
   validationHandling,
@@ -89,9 +90,10 @@ export const passwordValidator = [
       minLowercase: 1,
       minNumbers: 1,
       minUppercase: 1,
+      minSymbols: 0,
     })
     .withMessage(
-      "Please create a new password of minimum 6 characters, 1 lowercase, 1 uppercase, and 1 number."
+      "Please create a new password of minimum 8 characters, 1 lowercase, 1 uppercase, and 1 number."
     ),
   validationHandling,
 ];

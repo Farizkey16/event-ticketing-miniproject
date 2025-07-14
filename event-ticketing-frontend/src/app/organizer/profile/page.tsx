@@ -29,7 +29,7 @@ export default function OrganizerProfile() {
 
   return (
     <main className="p-6 max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold">Profil Organizer</h1>
+      <h1 className="text-2xl font-bold">Organizer Profile</h1>
 
       <Card>
         <CardContent className="p-6 space-y-6">
@@ -62,7 +62,7 @@ export default function OrganizerProfile() {
               />
             </div>
             <div>
-              <Label>Address Organizer</Label>
+              <Label>Address</Label>
               <Input
                 name="address"
                 value={profile.address}

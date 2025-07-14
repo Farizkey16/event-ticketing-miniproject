@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    const res = await fetch("http://localhost:3077/ticket/organizer/reset-password/confirm", {
+    const res = await fetch("http://localhost:3077/api/organizer/reset-password/confirm", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
