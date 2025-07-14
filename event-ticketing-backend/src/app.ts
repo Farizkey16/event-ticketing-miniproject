@@ -22,7 +22,7 @@ class App {
 
   private route(): void {
     const ticketingRouter = new TicketingRouter;
-    this.app.use("/ticket", ticketingRouter.getRouter())
+    this.app.use("/api", ticketingRouter.getRouter())
   }
 
   public start(): void {
