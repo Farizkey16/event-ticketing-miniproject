@@ -1,38 +1,69 @@
-import { events } from "../events"
-import { notFound } from "next/navigation";
+"use client";
 
-type Event = typeof events[number];
+import { useParams, useRouter } from "next/navigation";
+import { events, type Event } from "@/data/events"; // ✅ Gunakan `type Event` bukan `type events`
+import Image from "next/image";
 
-export default function EventDetailPage({ params }: { params: { id: string } }) {
-  const event = events.find((e: Event) => e.id === params.id);
+export default function EventDetailPage() {
+  const router = useRouter();
+  const rawId = useParams()?.id;
+  const eventId = Array.isArray(rawId) ? rawId[0] : rawId ?? "";
 
-  if (!event) return notFound();
+  const event: Event | undefined = events.find((e) => e.id === eventId);
+
+  if (!event) {
+    return <div className="p-6 text-red-600">Event tidak ditemukan.</div>;
+  }
+
+  const handleDaftar = () => {
+    router.push(`/purchase/${event.id}`);
+  };
 
   return (
-    <main className="max-w-4xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-4">{event.name}</h1>
-      <img src={event.image} alt={event.alt} className="rounded-xl mb-6 w-full object-cover" />
-      <p className="mb-2">📍 Lokasi: {event.location}</p>
-      <p className="mb-2">📅 Tanggal: {event.date}</p>
-      <p className="mb-2">⏰ Waktu: {event.time}</p>
-      <p className="mb-4">🎟️ Tiket: {event.price}</p>
+    <div className="max-w-4xl mx-auto px-4 py-10">
+      {/* Gambar */}
+      <Image
+        src={event.image}
+        alt={event.alt}
+        width={1200}
+        height={600}
+        className="rounded-lg mb-6"
+      />
 
-      {event.description.map((para: string, idx: number) => (
-        <p key={idx} className="text-lg mb-4">{para}</p>
-      ))}
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">Highlight Acara</h2>
-      <ul className="list-disc list-inside mb-6">
-        {event.highlights.map((item: string, idx: number) => (
-          <li key={idx}>{item}</li>
-        ))}
-      </ul>
-
-      <div className="mt-6 flex justify-start">
-        <button className="bg-pink-600 text-white px-6 py-2 rounded hover:bg-pink-700">
-          Daftar Sekarang
-        </button>
+      {/* Info Dasar */}
+      <div className="text-lg space-y-2 mb-6">
+        <p>📍 <strong>Location:</strong> {event.location}</p>
+        <p>📅 <strong>Start Date:</strong> {event.date}</p>
+        <p>⏰ <strong>Event Time:</strong> {event.time}</p>
+        <p>🎟️ <strong>Ticket Price:</strong> {event.price}</p>
       </div>
-    </main>
+
+      {/* Deskripsi */}
+      <div className="mb-6 space-y-2 text-justify">
+        {event.description.map((desc, i) => (
+          <p key={i}>{desc}</p>
+        ))}
+      </div>
+
+      {/* Highlight */}
+      {event.highlights.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Event Highlight </h2>
+          <ul className="list-disc list-inside space-y-1">
+            {event.highlights.map((highlight, index) => (
+              <li key={index}>{highlight}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Tombol Daftar */}
+      <button
+        onClick={handleDaftar}
+        className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg"
+      >
+        Join Now
+      </button>
+    </div>
   );
 }

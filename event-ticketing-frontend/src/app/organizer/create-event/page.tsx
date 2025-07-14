@@ -6,6 +6,8 @@ import React from "react";
 export default function CreateEventPage() {
   const [priceType, setPriceType] = useState<'free' | 'paid'>('free');
   const [priceValue, setPriceValue] = useState('');
+  const [availableSeat, setAvailableSeat] = useState('');
+  const [description, setDescription] = useState('');
 
   return (
     <div className="max-w-xl mx-auto p-6">
@@ -77,6 +79,31 @@ export default function CreateEventPage() {
             />
           </div>
         )}
+      </div>
+
+      {/* Available Seat */}
+      <div className="mb-4">
+        <label className="block font-medium mb-1">Available Seat</label>
+        <input
+          type="number"
+          min={0}
+          placeholder="Enter total seats available"
+          className="w-full border rounded px-3 py-2"
+          value={availableSeat}
+          onChange={(e) => setAvailableSeat(e.target.value)}
+        />
+      </div>
+
+      {/* Description */}
+      <div className="mb-6">
+        <label className="block font-medium mb-1">Event Description</label>
+        <textarea
+          rows={4}
+          placeholder="Enter event details"
+          className="w-full border rounded px-3 py-2"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </div>
 
       <button className="bg-green-600 text-white px-4 py-2 rounded">Create</button>
