@@ -1,6 +1,7 @@
 import { JwtPayload, verify } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken"
+import AppError from "../errors/AppError";
 
 export const VerifyToken = (
   req: Request,
@@ -11,7 +12,7 @@ export const VerifyToken = (
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        throw new Error("Token is not found. Login is required.")
+        throw new AppError("Token not found. Login is required.", 404)
     }
 
     const payload = jwt.verify(token, process.env.JWT_TOKEN as string) as JwtPayload & {
@@ -26,8 +27,7 @@ export const VerifyToken = (
     next();
 
   } catch (err) {
-    res.status(403).json({ message: "Invalid or expired token" });
-    return;
+    throw new AppError("Invalid or expired token.", 403)
   }
 };
 

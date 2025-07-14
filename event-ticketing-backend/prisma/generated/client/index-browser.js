@@ -218,6 +218,7 @@ exports.Prisma.Event_tableScalarFieldEnum = {
   id: 'id',
   organizer_id: 'organizer_id',
   name: 'name',
+  description: 'description',
   price: 'price',
   start_date: 'start_date',
   end_date: 'end_date',
@@ -318,6 +319,27 @@ exports.issuer = exports.$Enums.issuer = {
   system: 'system',
   organizer: 'organizer',
   admin: 'admin'
+};
+
+exports.EventType = exports.$Enums.EventType = {
+  CONFERENCE: 'CONFERENCE',
+  SEMINAR: 'SEMINAR',
+  WORKSHOP: 'WORKSHOP',
+  WEBINAR: 'WEBINAR',
+  MEETUP: 'MEETUP',
+  PANEL: 'PANEL',
+  TALK: 'TALK',
+  TRAINING: 'TRAINING',
+  COMPETITION: 'COMPETITION',
+  FESTIVAL: 'FESTIVAL',
+  CONCERT: 'CONCERT',
+  PERFORMANCE: 'PERFORMANCE',
+  EXHIBITION: 'EXHIBITION',
+  SPORTS: 'SPORTS',
+  FUNDRAISER: 'FUNDRAISER',
+  NETWORKING: 'NETWORKING',
+  CEREMONY: 'CEREMONY',
+  PARTY: 'PARTY'
 };
 
 exports.event_status = exports.$Enums.event_status = {

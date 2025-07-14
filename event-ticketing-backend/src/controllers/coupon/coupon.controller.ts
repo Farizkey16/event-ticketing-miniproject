@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { customAlphabet } from "nanoid";
 import { prisma } from "../../config/prisma";
 
 class GenerateCoupon {
-  public couponGenerator = async (req: Request, res: Response) => {
+  public couponGenerator = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 8);
       const code = nanoid();
@@ -42,6 +42,7 @@ class GenerateCoupon {
       });
     } catch (err) {
       res.status(500).send(err);
+      next(err)
       
     }
   };

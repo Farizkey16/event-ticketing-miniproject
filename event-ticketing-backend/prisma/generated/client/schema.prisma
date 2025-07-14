@@ -165,11 +165,12 @@ model event_table {
   id                Int                  @id @default(autoincrement())
   organizer_id      Int
   name              String
+  description       String?
   price             Int
   start_date        DateTime
   end_date          DateTime
   seat_capacity     Int? // query from attendees_list
-  event_type        String
+  event_type        EventType
   created_at        DateTime             @default(now())
   expires_at        DateTime?
   thumbnail_img     String?
@@ -180,6 +181,27 @@ model event_table {
   event_attendees   event_attendees[]
   transactions      transactions_table[]
   voucher           voucher_table[]
+}
+
+enum EventType {
+  CONFERENCE // multi‑track, multi‑day, lots of talks
+  SEMINAR // single‑track, educational
+  WORKSHOP // hands‑on, limited seats
+  WEBINAR // online‑only session
+  MEETUP // informal, local gathering
+  PANEL // moderated panel discussion
+  TALK // single speaker / keynote
+  TRAINING // structured course
+  COMPETITION // hackathon, esports, etc.
+  FESTIVAL // multi‑day, multi‑venue (music, film, food)
+  CONCERT // live music performance
+  PERFORMANCE // theatre, dance, stand‑up
+  EXHIBITION // art, trade show, expo
+  SPORTS // match, tournament
+  FUNDRAISER // charity gala, auction
+  NETWORKING // pure mingle / mixer
+  CEREMONY // award show, graduation
+  PARTY // social / celebration
 }
 
 model ticket_holds {

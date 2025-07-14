@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { compare } from "bcrypt";
-import { Jwt, sign } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { prisma } from "../../config/prisma";
-import dayjs from "dayjs";
 import bcrypt from "bcrypt";
+import AppError from "../../errors/AppError";
 
 class OrganizerAuthController {
   public register = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,18 +22,14 @@ class OrganizerAuthController {
         return;
       }
 
-      const checkOrganizer = await prisma.organizer_account.findFirst({
+      const existingOrganizer = await prisma.organizer_account.findFirst({
         where: {
           OR: [{ email }, { username }],
         },
       });
 
-      if (checkOrganizer) {
-        res.status(400).send({
-          success: false,
-          message: "Email or username already exists.",
-        });
-        return;
+      if (existingOrganizer) {
+        throw new AppError("There is already an organizer with this email/username", 409)
       }
 
       // Registering User
@@ -80,29 +76,29 @@ class OrganizerAuthController {
     next: NextFunction
   ): Promise<void> => {
     // Check Organizer
-    const checkOrganizer = await prisma.organizer_account.findUnique({
+    const existingOrganizer = await prisma.organizer_account.findUnique({
       where: {
         email: req.body.email,
       },
     });
 
-    if (!checkOrganizer) {
-      throw new Error("No account with that email exists.");
+    if (!existingOrganizer) {
+      throw new AppError("No account with that email exists.", 404);
     }
 
     // Comparing Password
-    const passwordCompare = compare(req.body.password, checkOrganizer.password);
+    const passwordCompare = compare(req.body.password, existingOrganizer.password);
 
     if (!passwordCompare) {
-      throw new Error("Your entered password is incorrect.");
+      throw new AppError("Your entered password is incorrect.", 400);
     }
 
     // Token
     const token = sign(
       {
-        id: checkOrganizer.id,
-        email: checkOrganizer.email,
-        role: checkOrganizer.role,
+        id: existingOrganizer.id,
+        email: existingOrganizer.email,
+        role: existingOrganizer.role,
       },
       process.env.JWT_TOKEN as string,
       { expiresIn: "2h" }
@@ -111,7 +107,7 @@ class OrganizerAuthController {
     res.status(200).send({
       success: true,
       message: "Log in successful",
-      data: checkOrganizer,
+      data: existingOrganizer,
       token: token,
     });
   };

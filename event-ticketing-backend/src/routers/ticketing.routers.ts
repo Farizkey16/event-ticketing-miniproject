@@ -3,10 +3,11 @@ import OrganizerAuthController from "../controllers/auth/organizerAuthController
 import GenerateCoupon from "../controllers/coupon/coupon.controller";
 import OrganizerEventManagement from "../controllers/event/organizerEventController";
 import { VerifyToken } from "../middlewares/VerifyToken";
-import { Router } from "express";
+import { RequestHandler, Router } from "express";
 import OrganizerProfile from "../controllers/profiles/organizerProfileController";
 import VerifyOrganizer from "../middlewares/VerifyOrganizer";
 import { Verify } from "crypto";
+import { uploaderMemory } from "../middlewares/uploader";
 
 class TicketingRouter {
   private route: Router;
@@ -40,6 +41,7 @@ class TicketingRouter {
     this.route.get("/organizer/profile", VerifyToken, VerifyOrganizer, this.organizerProfile.getProfile);
     this.route.patch("/organizer/profile", VerifyToken, VerifyOrganizer, this.organizerProfile.editProfile)
     this.route.patch("/organizer/password/change", VerifyToken, VerifyOrganizer, this.organizerProfile.changePassword)
+    this.route.patch("/organizer/profile-img", VerifyToken, VerifyOrganizer, uploaderMemory().single("img"), this.organizerProfile.uploadProfileImage)
     this.route.post("/organizer/reset-password", this.organizerProfile.resetPassword)
     this.route.patch("/organizer/reset-password/confirm", this.organizerProfile.confirmResetPassword)
 
