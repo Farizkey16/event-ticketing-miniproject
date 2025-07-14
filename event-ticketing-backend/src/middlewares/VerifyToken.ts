@@ -9,14 +9,16 @@ export const VerifyToken = (
   next: NextFunction
 ) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.token
+    //  const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        throw new AppError("Token not found. Login is required.", 404)
+        return next(new AppError("Token not found. Login is required.", 401))
     }
 
     const payload = jwt.verify(token, process.env.JWT_TOKEN as string) as JwtPayload & {
         id: number;
+        username: string;
         email: string;
         role: string;
     }
@@ -24,10 +26,10 @@ export const VerifyToken = (
     res.locals.user = payload
     console.log(payload)
 
-    next();
+    return next();
 
   } catch (err) {
-    throw new AppError("Invalid or expired token.", 403)
+    return next(new AppError("Invalid or expired token", 401));
   }
 };
 

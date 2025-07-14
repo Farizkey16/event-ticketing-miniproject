@@ -72,10 +72,10 @@ class UserAuthController {
           referred_by_code: referred_by_code || "",
           user_profile: {
             create: {
-              user_fullname: "",
-              user_date_of_birth: "",
-              user_phone: 0,
-              user_profile_image: ""
+              user_fullname: "",  
+              user_date_of_birth: new Date(),
+              user_profile_image: "",
+              user_phone: ""
             }
           }
         },

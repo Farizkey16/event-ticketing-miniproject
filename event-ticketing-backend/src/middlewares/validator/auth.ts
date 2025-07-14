@@ -1,55 +1,80 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { body, param, validationResult } from "express-validator";
 
-const validationHandling = (
+export const validationHandling = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  try {
-    const errorValidation = validationResult(req);
-    if (!errorValidation.isEmpty()) {
-      res.status(400).json({
-        message: "Validation failed",
-        errors: errorValidation.array(),
-      });
-    }
-    next();
-  } catch (err: any) {
-    res.status(err).send(err);
+): void => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors: errors.array(),
+    });
+    return;
   }
+
+  next();
 };
+
+// const validationHandling: RequestHandler = (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ): void => {
+//   try {
+//     const errorValidation = validationResult(req);
+//     if (!errorValidation.isEmpty()) {
+//       res.status(400).json({
+//         message: "Validation failed",
+//         errors: errorValidation.array(),
+//       });
+//       return;
+//     }
+//     next();
+//   } catch (err: any) {
+//     return next(err)
+//   }
+// };
 
 export const registValidation = [
   body("username").notEmpty().withMessage("Username is required."),
-  body("email").notEmpty().isEmail().withMessage("Email is required."),
+  body("email")
+  .notEmpty().withMessage("Email is required.")
+  .isEmail().withMessage("Email must be valid.")
+,
   body("password")
     .notEmpty()
+    .withMessage("Password is required.")
     .isStrongPassword({
       minLength: 8,
       minLowercase: 1,
       minNumbers: 1,
       minUppercase: 1,
+      minSymbols: 0
     })
-    .withMessage(
-      "Please create a password of minimum 6 characters, 1 lowercase, 1 uppercase, and 1 number."
-    ),
+    .withMessage("Password must have at least 8 characters, including 1 lowercase, 1 uppercase, and 1 number."),
   validationHandling,
 ];
 
 export const loginValidation = [
-  body("email").notEmpty().isEmail().withMessage("Email is required."),
+  body("email")
+  .notEmpty().withMessage("Email is required.")
+  .isEmail().withMessage("Email must be valid.")
+,
   body("password")
     .notEmpty()
+    .withMessage("Password is required.")
     .isStrongPassword({
       minLength: 8,
       minLowercase: 1,
       minNumbers: 1,
       minUppercase: 1,
     })
-    .withMessage(
-      "Please create a password of minimum 6 characters, 1 lowercase, 1 uppercase, and 1 number."
-    ),
+    .withMessage("Password must have at least 8 characters, including 1 lowercase, 1 uppercase, and 1 number."),
   validationHandling,
 ];
 

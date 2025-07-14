@@ -43,7 +43,7 @@ model user_profile {
     id                 Int      @id @default(autoincrement())
     user_id            Int      @unique
     user_fullname      String
-    user_date_of_birth DateTime
+    user_date_of_birth DateTime?
     user_phone         String
     user_profile_image String
 
@@ -174,11 +174,12 @@ model event_table {
     created_at        DateTime             @default(now())
     expires_at        DateTime?
     thumbnail_img     String?
+    slug              String
     organizer         organizer_account    @relation(fields: [organizer_id], references: [id])
     organizer_reviews organizer_reviews[]
     ticket_holds      ticket_holds[]
     ticket_type       ticket_type[]
-    event_attendees   event_attendees[]
+    event_attendees   event_attendees[] 
     transactions      transactions_table[]
     voucher           voucher_table[]
 }
@@ -238,9 +239,9 @@ model event_attendees {
     ticket_quantity  Int
     total_price_paid Int
     status           event_status
-    event            event_table       @relation(fields: [event_id], references: [id])
-    organizer        organizer_account @relation(fields: [organizer_id], references: [id])
-    user             user_account      @relation(fields: [user_id], references: [id])
+    event            event_table       @relation(fields: [event_id], references: [id], onDelete: Cascade)
+    organizer        organizer_account @relation(fields: [organizer_id], references: [id], onDelete: Cascade)
+    user             user_account      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
     @@unique([event_id, user_id])
 }

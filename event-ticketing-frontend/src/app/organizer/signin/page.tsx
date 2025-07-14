@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function OrganizerSignIn() {
@@ -17,16 +16,25 @@ export default function OrganizerSignIn() {
     setLoading(true);
 
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      // Karena next-auth setting-nya tidak sesuai dengan back-end yang menggunakan Express,
+      // Jadi untuk auth akan diganti dengan Express & JWT
+      // Kode di bawah ini diubah oleh Farizky 
 
-      if (result?.ok) {
-        router.push("/organizer/dashboard");
+      const res = await fetch("http://localhost:3077/api/organizer/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({email, password})
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        router.push("/dashboard"); // Changed by Farizky
       } else {
-        alert("Email atau password salah.");
+        alert(data.message || "Login failed");
       }
     } catch (error) {
       console.error("Sign-in failed:", error);

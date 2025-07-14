@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { events } from "@/app/events/events";
+import { events } from "@/app/events/listevents";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 import EventSearch from "@/components/eventsearch";

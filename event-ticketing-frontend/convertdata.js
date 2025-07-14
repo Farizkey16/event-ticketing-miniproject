@@ -1,4 +1,4 @@
-export const events = [
+export const listevents = [
   {
     "id": "week-me-up-bali",
     "name": "Week Me Up Music Festival 2025",
@@ -253,7 +253,95 @@ export const events = [
     "Live acoustic dan games seru untuk pasangan"
   ]
 }
+];
 
+// Helper function to parse price string to integer
+function parsePrice(priceString) {
+  if (priceString.toLowerCase().includes("gratis")) {
+    return 0;
+  }
+  // Extract numbers, remove dots, and parse to integer
+  const match = priceString.match(/Rp(\d+\.?\d*)/);
+  if (match && match[1]) {
+    return parseInt(match[1].replace(/\./g, ""), 10);
+  }
+  return 0; // Default to 0 if price cannot be parsed
+}
 
- 
-]
+// Helper function to determine event type
+function getEventType(event) {
+  const name = event.name.toLowerCase();
+  const description = event.description.join(" ").toLowerCase();
+
+  if (name.includes("festival") || description.includes("festival")) {
+    if (name.includes("kuliner") || description.includes("kuliner") || name.includes("fair")) {
+      return "FESTIVAL"; // Or EXHIBITION if it's primarily a trade show
+    }
+    return "FESTIVAL";
+  }
+  if (name.includes("run") || name.includes("funbike") || description.includes("bersepeda") || description.includes("lari")) {
+    return "SPORTS";
+  }
+  if (name.includes("concert") || name.includes("soundwave") || name.includes("music parade") || description.includes("musik") || description.includes("dj")) {
+    return "CONCERT";
+  }
+  if (name.includes("workshop")) {
+    return "WORKSHOP";
+  }
+  if (name.includes("exhibition") || description.includes("pameran")) {
+    return "EXHIBITION";
+  }
+  // Default to FESTIVAL if no specific type is matched, or choose a more generic one
+  return "FESTIVAL";
+}
+
+// Function to convert data to CSV
+function convertToCsv(data) {
+  const headers = [
+    "id",
+    "organizer_id",
+    "name",
+    "description",
+    "price",
+    "start_date",
+    "end_date",
+    "seat_capacity",
+    "event_type",
+    "created_at",
+    "expires_at",
+    "thumbnail_img",
+    "slug" // New column for the original JSON ID
+  ];
+
+  const rows = data.map((event, index) => {
+    const startDate = new Date(event.date);
+    const endDate = new Date(event.date); // Assuming single-day events for now
+
+    return {
+      id: index + 1, // Auto-incrementing ID for CSV
+      organizer_id: 1, // Placeholder, adjust as needed
+      name: `"${event.name.replace(/"/g, '""')}"`, // Handle quotes in name
+      description: `"${event.description.join(" ").replace(/"/g, '""')}"`, // Join array and handle quotes
+      price: parsePrice(event.price),
+      start_date: startDate.toISOString(),
+      end_date: endDate.toISOString(),
+      seat_capacity: "\\N", // Use \N for NULL in CSV for Supabase/PostgreSQL
+      event_type: getEventType(event),
+      created_at: new Date().toISOString(), // Current timestamp
+      expires_at: "\\N", // NULL
+      thumbnail_img: `"${event.image.replace(/"/g, '""')}"`,
+      slug: `"${event.id.replace(/"/g, '""')}"` // Original JSON ID as slug
+    };
+  });
+
+  // Format rows into CSV string
+  const csvRows = [
+    headers.join(","),
+    ...rows.map(row => Object.values(row).join(","))
+  ];
+
+  return csvRows.join("\n");
+}
+
+const csvOutput = convertToCsv(listevents);
+console.log(csvOutput); // This will print the CSV to the console

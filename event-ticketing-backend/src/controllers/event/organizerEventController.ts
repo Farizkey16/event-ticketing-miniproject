@@ -26,7 +26,7 @@ class OrganizerEventManagement {
     }
 
     try {
-      const { name, price, start_date, end_date, seat_capacity, event_type } =
+      const { name, price, start_date, end_date, seat_capacity, event_type, slug } =
         req.body;
 
       const parsed_startDate = new Date(start_date);
@@ -53,6 +53,7 @@ class OrganizerEventManagement {
           seat_capacity,
           event_type,
           expires_at: expiry,
+          slug
         },
       });
 
@@ -151,6 +152,14 @@ class OrganizerEventManagement {
         throw new AppError("Delete only your own event", 403)
       }
 
+      // Delete Children 
+      await prisma.event_attendees.deleteMany({
+        where: {
+          id: event.id
+        }
+      })
+
+      // Delete Event
       await prisma.event_table.delete({
         where: {
           id: parseInt(id),
@@ -170,7 +179,90 @@ class OrganizerEventManagement {
     req: Request,
     res: Response,
     next: NextFunction
-  ) => {};
+  ) => {
+
+    try{
+      const organizer = res.locals.user
+
+      if (!organizer) {
+        return next (new AppError("You are not allowed to access this page.", 403))
+      }
+      
+      const events = await prisma.event_table.findMany({
+        where: {
+          organizer_id: organizer.id
+        }
+      })
+
+      if (!events || events.length === 0) {
+        return next (new AppError("Events not found.", 404))
+      }
+
+      res.status(200).send({
+        success: true,
+        message: `Events from organizer ${organizer.username} successfully fetched.`,
+        data: events
+      })
+    }catch(err){
+      console.error(err);
+      next(err)
+
+    }
+  };
+
+  public getEventAttendees = async (req:Request,res:Response,next:NextFunction) => {
+    try{
+
+      const organizer = res.locals.user;
+
+      if (!organizer) {
+        return next (new AppError("You are not allowed to access this page.", 403))
+      }
+
+      const attendees = await prisma.event_attendees.findMany({
+        where: {
+          organizer_id: organizer.id
+        },
+        include: {
+          event: {
+            select: {
+              name: true
+            },
+          },
+          user: {
+            select: {
+              username: true
+            }
+          }
+        }
+      })
+
+      if (!attendees || attendees.length === 0) {
+        return next (new AppError("Attendees not found.", 404))
+      }
+
+      const formatted = attendees.map((a) => ({
+        id: a.id,
+        eventName: a.event.name,
+        userName: a.user.username,
+        ticketQuantity: a.ticket_quantity,
+        totalPricePaid: a.total_price_paid,
+        status: a.status
+      }))
+
+      res.status(200).send({
+        success: true,
+        message: `Events from organizer ${organizer.username} successfully fetched.`,
+        data: formatted
+      })
+
+
+    }catch(err){
+      console.error(err);
+      next(err)
+
+    }
+  }
 }
 
 export default OrganizerEventManagement;
