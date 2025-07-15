@@ -1,5 +1,6 @@
 "use client";
 
+import { previousDay } from "date-fns";
 import { useState, useEffect } from "react";
 
 type TransactionStatus =
@@ -98,20 +99,33 @@ export default function TransactionPage() {
   }, []);
 
   const handleAction = async (id: number, action: "accept" | "reject") => {
-    // Replace with real fetch call to backend
+    try {
+      
+      const res = await fetch(
+        `http://localhost:3077/api/transactions/${id}/${action}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: { Content_Type: "application/json" },
+          body: JSON.stringify({
+            status: action === "accept" ? "accepted" : "rejected",
+          }),
+        }
+      );
 
-    await fetch(`http://localhost:3000/api/transactions/${id}/${action}`, {
-      method: "POST",
-      credentials: "include",
-    });
+      if (!res.ok) throw new Error("Failed to update transaction..");
 
-    setTransactions((prev) =>
-      prev.map((trx) =>
-        trx.id === id
-          ? { ...trx, status: action === "accept" ? "accepted" : "rejected" }
-          : trx
-      )
-    );
+      setTransactions((prev) =>
+        prev.map((trx) =>
+          trx.id === id
+            ? { ...trx, status: action === "accept" ? "accepted" : "rejected" }
+            : trx
+        )
+      );
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update transaction.");
+    }
   };
 
   return (
@@ -119,7 +133,7 @@ export default function TransactionPage() {
       <h1 className="text-xl font-semibold mb-4">Transactions</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {transactions.map((trx) => {
-          const isResolved = resolvedStatuses.includes(trx.status); // ✅ Inserted here
+          const isResolved = resolvedStatuses.includes(trx.status);
 
           return (
             <div
@@ -156,28 +170,28 @@ export default function TransactionPage() {
                 >
                   View Proof
                 </button>
-                  {isResolved ? (
-                    <p className="text-xs text-gray-500 italic">
-                      Already processed
-                    </p>
-                  ) : (
-                    <>
-                      <button
-                        className="text-xs px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded cursor-pointer"
-                        onClick={() => handleAction(trx.id, "accept")}
-                      >
-                        Accept
-                      </button>
-                      <button
-                        className="text-xs px-3 py-1 bg-red-100 hover:bg-red-200 text-red-800 rounded cursor-pointer"
-                        onClick={() => handleAction(trx.id, "reject")}
-                      >
-                        Reject
-                      </button>
-                    </>
-                  )}
-                </div>
+                {isResolved ? (
+                  <p className="text-xs text-gray-500 italic">
+                    Already processed
+                  </p>
+                ) : (
+                  <>
+                    <button
+                      className="text-xs px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded cursor-pointer"
+                      onClick={() => handleAction(trx.id, "accept")}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="text-xs px-3 py-1 bg-red-100 hover:bg-red-200 text-red-800 rounded cursor-pointer"
+                      onClick={() => handleAction(trx.id, "reject")}
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
               </div>
+            </div>
           );
         })}
       </div>

@@ -68,27 +68,6 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
-  // async function handleDelete(id: number) {
-  //   const confirm = window.confirm(
-  //     "Are you sure you want to delete this event?"
-  //   );
-  //   if (!confirm) return;
-  //   try {
-  //     const res = await fetch(`http://localhost:3077/api/event/delete/${id}`, {
-  //       method: "DELETE",
-  //       credentials: "include",
-  //     });
-  //     if (res.ok) {
-  //       setEvents(events.filter((e) => e.id !== id));
-  //     } else {
-  //       const err = await res.json();
-  //       alert(err.message || "Failed to delete");
-  //     }
-  //   } catch (err) {
-  //     console.error("Delete error:", err);
-  //   }
-  // }
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">

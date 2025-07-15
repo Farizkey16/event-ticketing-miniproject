@@ -4,6 +4,7 @@ import { organizer_account } from "../../../prisma/generated/client";
 import { sendEmail } from "../../utils/mail.utils";
 import { calculateDiscount } from "../../utils/calculateprice.utils";
 import { throwMappedError } from "../../utils/errorMapper";
+import AppError from "../../errors/AppError";
 
 type TransactionWithRelations = Awaited<ReturnType<typeof transactionUpdate>>;
 type SeatCapacityUpdate = "increment" | "decrement";
@@ -13,6 +14,11 @@ export const transactionUpdate = async (
   txid: number,
   status: "accepted" | "rejected"
 ) => {
+  const exists = await tx.transactions_table.findUnique({
+    where: { id: txid },
+  });
+  if (!exists) throw new AppError("TRANSACTION_NOT_FOUND", 404);
+
   const transaction = await tx.transactions_table.update({
     where: {
       id: txid,
@@ -28,7 +34,6 @@ export const transactionUpdate = async (
       },
       user: true,
       event: true,
-      total_price: true,
     },
   });
 
@@ -114,7 +119,7 @@ export const rollbackPoint = async (
     pointsUsed.map((p) =>
       tx.user_points.update({
         where: {
-          id: p.user_point_id
+          id: p.user_point_id,
         },
         data: {
           points_remaining: {
@@ -192,11 +197,13 @@ export const voucherCouponCheck = async (
 
     if (coupon.usage_limit <= 0) throwMappedError("COUPON_EXPIRED");
 
-    const userCoupon = await tx.user_coupon.findFirst({
+    const userCoupon = await tx.user_coupon.findUnique({
       where: {
+        user_id_coupon_id:{
         user_id: transaction.user_id,
         coupon_id: coupon.id,
-      },
+        }
+      }
     });
 
     if (userCoupon?.used_at) throwMappedError("COUPON_ALREADY_USED");

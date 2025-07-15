@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams?.get("token");
   
 
 
@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    const res = await fetch("http://localhost:3077/ticket/organizer/reset-password/confirm", {
+    const res = await fetch("http://localhost:3077/api/user/reset-password/confirm", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

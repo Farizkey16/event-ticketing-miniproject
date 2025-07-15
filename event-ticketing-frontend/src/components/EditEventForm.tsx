@@ -30,14 +30,20 @@ export function EditEventForm({ event, onSuccess }: EditEventFormProps) {
     const res = await fetch(
       `http://localhost:3077/api/event/edit/${event.id}`,
       {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
         credentials: "include",
       }
     );
-    if (res.ok) onSuccess();
-    else alert("Update failed");
+    console.log(event.id)
+    if (res.ok) {
+      onSuccess();
+      alert("Update successful!")}
+    else {
+      console.log(event.id)
+      alert("Update failed");}
+    
   };
 
   return (

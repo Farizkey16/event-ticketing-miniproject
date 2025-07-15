@@ -200,3 +200,117 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-14 19:53:46 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
 2025-07-14 19:54:07 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
 2025-07-14 19:54:23 [ERROR]: GET /api/organizer/me: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-14 23:20:13 [ERROR]: POST /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-14 23:59:15 [ERROR]: POST /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:01:21 [ERROR]: POST /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:04:37 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:09:46 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:11:28 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:12:08 [ERROR]: POST /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:12:35 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:13:33 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:16:29 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:18:53 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:24:13 [ERROR]: POST /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:26:50 [ERROR]: POST /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:27:29 [ERROR]: POST /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:27:38 [ERROR]: POST /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:27:57 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:31:18 [ERROR]: POST /api/transactions/5/reject: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 00:32:22 [ERROR]: PATCH /api/transactions/29/reject: Expected double-quoted property name in JSON at position 26 {"expose":true,"statusCode":400,"status":400,"body":"{\n  \"status\": \"rejected\",\n}\n","type":"entity.parse.failed"}
+2025-07-15 00:32:34 [ERROR]: POST /api/transactions/29/reject: Transaction not found. {"message":"Transaction not found.","statusCode":404,"success":false}
+2025-07-15 00:33:22 [ERROR]: POST /api/transactions/29/reject: Transaction not found. {"message":"Transaction not found.","statusCode":404,"success":false}
+2025-07-15 01:05:12 [ERROR]: POST /api/transactions/29/reject: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:12:58 [ERROR]: POST /api/transactions/29/reject: Transaction not found. {"message":"Transaction not found.","statusCode":404,"success":false}
+2025-07-15 01:13:12 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:13:21 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:16:01 [ERROR]: GET /api/transactions/get-transactions: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-15 01:17:05 [ERROR]: GET /api/transactions/get-transactions: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-15 01:21:08 [ERROR]: GET /api/transactions/get-transactions: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-15 01:32:51 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:33:08 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:37:26 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:41:03 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:44:59 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:46:18 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:46:27 [ERROR]: POST /api/transactions/29/reject: Transaction not found. {"message":"Transaction not found.","statusCode":404,"success":false}
+2025-07-15 01:46:41 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:46:48 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:50:52 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:51:56 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:53:15 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:54:47 [ERROR]: PATCH /api/transactions/29/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:55:36 [ERROR]: PATCH /api/transactions/30/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:56:07 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:56:49 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:57:17 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:58:36 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 01:59:00 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:00:22 [ERROR]: PATCH /api/transactions/5/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:00:47 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:01:21 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:01:42 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:05:42 [ERROR]: PATCH /api/transactions/2/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:08:24 [ERROR]: POST /api/transactions/8/reject: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:08:59 [ERROR]: POST /api/transactions/8/reject: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 02:09:57 [ERROR]: POST /api/transactions/8/reject: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-15 02:10:36 [ERROR]: POST /api/transactions/8/reject: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:07:42 [ERROR]: POST /api/user/reset-password: Cannot destructure property 'email' of 'req.body' as it is undefined. {}
+2025-07-15 03:12:39 [ERROR]: PATCH /api/organizer/reset-password/confirm: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:14:06 [ERROR]: PATCH /api/organizer/reset-password/confirm: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:15:27 [ERROR]: PATCH /api/organizer/reset-password/confirm: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:17:30 [ERROR]: PATCH /api/organizer/reset-password/confirm: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:17:58 [ERROR]: PATCH /api/organizer/reset-password/confirm: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 03:51:09 [ERROR]: PATCH /api/user/profile: You are not allowed to access this page. {"message":"You are not allowed to access this page.","statusCode":403,"success":false}
+2025-07-15 03:52:27 [ERROR]: PATCH /api/user/profile: You are not allowed to access this page. {"message":"You are not allowed to access this page.","statusCode":403,"success":false}
+2025-07-15 04:00:15 [ERROR]: PATCH /api/user/profile: You are not allowed to access this page. {"message":"You are not allowed to access this page.","statusCode":403,"success":false}
+2025-07-15 04:00:16 [ERROR]: PATCH /api/user/profile: You are not allowed to access this page. {"message":"You are not allowed to access this page.","statusCode":403,"success":false}
+2025-07-15 04:01:21 [ERROR]: PATCH /api/user/profile: Missing required profile fields. {"message":"Missing required profile fields.","statusCode":400,"success":false}
+2025-07-15 04:02:42 [ERROR]: PATCH /api/user/profile: Unexpected number in JSON at position 96 {"expose":true,"statusCode":400,"status":400,"body":"{\n    \"user_fullname\": \"M. Farizky\",\n    \"user_date_of_birth\": \"1991-10-10\",\n    \"user_phone\": 087722174146\n}","type":"entity.parse.failed"}
+2025-07-15 04:02:49 [ERROR]: PATCH /api/user/profile: 
+Invalid `prisma.user_profile.update()` invocation in
+/Users/Farizkey/Documents/Purwadhika - JCWDOL 020 /mini-project/event-ticketing-backend/src/controllers/profiles/userProfileController.ts:58:56
+
+  55   throw new AppError("User profile not found", 404);
+  56 }
+  57 
+→ 58 const updatedProfile = await prisma.user_profile.update({
+       where: {
+         id: 19
+       },
+       data: {
+         user_fullname: "M. Farizky",
+         user_date_of_birth: "1991-10-10",
+                             ~~~~~~~~~~~~
+         user_phone: "087722174146",
+         user_profile_image: undefined,
+         user: {
+           connect: {
+             id: 38
+           }
+         }
+       }
+     })
+
+Invalid value for argument `user_date_of_birth`: premature end of input. Expected ISO-8601 DateTime. {"name":"PrismaClientValidationError","clientVersion":"6.11.1"}
+2025-07-15 04:06:56 [ERROR]: PATCH /api/organizer/profile: Missing required profile fields. {"message":"Missing required profile fields.","statusCode":400,"success":false}
+2025-07-15 04:15:41 [ERROR]: PATCH /api/organizer/password/change: Token not found. Login is required. {"message":"Token not found. Login is required.","statusCode":401,"success":false}
+2025-07-15 04:21:22 [ERROR]: POST /api/organizer/login: Your entered password is incorrect. {"message":"Your entered password is incorrect.","statusCode":400,"success":false}
+2025-07-15 04:36:26 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:37:08 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:37:46 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:39:16 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:39:40 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:40:13 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:41:18 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:42:20 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:44:18 [ERROR]: PATCH /api/transactions/19/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:44:46 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:51:58 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:52:04 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:52:21 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:53:12 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:53:53 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:54:35 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:55:10 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}
+2025-07-15 04:55:51 [ERROR]: PATCH /api/transactions/17/accept: Internal server error. {"message":"Internal server error.","statusCode":500,"success":false}

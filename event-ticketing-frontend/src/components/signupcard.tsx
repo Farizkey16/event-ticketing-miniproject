@@ -24,7 +24,7 @@ export default function SignUpCard({ onClose }: { onClose: () => void }) {
     }
 
     try {
-      const res = await axios.post("http://localhost:4000/api/user/register", {
+      const res = await axios.post("http://localhost:3077/api/user/register", {
         email: form.email,
         username: form.username,
         password: form.password,

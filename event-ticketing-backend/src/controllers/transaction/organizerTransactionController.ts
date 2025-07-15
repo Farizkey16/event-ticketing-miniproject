@@ -8,6 +8,7 @@ import {
   voucherCouponCheck,
   updateSeatTicket,
   rollbackPoint,
+  rollbackVoucherCoupon,
 } from "../../service/transaction/transaction.service";
 import AppError from "../../errors/AppError";
 
@@ -24,7 +25,7 @@ class OrganizerTransaction {
         throw new AppError("Unauthorized access.", 403);
       }
 
-      const transactionId = parseInt(req.params.id);
+      const transactionId = parseInt(req.params.id, 10);
 
       if (isNaN(transactionId)) {
         throw new AppError("Invalid transaction ID.", 400);
@@ -38,17 +39,29 @@ class OrganizerTransaction {
           "accepted"
         );
 
+        if (transaction.event.organizer_id !== organizer.id) {
+          throw new AppError(
+            "Forbidden: You do not have permission to modify this transaction.",
+            403
+          );
+        }
         // Check Voucher & Coupon Usage
-        const { coupon_code, voucher_code } = req.body.vouchercoupon;
-        await voucherCouponCheck(
-          tx,
-          { coupon_code, voucher_code },
-          transaction,
-          organizer
-        );
+
+        if (req.body?.vouchercoupon) {
+          const { coupon_code, voucher_code } = req.body.vouchercoupon;
+          await voucherCouponCheck(
+            tx,
+            { coupon_code, voucher_code },
+            transaction,
+            organizer
+          );
+        }
 
         // Check Points, Create Redemption Point log, Redemption log, and Update Points
-        await usePoint(tx, req.body.pointsUsed, transaction);
+        const { pointsUsed } = req.body
+        if (Array.isArray(pointsUsed) && pointsUsed.length > 0) {
+          await usePoint(tx, req.body?.pointsUsed || null, transaction);
+        }
 
         // Update seat_capacity and delete ticket holds
         await updateSeatTicket(tx, transaction, "increment", transactionId);
@@ -77,11 +90,15 @@ class OrganizerTransaction {
         throw new AppError("User not found.", 404);
       }
 
-      await notifyUserPaymentStatus(
-        user.email,
-        transaction.event.name,
-        "accepted"
-      );
+      try {
+        await notifyUserPaymentStatus(
+          user.email,
+          transaction.event.name,
+          "accepted"
+        );
+      } catch (err) {
+        console.error("Failed to send email:", err);
+      }
 
       // Sending Response
       res.status(200).json({
@@ -103,6 +120,7 @@ class OrganizerTransaction {
           return next(new AppError("pointsUsed array is required.", 400));
         }
       }
+      console.error("Internal transaction error:", err);
       return next(new AppError("Internal server error.", 500));
     }
   };
@@ -119,7 +137,7 @@ class OrganizerTransaction {
         throw new AppError("Unauthorized Access.", 403);
       }
 
-      const transactionId = parseInt(req.params.id);
+      const transactionId = parseInt(req.params.id, 10);
 
       if (!transactionId) {
         throw new AppError("Transaction not found", 404);
@@ -149,8 +167,16 @@ class OrganizerTransaction {
         );
 
         // Rolling back points, deletion of redemption point log, and redemption points items
+        if (req.body?.pointsUsed){
         const { user_point_id, used_points } = req.body.pointsUsed;
         await rollbackPoint(tx, [{ user_point_id, used_points }]);
+        }
+
+        // Rolling back vouchers or coupons
+        if (req.body?.vouchercoupon){
+          const { coupon_code, voucher_code } = req.body.vouchercoupon;
+          await rollbackVoucherCoupon(tx, {coupon_code, voucher_code}, transaction, organizer)
+        }
 
         // Decrease Seat Capacity
         await updateSeatTicket(tx, transaction, "decrement", transactionId);
@@ -188,6 +214,7 @@ class OrganizerTransaction {
           return next(new AppError("pointsUsed array is required.", 400));
         }
       }
+      console.error("Internal server error:", err)
       return next(new AppError("Internal server error.", 500));
     }
   };
@@ -264,9 +291,8 @@ class OrganizerTransaction {
         total_price: trx.total_price,
         discount_applied: trx.discount_applied,
         payment_proof_url: trx.payment_proof_url,
-        status: trx.status
-
-      }))
+        status: trx.status,
+      }));
 
       res.status(200).json({
         success: true,

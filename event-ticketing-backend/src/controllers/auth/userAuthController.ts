@@ -4,8 +4,10 @@ import { Jwt } from "jsonwebtoken";
 import { sign } from "jsonwebtoken";
 import { prisma } from "../../config/prisma";
 import dayjs from "dayjs";
-import { totalUserPoints } from "../../../prisma/generated/client/sql";
+import nodemailer from "nodemailer"
+
 import AppError from "../../errors/AppError";
+import { sendEmail } from "../../utils/mail.utils";
 
 class UserAuthController {
   // Registration
@@ -62,30 +64,30 @@ class UserAuthController {
 
       // Registering User
 
-      const { email, username, password, referred_by_code } = req.body
-      const hashedPassword = await hash(password, 10)//tambahkan hash
+      const { email, username, password, referred_by_code } = req.body;
+      const hashedPassword = await hash(password, 10); //tambahkan hash
 
       const newUser = await prisma.user_account.create({
         data: {
           email,
           username,
-          password: hashedPassword,//hashPassword
-          
+          password: hashedPassword, //hashPassword
+
           role: "user",
           referral_code: referralCode,
           referred_by_code: referred_by_code || "",
           user_profile: {
             create: {
-              user_fullname: "",  
+              user_fullname: "",
               user_date_of_birth: new Date(),
               user_profile_image: "",
-              user_phone: ""
-            }
-          }
+              user_phone: "",
+            },
+          },
         },
         include: {
-          user_profile: true
-        }
+          user_profile: true,
+        },
       });
 
       // Rewarding Used Referral Code
@@ -111,6 +113,8 @@ class UserAuthController {
             coupon_id: referral_coupon.id,
           },
         });
+
+        await sendEmail(newUser.email,"You received a special coupon!", `<p>Thank you for registering with us using a Referral Code. Here's a discount coupon for you to be used within three months: <strong>REFERRAL10</strong></p>`)
       }
 
       // Referral 10,000 points
@@ -118,16 +122,21 @@ class UserAuthController {
       if (req.body.referred_by_code) {
         referrer = await prisma.user_account.findUnique({
           where: { referral_code: req.body.referred_by_code },
-          select: { id: true, username: true, referral_code: true },
+          select: { id: true, username: true, referral_code: true, email:true },
         });
 
         if (!referrer) {
           throw new AppError("The referral code does not exist.", 404);
         }
+        
+        await sendEmail(referrer.email, "10,000 points for you!", "<p> Thank you for making our platform merrier! For having your Referral Code used, your account has now obtained 10,000 points to be used within three months!</p>")
 
-        const user_points_result = await prisma.$queryRawTyped(
-          totalUserPoints(referrer.id)
-        );
+        const user_points_result = await prisma.$queryRaw<
+          { total_points: number }[]
+        >`
+  SELECT COALESCE(SUM(points), 0) AS total_points
+  FROM user_points
+  WHERE user_id = ${referrer.id}`;
 
         const user_points_remaining = Number(
           user_points_result[0]?.total_points ?? 0
@@ -145,6 +154,10 @@ class UserAuthController {
           },
         });
       }
+
+      
+      
+      
 
       // Sending response
       res.status(201).send({
@@ -174,8 +187,10 @@ class UserAuthController {
 
     // Comparing Password
 
-    const passwordCompare = await compare(req.body.password, checkUser.password)// tambahkan await
-
+    const passwordCompare = await compare(
+      req.body.password,
+      checkUser.password
+    ); // tambahkan await
 
     if (!passwordCompare) {
       throw new AppError("Your entered password is incorrect.", 400);
